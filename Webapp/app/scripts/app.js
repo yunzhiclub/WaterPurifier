@@ -19,21 +19,6 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .when('/teacher', {
-        templateUrl: 'views/teacher/index.html',
-        controller: 'TeacherIndexCtrl',
-        controllerAs: 'teacher/index'
-      })
       .when('/login', {
         templateUrl: 'views/login/index.html',
         controller: 'LoginIndexCtrl',
@@ -79,7 +64,22 @@ angular
         controller: 'RechargeIndexCtrl',
         controllerAs: 'recharge/index'
       })
+      .when('/index', {
+        templateUrl: 'views/index/index.html',
+        controller: 'IndexIndexCtrl',
+        controllerAs: 'index/index'
+      })
+      .when('/mainpage', {
+        templateUrl: 'views/mainpage/index.html',
+        controller: 'MainpageIndexCtrl',
+        controllerAs: 'mainpage/index'
+      })
+      .when('/onlinedetailers/payment', {
+        templateUrl: 'views/onlinedetailers/payment.html',
+        controller: 'OnlinedetailersPaymentCtrl',
+        controllerAs: 'onlinedetailers/payment'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/index'
       });
   });
