@@ -8,10 +8,6 @@
  * Controller of the webappApp
  */
 angular.module('webappApp')
-  .controller('RechargeIndexCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('RechargeIndexCtrl', function ($scope) {
+    $scope.price = 10;
   });

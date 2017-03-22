@@ -8,10 +8,6 @@
  * Controller of the webappApp
  */
 angular.module('webappApp')
-  .controller('IndexIndexCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('IndexIndexCtrl', function ($location) {
+    $location.path('/login');
   });

@@ -1,1 +1,48 @@
-<p>This is the recharge/index view.</p>
+<table align="center" class="table table-bordered table_main">
+    <thead>
+        <tr>
+            <th>
+                <div align="center">
+                    <h3 class="text-center">商品名称：XXXXXX</h3>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <div ng-app="webappApp" ng-controller="RechargeIndexCtrl">
+            <tr>
+                <tr>
+                    <td bgcolor="#5B9BD5" align="center">
+                        <table>
+                            <tr>
+                                <td>单价：{{price}} 元
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>数量：{{quantity}} 升
+                                    <button class="button button-square button-tiny" ng-click="quantity = quantity + 1"><i class="glyphicon glyphicon-plus"></i></button>
+                                    <button class="button button-square button-tiny" ng-click="quantity = quantity - 1"><i class="glyphicon glyphicon-minus"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>总价：{{ (quantity * price) }} 元</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#5B9BD5">
+                        <a ng-href="#!/onlinedetailers/payment"><button class="btn btn-large btn-block" type="button">确定充值：{{ (quantity * price) }}元</button></a>
+                        <br>
+                        <button class="btn btn-large btn-block" type="button">电商平台</button>
+                        <br>
+                        <a href="#!/onlinedetailers">
+                            <button align="center" class="btn btn-large btn-block" type="button">返回上级页面</button>
+                        </a>
+                    </td>
+                </tr>
+            </tr>
+        </div>
+    </tbody>
+</table>
