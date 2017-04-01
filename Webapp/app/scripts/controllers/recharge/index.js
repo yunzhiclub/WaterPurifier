@@ -10,4 +10,5 @@
 angular.module('webappApp')
   .controller('RechargeIndexCtrl', function ($scope) {
     $scope.price = 10;
+    $scope.quantity = 0;
   });

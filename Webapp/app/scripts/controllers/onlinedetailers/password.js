@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name webappApp.controller:LoginIndexCtrl
+ * @name webappApp.controller:OnlinedetailersPasswordCtrl
  * @description
- * # LoginIndexCtrl
+ * # OnlinedetailersPasswordCtrl
  * Controller of the webappApp
  */
 angular.module('webappApp')
-  .controller('LoginIndexCtrl', function ($routeParams) {
+  .controller('OnlinedetailersPasswordCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

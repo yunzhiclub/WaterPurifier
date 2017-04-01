@@ -79,6 +79,21 @@ angular
         controller: 'OnlinedetailersPaymentCtrl',
         controllerAs: 'onlinedetailers/payment'
       })
+      .when('/onlinedetailers/password', {
+        templateUrl: 'views/onlinedetailers/password.html',
+        controller: 'OnlinedetailersPasswordCtrl',
+        controllerAs: 'onlinedetailers/password'
+      })
+      .when('/onlinedetailers/success', {
+        templateUrl: 'views/onlinedetailers/success.html',
+        controller: 'OnlinedetailersSuccessCtrl',
+        controllerAs: 'onlinedetailers/success'
+      })
+      .when('/waterconsumption/detail/:id', {
+        templateUrl: 'views/waterconsumption/detail.html',
+        controller: 'WaterconsumptionDetailCtrl',
+        controllerAs: 'waterconsumption/detail'
+      })
       .otherwise({
         redirectTo: '/index'
       });
