@@ -1,48 +1,38 @@
-<table align="center" class="table table-bordered table_main">
-    <thead>
-        <tr>
-            <th>
-                <div align="center">
-                    <h3 class="text-center">商品名称：XXXXXX</h3>
-                </div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <div ng-app="webappApp" ng-controller="RechargeIndexCtrl">
-            <tr>
-                <tr>
-                    <td bgcolor="#5B9BD5" align="center">
-                        <table>
-                            <tr>
-                                <td>单价：{{price}} 元
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>数量：{{quantity}} 升
-                                    <button class="button button-square button-tiny" ng-click="quantity = quantity + 1"><i class="glyphicon glyphicon-plus"></i></button>
-                                    <button class="button button-square button-tiny" ng-click="quantity = quantity - 1"><i class="glyphicon glyphicon-minus"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>总价：{{ (quantity * price) }} 元</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#5B9BD5">
-                        <a ng-href="#!/onlinedetailers/payment"><button class="btn btn-large btn-block" type="button">确定充值：{{ (quantity * price) }}元</button></a>
-                        <br>
-                        <button class="btn btn-large btn-block" type="button">电商平台</button>
-                        <br>
-                        <a href="#!/onlinedetailers">
-                            <button align="center" class="btn btn-large btn-block" type="button">返回上级页面</button>
-                        </a>
-                    </td>
-                </tr>
-            </tr>
+<article class="weui-article">
+    <h1 align="center">
+        商品名称：XXXXXXXX
+    </h1>
+    <hr>
+    <div class="page__bd page__bd_spacing" ng-app="webappApp" ng-controller="RechargeIndexCtrl">
+        <div class="weui-flex" align="center">
+            <div class="weui-flex__item">
+                <div class="placeholder">单价：{{price}} 元</div>
+            </div>
         </div>
-    </tbody>
-</table>
+        <div class="weui-flex" align="center">
+            <div class="weui-flex__item">
+                <div class="placeholder">数量：{{quantity}} 升
+                    <a href="" class="weui-btn weui-btn_mini weui-btn_primary" ng-click="quantity = quantity + 1"><i class="glyphicon glyphicon-plus"></i></a>
+                    <a href="" class="weui-btn weui-btn_mini weui-btn_primary" ng-click="quantity = quantity - 1"><i class="glyphicon glyphicon-minus"></i></a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="weui-flex" align="center">
+            <div class="weui-flex__item">
+                <div class="placeholder">总价：{{ (quantity * price) }} 元</div>
+            </div>
+        </div>
+        <br>
+        <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers/payment" id="showTooltips">确认支付：{{ (quantity * price) }} 元</a>
+        <a ng-href="" class="weui-btn weui-btn_default">套餐情况</a>
+        <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers" id="showTooltips">返回</a>
+    </div>
+    <br>
+    <br>
+    <div class="page__bd page__bd_spacing">
+        <div class="weui-footer">
+            <p class="weui-footer__text">Copyright &copy; 2017 梦云智</p>
+        </div>
+    </div>
+</article>

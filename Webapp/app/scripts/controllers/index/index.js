@@ -9,5 +9,4 @@
  */
 angular.module('webappApp')
   .controller('IndexIndexCtrl', function ($location) {
-    $location.path('/login');
   });

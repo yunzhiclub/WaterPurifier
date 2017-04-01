@@ -1,47 +1,26 @@
-<table align="center" class="table table-bordered table_main">
-    <thead>
-        <tr>
-            <th>
-                <div align="center">
-                    天津依之纯环保科技有限责任公司</p>天津益升纯环保科技有限责任公司</p>天津恋纯环保科技有限责任公司</p>
+<article class="weui-article">
+    <h1 align="center">
+        天津依之纯环保科技有限责任公司</p>天津益升纯环保科技有限责任公司</p>
+        天津恋纯环保科技有限责任公司</p>
+    </h1>
+    <hr>
+    <div class="weui-cells__title">请登录机器号</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">机器号</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="MachineID" placeholder="请输入机器号"/>
                 </div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <div>
-            <tr>
-                <td bgcolor="#5B9BD5">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="inputMachineID" class="col-sm-2 control-label col-sm-offset-2">机器号</label>
-                            <div class="col-sm-6">
-                                <input type="MachineID" class="form-control" id="inputMachineID" placeholder="MachineID">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label col-sm-offset-2">密&nbsp;&nbsp;码</label>
-                            <div class="col-sm-6">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> 记住密码
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-5 col-sm-10">
-                                <a ng-href="#!/mainpage"><button type="submit" class="btn btn-default">登录</button></a>
-                            </div>
-                        </div>
-                    </form>
-                </td>
-            </tr>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input type="password" class="weui-input" id="inputPassword3" placeholder="请输入密码">
+                </div>
+            </div>
         </div>
-    </tbody>
-</table>
+        <br>
+        <a class="weui-btn weui-btn_primary" ng-href="#!/mainpage" id="showTooltips">确认登录</a>
+</article>

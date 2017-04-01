@@ -1,42 +1,36 @@
-<table align="center" class="table table-bordered table_main">
-    <thead>
-        <tr>
-            <th>
-                <div align="center">
-                    <h3>商品支付</h3>
+<div class="page__hd">
+        <h1 class="page__title">支付页面</h1>
+</div>
+<div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">付款金额</label>
+                    <em class="weui-form-preview__value">¥300.00</em>
                 </div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <tr>
-                <td bgcolor="#5B9BD5" align="center">
-                    <form action="demo-form.php">
-                        请输入密码:
-                        <input type="text" name="password" placeholder="password">
-                        <br><br>
-                    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#payment">确认支付</button><br><br>
-                    <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="paymentLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="paymentLabel">支付信息</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>您已支付成功</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#!/onlinedetailers"><button align="center" class="btn btn-large btn-block" type="button">返回电商平台页面</button></a>
-                    </form>
-                </td>
-            </tr>
-        </tr>
-    </tbody>
-</table>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">商品</label>
+                    <span class="weui-form-preview__value">套餐一</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">标题标题</label>
+                    <span class="weui-form-preview__value"><span>300</span>元 0.3/升</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">卖家</label>
+                    <span class="weui-form-preview__value">天津依之纯环保科技有限责任公司、天津益升纯环保科技有限责任公司、天津恋纯环保科技有限责任公司</span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" ng-href="#!/onlinedetailers/password"><h4
+                >支付</h4></a>
+            </div>
+            <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers" id="showTooltips">返回</a>
+        </div>
+        <br><br>
+    <div class="page__bd page__bd_spacing">
+        <div class="weui-footer">
+            <p class="weui-footer__text">Copyright &copy; 2017 梦云智</p>
+        </div>
+    </div>
