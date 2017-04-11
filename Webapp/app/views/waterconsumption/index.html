@@ -1,13 +1,11 @@
 <article class="weui-article">
     <h1 align="center">
-        天津依之纯环保科技有限责任公司</p>天津益升纯环保科技有限责任公司</p>
-        天津恋纯环保科技有限责任公司</p>
+        用水情况
     </h1>
     <hr>
     <a ng-href="#!/waterconsumption/detail/1" class="weui-btn weui-btn_plain-primary">今日用水情况</a>
     <a ng-href="#!/waterconsumption/detail/2" class="weui-btn weui-btn_plain-primary">本周用水情况</a>
     <a ng-href="#!/waterconsumption/detail/3" class="weui-btn weui-btn_plain-primary">本月用水情况</a>
-    <a ng-href="" class="weui-btn weui-btn_default">用水情况</a>
     <a class="weui-btn weui-btn_primary" ng-href="#!/machine" id="showTooltips">返回</a>
     <br><br>
     <div class="page__bd page__bd_spacing">
@@ -16,78 +14,3 @@
         </div>
     </div>
 </article>
-
-<table align="center" class="table table-bordered table_main">
-    <thead>
-        <tr>
-            <th>
-                <div align="center">
-                    天津依之纯环保科技有限责任公司</p>天津益升纯环保科技有限责任公司</p>天津恋纯环保科技有限责任公司</p>
-                </div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    <div ng-app="webappApp" ng-controller="WaterconsumptionIndexCtrl">
-        <tr>
-            <tr>
-                <td bgcolor="#5B9BD5" align="center">
-                    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#todayConsumption">今日用水情况</button><br><br>
-                    <div class="modal fade" id="todayConsumption" tabindex="-1" role="dialog" aria-labelledby="todayConsumptionLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="todayConsumptionLabel">今日用水情况</h4>
-                                </div>
-                                <div class="modal-body">
-                                    2017年3月21日17时39分 20升
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#weekConsumption">本周用水情况</button><br><br>
-                    <div class="modal fade" id="weekConsumption" tabindex="-1" role="dialog" aria-labelledby="weekConsumptionLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="weekConsumptionLabel">本周用水情况</h4>
-                                </div>
-                                <div class="modal-body" ng-repeat="x in weeks">
-                                    <p>{{x.week}}：{{x.consumption}}升</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#monthConsumption">本月用水情况</button><br><br>
-                    <div class="modal fade" id="monthConsumption" tabindex="-1" role="dialog" aria-labelledby="monthConsumptionLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="monthConsumptionLabel">本月用水情况</h4>
-                                </div>
-                                <div class="modal-body" ng-repeat="x in months">
-                                    <p>{{x.day}}：{{x.consumption}}升</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button align="center" class="btn btn-large btn-block" type="button">水质情况</button><br>
-                    <a href="#!/machine"><button align="center" class="btn btn-large btn-block" type="button">返回上级页面</button></a>
-                </td>
-            </tr>
-        </tr>
-        </div>
-    </tbody>
-</table>
