@@ -9,9 +9,4 @@
  */
 angular.module('webappApp')
   .controller('PackageIndexCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
   });

@@ -8,5 +8,5 @@
  * Controller of the webappApp
  */
 angular.module('webappApp')
-  .controller('IndexIndexCtrl', function ($location) {
+  .controller('IndexIndexCtrl', function () {
   });

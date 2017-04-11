@@ -1,16 +1,15 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name webappApp.controller:WaterconsumptionDetailCtrl
+ * @ngdoc service
+ * @name webappApp.myService
  * @description
- * # WaterconsumptionDetailCtrl
- * Controller of the webappApp
+ * # myService
+ * Service in the webappApp.
  */
 angular.module('webappApp')
-    .controller('WaterconsumptionDetailCtrl', ['$routeParams', '$scope', function($routeParams, $scope) {
-        var id = $routeParams.id;
-        if (id === '1') {
+  .service('myService', function () {
+    	if (id === '1') {
             $scope.title = "今日用水情况";
             $scope.datas = [
                 [{
@@ -27,8 +26,10 @@ angular.module('webappApp')
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
-                [ {
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
                     quantity: "20升",
                     date: new Date()
                 }, {
@@ -38,17 +39,16 @@ angular.module('webappApp')
                 [{
                     quantity: "20升",
                     date: new Date()
-                }, 
-                {
-                    quantity: "20升",
-                    date: new Date()
-                }, ],
-                [{
+                }, {
                     quantity: "20升",
                     date: new Date()
                 },{
                     quantity: " ",
-                },]
+                },{
+                    quantity: " ",
+                },{
+                    quantity: " ",
+                }, ]
             ];
         } else {
             $scope.title = "本月用水情况";
@@ -59,111 +59,116 @@ angular.module('webappApp')
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, ],
                 [{
                     quantity: "20升",
                     date: new Date()
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, ],
                 [{
                     quantity: "20升",
                     date: new Date()
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, ],
                 [{
                     quantity: "20升",
                     date: new Date()
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, ],
                 [{
                     quantity: "20升",
                     date: new Date()
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, ],
                 [{
                     quantity: "20升",
                     date: new Date()
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
-                [{
+                }, {
                     quantity: "20升",
                     date: new Date()
                 }, {
                     quantity: "20升",
                     date: new Date()
-                },],
+                }, {
+                    quantity: "20升",
+                    date: new Date()
+                }, ],
                 [{
                     quantity: "20升",
                     date: new Date()
                 }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
-                }, {
-                    quantity: "20升",
-                    date: new Date()
-                },],
-                [{
-                    quantity: "20升",
-                    date: new Date()
+                    quantity: " ",
                 },{
                     quantity: " ",
-                },]
+                },{
+                    quantity: " ",
+                },{
+                    quantity: " ",
+                }, ]
             ];
         }
-    }]);
+        var getmyServiceById = function (Id, callback) {
+		callback(datas);
+	};
+    	return {
+    		getmyServiceById: function(Id, callback) {
+			getmyServiceById(Id, callback);
+		}
+    	};
+  });
