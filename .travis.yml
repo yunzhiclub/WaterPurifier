@@ -34,7 +34,7 @@ before_cache:
 script:
   - cd api
   - mvn clean
-  - mvn test
+  - mvn -U test
 
 # 声明缓存
 cache:
