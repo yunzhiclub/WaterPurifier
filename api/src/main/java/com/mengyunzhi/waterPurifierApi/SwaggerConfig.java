@@ -8,7 +8,7 @@ import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.spring.web.plugins.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.ant;
@@ -22,6 +22,7 @@ public class SwaggerConfig {
     @Bean
     public Docket restApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .host("http://www.mengyunzhi.cn:8000")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(Predicates.and(ant("/**"), Predicates.not(ant("/error")), Predicates.not(ant("/management/**")), Predicates.not(ant("/management*"))))
@@ -35,7 +36,7 @@ public class SwaggerConfig {
                 .contact(new Contact("河北工业大学 梦云智软件开发团队", "http://www.mengyunzhi.com", "panjie@yunzhiclub.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .version("1.0.0")
+                .version("0.0.1")
                 .build();
     }
 }

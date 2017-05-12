@@ -18,23 +18,23 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<!--阿里资源仓库地址-->
-	<repositories>
-		<repository>
-			<id>alimaven</id>
-			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>
+	<!--&lt;!&ndash;阿里资源仓库地址&ndash;&gt;-->
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<id>alimaven</id>-->
+			<!--<name>aliyun maven</name>-->
+			<!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
-	<!--阿里资源仓库插件地址-->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>alimaven</id>
-			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</pluginRepository>
-	</pluginRepositories>
+	<!--&lt;!&ndash;阿里资源仓库插件地址&ndash;&gt;-->
+	<!--<pluginRepositories>-->
+		<!--<pluginRepository>-->
+			<!--<id>alimaven</id>-->
+			<!--<name>aliyun maven</name>-->
+			<!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+		<!--</pluginRepository>-->
+	<!--</pluginRepositories>-->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
