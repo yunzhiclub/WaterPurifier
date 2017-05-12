@@ -1,11 +1,13 @@
 package com.mengyunzhi.waterPurifierApi;
 
 import com.google.common.base.Predicates;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.*;
@@ -25,7 +27,6 @@ public class SwaggerConfig {
                 .host("http://www.mengyunzhi.cn:8000")
                 .apiInfo(apiInfo())
                 .select()
-                .paths(Predicates.and(ant("/**"), Predicates.not(ant("/error")), Predicates.not(ant("/management/**")), Predicates.not(ant("/management*"))))
                 .build();
     }
 
