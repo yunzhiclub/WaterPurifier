@@ -35,7 +35,7 @@ script:
 cache:
   directories:
   - .autoconf
-  - $HOME/.m2
+  # - $HOME/.m2
 
 # 脚本执行成功后，进入文档文件夹，并强行push到项目的gh-page分支，生成项目文档
 after_success:
