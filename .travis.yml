@@ -31,7 +31,7 @@ before_install:
 script:
   - cd api
   # 当依赖发生错误时，使用以下语句清空依赖
-  - mvn clean install -U
+  # - mvn clean install -U
   - mvn test
 
 # 声明缓存
