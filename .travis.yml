@@ -24,6 +24,7 @@ notifications:
 
 # 执行脚本前创建数据库
 before_install:
+  - rm -rf "$HOME/.m2"
   - mysql -e 'CREATE DATABASE IF NOT EXISTS waterPurifier default charset utf8 COLLATE utf8_general_ci;' -uroot
 
 # 脚本
