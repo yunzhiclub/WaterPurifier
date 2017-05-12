@@ -24,12 +24,6 @@
             <id>jecenter</id>
             <name>jcenter maven</name>
             <url>http://jcenter.bintray.com</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
