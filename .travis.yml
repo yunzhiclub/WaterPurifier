@@ -24,7 +24,7 @@ notifications:
 
 # 执行脚本前创建数据库
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS measurement default charset utf8 COLLATE utf8_general_ci;' -uroot
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS waterPurifier default charset utf8 COLLATE utf8_general_ci;' -uroot
 
 # 脚本
 script:
@@ -35,7 +35,7 @@ script:
 cache:
   directories:
   - .autoconf
-  - $HOME/.m2
+  # - $HOME/.m2
 
 # 脚本执行成功后，进入文档文件夹，并强行push到项目的gh-page分支，生成项目文档
 after_success:
