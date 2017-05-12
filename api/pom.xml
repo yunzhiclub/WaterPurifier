@@ -18,23 +18,29 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<!--&lt;!&ndash;阿里资源仓库地址&ndash;&gt;-->
-	<!--<repositories>-->
-		<!--<repository>-->
-			<!--<id>alimaven</id>-->
-			<!--<name>aliyun maven</name>-->
-			<!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
-		<!--</repository>-->
-	<!--</repositories>-->
+	<!--jcenter仓库地址-->
+    <repositories>
+        <repository>
+            <id>jecenter</id>
+            <name>jcenter maven</name>
+            <url>http://jcenter.bintray.com</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-	<!--&lt;!&ndash;阿里资源仓库插件地址&ndash;&gt;-->
-	<!--<pluginRepositories>-->
-		<!--<pluginRepository>-->
-			<!--<id>alimaven</id>-->
-			<!--<name>aliyun maven</name>-->
-			<!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
-		<!--</pluginRepository>-->
-	<!--</pluginRepositories>-->
+    <!--jcenter仓库插件地址-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>jcenter maven</name>
+            <url>http://jcenter.bintray.com</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
