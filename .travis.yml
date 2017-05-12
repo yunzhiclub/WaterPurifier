@@ -1,4 +1,3 @@
-sudo: required
 # 声明使用语言
 language: java
 
@@ -31,7 +30,8 @@ before_install:
 # 脚本
 script:
   - cd api
-  - mvn clean install -U
+  # 当依赖发生错误时，使用以下语句清空依赖
+  # - mvn clean install -U 
   - mvn test
 
 # 声明缓存
