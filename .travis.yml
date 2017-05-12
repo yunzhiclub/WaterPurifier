@@ -29,6 +29,7 @@ before_install:
 # 脚本
 script:
   - cd api
+  - mvn clean
   - mvn test
 
 # 声明缓存
