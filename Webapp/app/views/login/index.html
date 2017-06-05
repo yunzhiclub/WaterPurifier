@@ -1,30 +1,14 @@
-<article class="weui-article">
-    <div class="weui-msg">
-        <div class="weui-msg__icon-area"><i class="weui-icon-info weui-icon_msg"></i></div>
-        <div class="weui-msg__text-area">
-            <h2 class="weui-msg__title">登录操作</h2>
-            <p class="weui-msg__desc">如果您同意登录，请输入机器号及相应的密码</p>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">净水器编号</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input type="password" class="weui-input" id="inputPassword3" placeholder="请输入编号">
         </div>
     </div>
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">机器号</label>
-            </div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="MachineID" placeholder="请输入机器号" />
-            </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">密码</label>
-            </div>
-            <div class="weui-cell__bd">
-                <input type="password" class="weui-input" id="inputPassword3" placeholder="请输入密码">
-            </div>
-        </div>
-    </div>
-    <br>
-    <a class="weui-btn weui-btn_primary" ng-href="#!/mainpage" id="showTooltips">确认登录</a>
+</div>
+<br>
+<a class="weui-btn weui-btn_primary" ng-href="#!/index" id="showTooltips">登录</a>
     
-</article>
+

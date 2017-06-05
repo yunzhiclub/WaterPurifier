@@ -1,12 +1,37 @@
-<article class="weui-article">
-    <h1 align="center">
-        商品名称：XXXXXXXX
-    </h1>
-    <hr>
-    <div class="page__bd page__bd_spacing" ng-app="webappApp" ng-controller="RechargeIndexCtrl">
+<!--     <div ng-app="webappApp" ng-controller="RechargeIndexCtrl">
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">净水器编号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input type="number" class="weui-input" id="inputPassword3" value="2322" disabled="disabled">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">充值金额</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">水量</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input type="text" class="weui-input" value="2322L" disabled="disabled">
+            </div>
+        </div>
+    </div>
+
         <div class="weui-flex" align="center">
             <div class="weui-flex__item">
-                <div class="placeholder">单价：{{price}} 元</div>
+                <div class="placeholder">金额{{price}} 元</div>
+            </div>
+            <div class="weui-cell__bd">
+                <input type="number" class="weui-input" id="inputPassword3" value="2322" disabled="disabled">
             </div>
         </div>
         <div class="weui-flex" align="center">
@@ -24,8 +49,7 @@
             </div>
         </div>
         <br>
-        <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers/payment" id="showTooltips">确认支付：{{ (quantity * price) }} 元</a>
-        <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers" id="showTooltips">返回</a>
+        <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers/payment" id="showTooltips">确认</a>
     </div>
     <br>
     <br>
@@ -33,5 +57,26 @@
         <div class="weui-footer">
             <p class="weui-footer__text">Copyright &copy; 2017 梦云智</p>
         </div>
+    </div> -->
+<div class="weui-cells weui-cells_form">
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label">净水器编号</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入编号">
     </div>
-</article>
+  </div>
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label">充值金额</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入充值金额(元)">
+    </div>
+  </div>
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label">水量</label></div>
+    <div class="weui-cell__bd">
+      100L
+    </div>
+  </div>
+  <br>
+  <a class="weui-btn weui-btn_primary" ng-href="#!/onlinedetailers/payment" id="showTooltips">确认</a>
+</div>
