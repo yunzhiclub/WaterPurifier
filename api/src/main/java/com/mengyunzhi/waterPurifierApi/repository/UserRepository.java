@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * Created by panjie on 17/5/12.
+ * UserRepository 用户实体仓库
  */
-@ApiModel("UserRepository 用户实体仓库")
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 }
