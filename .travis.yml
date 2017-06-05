@@ -1,0 +1,52 @@
+# 声明使用语言
+language: java
+
+# 声明JDK版本
+jdk:
+  - oraclejdk8
+
+# 声明使用的服务
+services:
+  - docker
+  - mysql
+
+# 指定使用软件的版本号
+addons:
+  apt:
+    packages:
+      - mysql-server-5.6
+      - mysql-client-core-5.6
+      - mysql-client-5.6
+
+# 设置通知方式
+notifications:
+  email: false
+
+# 执行脚本前创建数据库
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS waterPurifier default charset utf8 COLLATE utf8_general_ci;' -uroot
+
+
+# 脚本
+script:
+  - cd api
+  # 当依赖发生错误时，使用以下语句清空依赖
+  # - mvn clean install -U
+  - mvn test
+
+# 声明缓存
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+
+
+# 脚本执行成功后，进入文档文件夹，并强行push到项目的gh-page分支，生成项目文档
+after_success:
+  - cd target/asciidoc/html
+  - git init
+  - git config user.name "${GH_USER_NAME}"
+  - git config user.email "{GH_USER_EMAIL}"
+  - git add . ; git commit -m "Deploy to GitHub Pages"
+  - git status
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages

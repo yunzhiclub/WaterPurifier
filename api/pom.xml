@@ -18,23 +18,23 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<!--阿里资源仓库地址-->
-	<repositories>
-		<repository>
-			<id>alimaven</id>
-			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>
+	<!--jcenter仓库地址-->
+    <repositories>
+        <repository>
+            <id>jecenter</id>
+            <name>jcenter maven</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
 
-	<!--阿里资源仓库插件地址-->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>alimaven</id>
-			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</pluginRepository>
-	</pluginRepositories>
+    <!--jcenter仓库插件地址-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>jcenter maven</name>
+            <url>http://jcenter.bintray.com</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -136,18 +136,16 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.4.0</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.2.2</version>
+			<version>2.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-bean-validators</artifactId>
 			<version>2.4.0</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -159,30 +157,18 @@
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-jsonSchema</artifactId>
 			<version>2.6.5</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.github.robwin</groupId>
 			<artifactId>assertj-swagger</artifactId>
 			<version>0.2.0</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.github.swagger2markup</groupId>
 			<artifactId>swagger2markup-spring-restdocs-ext</artifactId>
 			<version>${swagger2markup.version}</version>
-			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-bean-validators</artifactId>
-			<version>RELEASE</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -334,15 +320,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>io.github.robwin.swagger2markup.petstore.Application</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
 			</plugin>
 
 			<!-- copy dependencies to the lib directory -->
@@ -363,6 +340,7 @@
 
 			<!-- copy the generated documents -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
 				<executions>
@@ -386,17 +364,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<delimiters>
-						<delimiter>@</delimiter>
-					</delimiters>
-					<useDefaultDelimiters>false</useDefaultDelimiters>
-				</configuration>
-			</plugin>
+
 		</plugins>
 	</build>
 
