@@ -1,14 +1,10 @@
 package com.mengyunzhi.waterPurifierApi.repository;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by panjie on 17/5/12.
@@ -22,37 +18,30 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @ApiModelProperty("姓名") private String name;
+    @ApiModelProperty("openId") private String openId;
+    @ApiModelProperty("昵称") private String name;
 
-    @ApiModelProperty("上级代理用户")
-    @ManyToOne @NotFound @JsonIgnore @JoinColumn(name = "pid")
-    private User parentUser;
-
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY) // 防止空json数组
-    @OneToMany(mappedBy = "parentUser", fetch = FetchType.EAGER)
-    private List<User> childUsers;
+    @ManyToOne
+    @ApiModelProperty("净水器")
+    private WaterPurifier waterPurifier;
 
     public User() {
     }
 
-    public User(String name, User parentUser, List<User> childUsers) {
+    public User(String openId, String name, WaterPurifier waterPurifier) {
+        this.openId = openId;
         this.name = name;
-        this.parentUser = parentUser;
-        this.childUsers = childUsers;
+        this.waterPurifier = waterPurifier;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "Id=" + Id +
+                ", openId='" + openId + '\'' +
                 ", name='" + name + '\'' +
-                ", parentUser=" + parentUser +
-                ", childUsers=" + childUsers +
+                ", waterPurifier=" + waterPurifier +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public Long getId() {
@@ -63,6 +52,14 @@ public class User implements Serializable {
         Id = id;
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
     public String getName() {
         return name;
     }
@@ -71,19 +68,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public User getParentUser() {
-        return parentUser;
+    public WaterPurifier getWaterPurifier() {
+        return waterPurifier;
     }
 
-    public void setParentUser(User parentUser) {
-        this.parentUser = parentUser;
-    }
-
-    public List<User> getChildUsers() {
-        return childUsers;
-    }
-
-    public void setChildUsers(List<User> childUsers) {
-        this.childUsers = childUsers;
+    public void setWaterPurifier(WaterPurifier waterPurifier) {
+        this.waterPurifier = waterPurifier;
     }
 }
