@@ -6,6 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 /**
  * Created by chuhang on 17-6-5.
  */
-@ApiModel("订单")
-public interface OrderRepository extends PagingAndSortingRepository<Customer, Long> {
+@ApiModel("订单实体")
+public interface OrderRepository extends PagingAndSortingRepository<Order, Long> {
 }
