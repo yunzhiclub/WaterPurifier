@@ -7,16 +7,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by chuhang on 17-6-5.
+ * Created by chuhang on 17-6-6.
  */
 @Entity
 @ApiModel("订单实体")
-public class Order implements Serializable{
+public class Bill implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
     @ApiModelProperty("充值金额（分）") private int rechargeAmount;
     @ApiModelProperty("充值水量（ml）") private int rechargeWaterQuantity;
@@ -33,7 +33,7 @@ public class Order implements Serializable{
     @ApiModelProperty("用户实体")
     private User user;
 
-    public Order(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
+    public Bill(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
         this.rechargeAmount = rechargeAmount;
         this.rechargeWaterQuantity = rechargeWaterQuantity;
         this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
@@ -44,13 +44,13 @@ public class Order implements Serializable{
         this.user = user;
     }
 
-    public Order() {
+    public Bill() {
     }
 
     @Override
     public String toString() {
-        return "Order{" +
-                "Id=" + Id +
+        return "Bill{" +
+                "id=" + id +
                 ", rechargeAmount=" + rechargeAmount +
                 ", rechargeWaterQuantity=" + rechargeWaterQuantity +
                 ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
@@ -63,11 +63,11 @@ public class Order implements Serializable{
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public int getRechargeAmount() {

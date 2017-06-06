@@ -3,18 +3,20 @@ package com.mengyunzhi.waterPurifierApi.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by chuhang on 17-6-6.
- * 订单仓库测试实体
+ * 订单实体仓库测试
  */
-public class OrderRepositoryTest extends RepositoryTest {
+public class BillRepositoryTest extends RepositoryTest {
     @Autowired
-    private OrderRepository orderRepository;
+    private BillRepository billRepository;
 
     @Test
     public void save() {
-        Order order = new Order();
-        orderRepository.save(order);
+        Bill bill = new Bill();
+        billRepository.save(bill);
     }
 
 }
