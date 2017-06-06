@@ -27,11 +27,11 @@ public class Bill implements Serializable {
 
     @ManyToOne
     @ApiModelProperty("饮水机实体")
-    private WaterPurifier waterPurifier;
+    private WaterPurifier waterPurifier = new WaterPurifier();
 
     @ManyToOne
     @ApiModelProperty("用户实体")
-    private User user;
+    private User user = new User();
 
     public Bill(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
         this.rechargeAmount = rechargeAmount;

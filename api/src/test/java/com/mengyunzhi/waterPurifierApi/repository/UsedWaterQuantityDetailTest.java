@@ -8,10 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by chuhang on 17-6-6.
+ * 用水量详情实体仓库测试
  */
 public class UsedWaterQuantityDetailTest extends RepositoryTest{
     private Logger logger = Logger.getLogger(UsedWaterQuantityDetailRepository.class.getName());
 
+    //用水量详情
     @Autowired
     private UsedWaterQuantityDetailRepository usedWaterQuantityDetailRepository;
 

@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * Created by chuhang on 17-6-5.
+ * 用水量详情实体
  */
 @Entity
 @ApiModel("用水量详情实体")
@@ -27,7 +28,7 @@ public class UsedWaterQuantityDetail implements Serializable {
 
     @ManyToOne
     @ApiModelProperty("净水器")
-    private WaterPurifier waterPurifier;
+    private WaterPurifier waterPurifier = new WaterPurifier();
 
     public UsedWaterQuantityDetail() {
     }

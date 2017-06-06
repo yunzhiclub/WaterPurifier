@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 /**
  * Created by panjie on 17/5/12.
+ * 净水器实体
  */
 @Entity
 @ApiModel("净水器实体")
@@ -19,7 +20,6 @@ public class WaterPurifier implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ApiModelProperty("编号") private int number;
     @ApiModelProperty("状态") private String status;
     @ApiModelProperty("类型")  private String type;
     @ApiModelProperty("最近更新时间")  private Long lastUpdateTime;
@@ -29,42 +29,12 @@ public class WaterPurifier implements Serializable{
     public WaterPurifier() {
     }
 
-    @Override
-    public String toString() {
-        return "WaterPurifier{" +
-                "id=" + id +
-                ", number=" + number +
-                ", status='" + status + '\'' +
-                ", type='" + type + '\'' +
-                ", lastUpdateTime=" + lastUpdateTime +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
-    }
-
-    public WaterPurifier(int number, String status, String type, Long lastUpdateTime, Long createTime, Long updateTime) {
-        this.number = number;
-        this.status = status;
-        this.type = type;
-        this.lastUpdateTime = lastUpdateTime;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public String getStatus() {
@@ -104,6 +74,26 @@ public class WaterPurifier implements Serializable{
     }
 
     public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "WaterPurifier{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
+                ", lastUpdateTime=" + lastUpdateTime +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
+    public WaterPurifier(String status, String type, Long lastUpdateTime, Long createTime, Long updateTime) {
+        this.status = status;
+        this.type = type;
+        this.lastUpdateTime = lastUpdateTime;
+        this.createTime = createTime;
         this.updateTime = updateTime;
     }
 }
