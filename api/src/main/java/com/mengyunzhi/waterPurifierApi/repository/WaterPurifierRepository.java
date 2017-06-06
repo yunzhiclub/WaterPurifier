@@ -6,6 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 /**
  * Created by panjie on 17/5/12.
  */
-@ApiModel("WaterPurifierRepository 净水机实体仓库")
+@ApiModel("净水器实体")
 public interface WaterPurifierRepository extends PagingAndSortingRepository<WaterPurifier, Long> {
 }
