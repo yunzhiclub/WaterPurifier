@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Created by panjie on 17/5/12.
  */
 @Entity
-@ApiModel("净水机")
+@ApiModel("净水器实体")
 public class WaterPurifier implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -19,27 +19,14 @@ public class WaterPurifier implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ApiModelProperty("编号") private Boolean number;
-    @ApiModelProperty("状态") private int status;
-    @ApiModelProperty("类型") @ManyToOne private Customer type;
-    @ApiModelProperty("最近更新时间") @ManyToOne private Customer lastUpdateTime;
-    @ApiModelProperty("创建时间") @ManyToOne private Customer createTime;
-    @ApiModelProperty("更新时间") @ManyToOne private Customer updateTime;
-    @ApiModelProperty("用户")
-    @ManyToOne
-    private User user;
+    @ApiModelProperty("编号") private int number;
+    @ApiModelProperty("状态") private String status;
+    @ApiModelProperty("类型")  private String type;
+    @ApiModelProperty("最近更新时间")  private Long lastUpdateTime;
+    @ApiModelProperty("创建时间")  private Long createTime;
+    @ApiModelProperty("更新时间")  private Long updateTime;
 
     public WaterPurifier() {
-    }
-
-    public WaterPurifier(Boolean number, int status, Customer type, Customer lastUpdateTime, Customer createTime, Customer updateTime, User user) {
-        this.number = number;
-        this.status = status;
-        this.type = type;
-        this.lastUpdateTime = lastUpdateTime;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.user = user;
     }
 
     @Override
@@ -47,13 +34,21 @@ public class WaterPurifier implements Serializable{
         return "WaterPurifier{" +
                 "id=" + id +
                 ", number=" + number +
-                ", status=" + status +
-                ", type=" + type +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
                 ", lastUpdateTime=" + lastUpdateTime +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                ", user=" + user +
                 '}';
+    }
+
+    public WaterPurifier(int number, String status, String type, Long lastUpdateTime, Long createTime, Long updateTime) {
+        this.number = number;
+        this.status = status;
+        this.type = type;
+        this.lastUpdateTime = lastUpdateTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     public Long getId() {
@@ -64,59 +59,51 @@ public class WaterPurifier implements Serializable{
         this.id = id;
     }
 
-    public Boolean getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(Boolean number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Customer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Customer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Customer getLastUpdateTime() {
+    public Long getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(Customer lastUpdateTime) {
+    public void setLastUpdateTime(Long lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public Customer getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Customer createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
-    public Customer getUpdateTime() {
+    public Long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Customer updateTime) {
+    public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
