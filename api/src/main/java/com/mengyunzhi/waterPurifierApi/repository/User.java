@@ -16,48 +16,38 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
-    @ApiModelProperty("openId") private String openId;
-    @ApiModelProperty("昵称") private String name;
+    @ApiModelProperty("姓名") private String name;
+    @ApiModelProperty("用户名") private String username;
+    @ApiModelProperty("密码") private String password;
 
-    @ManyToOne
-    @ApiModelProperty("净水器")
-    private WaterPurifier waterPurifier;
 
     public User() {
     }
 
-    public User(String openId, String name, WaterPurifier waterPurifier) {
-        this.openId = openId;
+    public User(String name, String username, String password) {
         this.name = name;
-        this.waterPurifier = waterPurifier;
+        this.username = username;
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
-                ", openId='" + openId + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
-                ", waterPurifier=" + waterPurifier +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
+        this.id = id;
     }
 
     public String getName() {
@@ -68,11 +58,19 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public WaterPurifier getWaterPurifier() {
-        return waterPurifier;
+    public String getUsername() {
+        return username;
     }
 
-    public void setWaterPurifier(WaterPurifier waterPurifier) {
-        this.waterPurifier = waterPurifier;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
