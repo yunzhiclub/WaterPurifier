@@ -18,7 +18,6 @@ public class Order implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @ApiModelProperty("订单编号") private Long number;
     @ApiModelProperty("充值金额（分）") private int rechargeAmount;
     @ApiModelProperty("充值水量（ml）") private int rechargeWaterQuantity;
     @ApiModelProperty("已冲值到机器") private Boolean isRechargeToWaterPurifier;
@@ -34,20 +33,41 @@ public class Order implements Serializable{
     @ApiModelProperty("用户实体")
     private User user;
 
+    public Order(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
+        this.rechargeAmount = rechargeAmount;
+        this.rechargeWaterQuantity = rechargeWaterQuantity;
+        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
+        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.waterPurifier = waterPurifier;
+        this.user = user;
+    }
+
+    public Order() {
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "Id=" + Id +
+                ", rechargeAmount=" + rechargeAmount +
+                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
+                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
+                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", waterPurifier=" + waterPurifier +
+                ", user=" + user +
+                '}';
+    }
+
     public Long getId() {
         return Id;
     }
 
     public void setId(Long id) {
         Id = id;
-    }
-
-    public Long getNumber() {
-        return number;
-    }
-
-    public void setNumber(Long number) {
-        this.number = number;
     }
 
     public int getRechargeAmount() {
@@ -112,37 +132,5 @@ public class Order implements Serializable{
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "Id=" + Id +
-                ", number=" + number +
-                ", rechargeAmount=" + rechargeAmount +
-                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
-                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
-                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", waterPurifier=" + waterPurifier +
-                ", user=" + user +
-                '}';
-    }
-
-    public Order(Long number, int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
-        this.number = number;
-        this.rechargeAmount = rechargeAmount;
-        this.rechargeWaterQuantity = rechargeWaterQuantity;
-        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
-        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.waterPurifier = waterPurifier;
-        this.user = user;
-    }
-
-    public Order() {
-
     }
 }
