@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 /**
  * Created by chuhang on 17-6-7.
+ * 用水量详情控制器测试
  */
 public class UsedWaterQuantityDetailControllerTest extends ControllerTest {
     @Test
