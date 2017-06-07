@@ -8,9 +8,10 @@ import java.io.Serializable;
 
 /**
  * Created by panjie on 17/5/12.
+ * 用户实体
  */
 @Entity
-@ApiModel("用户")
+@ApiModel("用户实体")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 

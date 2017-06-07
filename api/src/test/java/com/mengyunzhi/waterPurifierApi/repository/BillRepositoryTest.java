@@ -11,8 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 订单实体仓库测试
  */
 public class BillRepositoryTest extends RepositoryTest {
-    private Logger logger = Logger.getLogger(UserRepositoryTest.class.getName());
+    private Logger logger = Logger.getLogger(BillRepositoryTest.class.getName());
 
+    //订单实体仓库
     @Autowired
     private BillRepository billRepository;
 

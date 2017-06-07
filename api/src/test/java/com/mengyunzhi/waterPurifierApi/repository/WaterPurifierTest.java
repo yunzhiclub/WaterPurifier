@@ -10,8 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by chuhang on 17-6-6.
  */
 public class WaterPurifierTest extends RepositoryTest{
-    private Logger logger = Logger.getLogger(UserRepositoryTest.class.getName());
+    private Logger logger = Logger.getLogger(WaterPurifierRepository.class.getName());
 
+    //净水器实体仓库
     @Autowired
     private WaterPurifierRepository waterPurifierRepository;
 

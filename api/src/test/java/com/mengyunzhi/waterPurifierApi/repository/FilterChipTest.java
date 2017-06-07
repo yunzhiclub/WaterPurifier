@@ -8,10 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by chuhang on 17-6-6.
+ *滤芯实体测试
  */
 public class FilterChipTest extends RepositoryTest{
     private Logger logger = Logger.getLogger(FilterChipRepository.class.getName());
 
+    //滤芯实体仓库
     @Autowired
     private FilterChipRepository filterChipRepository;
 
