@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * Created by chuhang on 17-6-6.
+ * 订单实体
  */
 @Entity
 @ApiModel("订单实体")

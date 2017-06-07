@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @ApiModel("净水器实体")
-public class WaterPurifier implements Serializable{
+public class WaterPurifier implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
