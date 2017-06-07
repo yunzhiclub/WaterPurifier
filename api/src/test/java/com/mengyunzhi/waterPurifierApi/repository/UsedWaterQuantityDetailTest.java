@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UsedWaterQuantityDetailTest extends RepositoryTest{
     private Logger logger = Logger.getLogger(UsedWaterQuantityDetailRepository.class.getName());
 
-    //用水量详情
+    //用水量详情实体仓库
     @Autowired
     private UsedWaterQuantityDetailRepository usedWaterQuantityDetailRepository;
 

@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FilterChipTest extends RepositoryTest{
     private Logger logger = Logger.getLogger(FilterChipRepository.class.getName());
 
+    //滤芯实体仓库
     @Autowired
     private FilterChipRepository filterChipRepository;
 

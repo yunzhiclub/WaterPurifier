@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
  * Created by panjie on 17/5/12.
  */
 public class WaterPurifierRepositoryTest extends RepositoryTest{
+    //净水器实体仓库
     @Autowired
     private WaterPurifierRepository waterPurifierRepository;
 

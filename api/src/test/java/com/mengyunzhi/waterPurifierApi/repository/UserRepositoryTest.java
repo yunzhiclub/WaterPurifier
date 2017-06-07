@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserRepositoryTest extends RepositoryTest {
     private Logger logger = Logger.getLogger(UserRepositoryTest.class.getName());
 
+    //用户仓库
     @Autowired
     private UserRepository userRepository;
 
