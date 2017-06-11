@@ -1,0 +1,50 @@
+<!--index.wxml-->
+<view class="page">
+	<swiper indicator-dots="{{indicatorDots}}"
+	  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+	  <block wx:for="{{imgUrls}}">
+	    <swiper-item>
+	      <image src="/style/images/1.jpg" class="slide-image image-width" height="150"/>
+	    </swiper-item>
+	  </block>
+	</swiper>
+	<view class="page__bd">
+        <view class="weui-cells__title title">用水量</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">今日用水量</view>
+                <view class="weui-cell__ft">100L</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">剩余用水量</view>
+                <view class="weui-cell__ft">1000L</view>
+            </view>
+        </view>
+        <view class="weui-cells__title title">水质状态</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">剩余滤芯</view>
+                <view class="weui-cell__ft">
+                	<view class="weui-badge badge-general" style="margin-left: 5px;">80%</view>
+                </view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">净水前水质状态</view>
+                <view class="weui-cell__ft">
+                	<view class="weui-badge badge-bad" style="margin-left: 5px;">75%</view>
+                </view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">净水前水质状态</view>
+                <view class="weui-cell__ft">
+                	<view class="weui-badge badge-good" style="margin-left: 5px;">90%</view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-cells__title title">最近一周用水量</view>
+        <view class="container">
+            <canvas canvas-id="areaCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+        </view>
+        
+    </view>
+</view>

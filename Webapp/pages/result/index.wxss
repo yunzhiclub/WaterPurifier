@@ -1,0 +1,59 @@
+icon{
+    margin-right: 13px;
+}
+.page__bd {
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: left;
+}
+.page__title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.page__desc {
+    margin-top: 5px;
+    color: #888888;
+    text-align: left;
+    font-size: 14px;
+}
+.icon-box{
+    display: flex;
+    align-items: center;
+}
+.icon-box__ctn{
+    flex-shrink: 100;
+}
+.icon-box__title{
+    font-size: 20px;
+}
+.icon-box__desc{
+    margin-top: 6px;
+    font-size: 12px;
+    color: #888888;
+}
+.icon_sp_area {
+    margin-top: 10px;
+    text-align: left;
+}
+
+
+.icon-center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100rpx;
+}
+.title {
+	text-align: center;
+	color: #09BB07;
+}
+.desc-center {
+	text-align: center;
+}
+.title-money {
+	font-size: 30px;
+	text-align: center;
+	margin-top: 10rpx;
+}

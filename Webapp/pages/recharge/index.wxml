@@ -1,0 +1,35 @@
+<!--index.wxml-->
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+ 
+    <view class="page__bd">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">净水器编号</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" value="2332" />
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">充值金额</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="bindKeyInput" placeholder="请输入充值金额（元）" />
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">水量</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" value="{{inputValue}}L" />
+                </view>
+            </view>
+        </view>
+        <view class="weui-btn-area" bindtap="resultTap">
+            <button class="weui-btn" type="primary" bindtap="showTopTips">微信支付</button>
+        </view>
+    </view>
+</view>
