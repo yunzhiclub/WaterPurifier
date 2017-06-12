@@ -21,13 +21,6 @@ public class UsedWaterQuantityDetailController {
     @Autowired
     private UsedWaterQuantityDetailRepository usedWaterQuantityDetailRepository;
 
-    //TODO add方法是否像之前的用于重定向页面，怎么做与净水机的借口?这个不是保存方法做的么？不理解.暂时理解为AccessDetail中的sendDetail方法实现的功能
-    @ApiOperation(value = "add 添加用水量的详情", nickname = "UsedWaterQuantityDetail_add")
-    @RequestMapping("/add")
-    public void add() {
-        return;
-    }
-
     @ApiOperation(value = "save 保存用水量的详情", nickname = "UsedWaterQuantityDetail_save")
     @PostMapping("/save")
     public UsedWaterQuantityDetail save(@RequestBody UsedWaterQuantityDetail usedWaterQuantityDetail) {
