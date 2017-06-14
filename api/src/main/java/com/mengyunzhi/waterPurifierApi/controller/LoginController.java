@@ -1,7 +1,10 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
+import com.mengyunzhi.waterPurifierApi.service.LoginService;
 import io.swagger.annotations.*;
+import io.swagger.util.Json;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
@@ -16,11 +19,19 @@ import java.util.logging.Logger;
 public class LoginController {
     private static Logger logger = Logger.getLogger(WaterPurifierController.class.getName());
 
+    @Autowired
+    private LoginService loginService;
+
     @ApiOperation(value = "login 判断是否为用户发出的请求", nickname = "Login_login")
-    @PostMapping("/login")
-    public String login(@ApiParam(value = "登录") @RequestBody UserLoginInfo userLoginInfo) {
-        logger.info("---- 验证邓丽君信息是否合法 -----");
-        return "test";
+    @GetMapping("/login")
+    public String login(@ApiParam(value = "登录") @RequestParam("id") Long id, @RequestParam("timestamp") String timestamp, @RequestParam("randomString") String randomString, @RequestParam("encryptionInfo") String encryptionInfo) {
+        logger.info("---- 验证登录信息是否合法 -----");
+        //对获取的参数进行sha1加密，对请求的信息进行验证
+        if (loginService.isTrue(id, timestamp, randomString, encryptionInfo)) {
+            return "success";
+        }
+
+        return "error";
     }
 
     @ApiModel("UserRequestInfo 用户登录信息")
