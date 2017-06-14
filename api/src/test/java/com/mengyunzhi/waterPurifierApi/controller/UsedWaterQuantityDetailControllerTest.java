@@ -16,10 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
  * 用水量详情控制器测试
  */
 public class UsedWaterQuantityDetailControllerTest extends ControllerTest {
-    @Test
-    public void add() throws Exception {
-        return;
-    }
 
     @Test
     public void save() throws Exception {
