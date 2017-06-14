@@ -9,20 +9,26 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "XXX净水器公司",
+    "navigationBarTitleText": "天津依之纯科技有限公司",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "list": [
       {
+        "selectedIconPath": "style/images/4.png",
+        "iconPath": "style/images/4.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
+        "selectedIconPath": "style/images/6.png",
+        "iconPath": "style/images/6.png",
         "pagePath": "pages/login/index",
-        "text": "我的净水器"
+        "text": "切换"
       },
       {
+        "selectedIconPath": "style/images/5.png",
+        "iconPath": "style/images/5.png",
         "pagePath": "pages/recharge/index",
         "text": "点我充值"
       }

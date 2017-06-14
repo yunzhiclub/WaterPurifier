@@ -4,6 +4,7 @@ import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.service.LoginService;
 import io.swagger.annotations.*;
 import io.swagger.util.Json;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,11 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@ApiParam(value = "登录") @RequestParam("id") Long id, @RequestParam("timestamp") String timestamp, @RequestParam("randomString") String randomString, @RequestParam("encryptionInfo") String encryptionInfo) {
         logger.info("---- 验证登录信息是否合法 -----");
+        UserLoginInfo userLoginInfo = new UserLoginInfo();
+        userLoginInfo.setId(id);
+        userLoginInfo.setEncryptionInfo(encryptionInfo);
+        userLoginInfo.setRandomString(randomString);
+        userLoginInfo.setTimestamp(timestamp);
         //对获取的参数进行sha1加密，对请求的信息进行验证
         if (loginService.isTrue(id, timestamp, randomString, encryptionInfo)) {
             return "success";
@@ -41,11 +47,11 @@ public class LoginController {
         @ApiModelProperty("加密信息")
         private String encryptionInfo;
 
-        public UserLoginInfo() {
-        }
+        private String timestamp;
+
+        private String randomString;
 
         public Long getId() {
-
             return id;
         }
 
@@ -59,6 +65,26 @@ public class LoginController {
 
         public void setEncryptionInfo(String encryptionInfo) {
             this.encryptionInfo = encryptionInfo;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getRandomString() {
+            return randomString;
+        }
+
+        public void setRandomString(String randomString) {
+            this.randomString = randomString;
+        }
+
+        public UserLoginInfo() {
+
         }
     }
 }

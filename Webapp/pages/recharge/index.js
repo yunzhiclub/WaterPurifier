@@ -8,11 +8,11 @@ Page({
       focus: false,
       inputValue: ''
   },
-  bindKeyInput: function(e) {
-      this.setData({
-        inputValue: e.detail.value * 10
-      })
-    },
+  rechageInput: function(e) {
+    this.setData({
+      waterValue: e.detail.value * 10
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

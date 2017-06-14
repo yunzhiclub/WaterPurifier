@@ -24,10 +24,10 @@ public class LoginControllerTest extends ControllerTest {
         //测试login方法
         this.mockMvc.perform(get("/Login/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id","343")
-                .param("timestamp", "143423232")
-                .param("randomString","fsjldflsdfjsld2gvfd")
-                .param("encryptionInfo", "fsdfsdfssdfsdfsdf23cdf"))
+                .param("id","23")
+                .param("timestamp", "1497457292548")
+                .param("randomString","unzdtggyopn1fl7sx68b8olxr")
+                .param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
                 .andDo(print())
                 .andDo(document("Login_login", preprocessResponse(prettyPrint())));
 

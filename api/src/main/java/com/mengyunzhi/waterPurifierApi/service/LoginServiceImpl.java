@@ -40,10 +40,7 @@ public class LoginServiceImpl implements LoginService {
         //拼接字符串
         String spliceString = id + timestamp + randomString + "mengyunzhi";
         //对拼接的字符串进行sha1加密，判断是否等于encryptionInfo
-        System.out.println(spliceString);
-        System.out.println(encryptionInfo);
-        System.out.println(this.sha1(spliceString));
-        if (this.sha1(spliceString) == encryptionInfo) {
+        if (this.sha1(spliceString).equals(encryptionInfo)) {
             return true;
         }
         return false;

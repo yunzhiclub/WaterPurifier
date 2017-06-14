@@ -33,10 +33,10 @@ Page({
             categories: ['02-20', '02-21', '02-22', '02-23', '02-24', '02-25'],
             animation: true,
             series: [{
-                name: '用水量',
+                name: '用水量(升)',
                 data: [32, 45, 45, 56, 33, 34],
                 format: function (val) {
-                    return val.toFixed(2) + '升';
+                    return val.toFixed(2) + '';
                 }
             }],
             yAxis: {
