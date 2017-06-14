@@ -1,9 +1,7 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
@@ -20,7 +18,36 @@ public class LoginController {
 
     @ApiOperation(value = "login 判断是否为用户发出的请求", nickname = "Login_login")
     @PostMapping("/login")
-    public void get(@ApiParam(value = "登录") @RequestBody RequestInfo requestInfo) {
+    public String login(@ApiParam(value = "登录") @RequestBody UserLoginInfo userLoginInfo) {
         logger.info("---- 验证邓丽君信息是否合法 -----");
+        return "test";
+    }
+
+    @ApiModel("UserRequestInfo 用户登录信息")
+    private static class UserLoginInfo {
+        @ApiModelProperty("饮水机ID")
+        private Long id;
+        @ApiModelProperty("加密信息")
+        private String encryptionInfo;
+
+        public UserLoginInfo() {
+        }
+
+        public Long getId() {
+
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getEncryptionInfo() {
+            return encryptionInfo;
+        }
+
+        public void setEncryptionInfo(String encryptionInfo) {
+            this.encryptionInfo = encryptionInfo;
+        }
     }
 }
