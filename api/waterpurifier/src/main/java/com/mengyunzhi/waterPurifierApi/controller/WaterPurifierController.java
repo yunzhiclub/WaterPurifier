@@ -29,4 +29,5 @@ public class WaterPurifierController {
         logger.info("---- 获取净水器实体信息 -----");
         return waterPurifierRepository.findOne(id);
     }
+
 }
