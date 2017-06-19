@@ -9,18 +9,18 @@
 	  </block>
 	</swiper>
 	<view class="page__bd">
-        <view class="weui-cells__title title">用水量</view>
+        <view class="weui-cells__title">用水量</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">今日用水量</view>
-                <view class="weui-cell__ft">100L</view>
+                <view class="weui-cell__ft">100,000mL</view>
             </view>
             <view class="weui-cell">
                 <view class="weui-cell__bd">剩余用水量</view>
-                <view class="weui-cell__ft">1000L</view>
+                <view class="weui-cell__ft">1000,000mL</view>
             </view>
         </view>
-        <view class="weui-cells__title title">水质状态</view>
+        <view class="weui-cells__title">水质状态</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">剩余滤芯</view>
@@ -35,13 +35,13 @@
                 </view>
             </view>
             <view class="weui-cell">
-                <view class="weui-cell__bd">净水前水质状态</view>
+                <view class="weui-cell__bd">净水后水质状态</view>
                 <view class="weui-cell__ft">
                 	<view class="weui-badge badge-good" style="margin-left: 5px;">90%</view>
                 </view>
             </view>
         </view>
-        <view class="weui-cells__title title">最近一周用水量</view>
+        <view class="weui-cells__title title" style="text-align:center">最近一周用水量</view>
         <view class="container">
             <canvas canvas-id="areaCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
         </view>

@@ -13,18 +13,18 @@
             </view>
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">充值金额</view>
+                    <view class="weui-label">充值金额(元)</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" bindinput="bindKeyInput" placeholder="请输入充值金额（元）" />
+                    <input class="weui-input" type="number" min="0" bindinput="rechageInput" />
                 </view>
             </view>
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">水量</view>
+                    <view class="weui-label">水量(升)</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" value="{{inputValue}}L" />
+                    <input class="weui-input" type="number" min="0" value="{{waterValue}}" />
                 </view>
             </view>
         </view>
