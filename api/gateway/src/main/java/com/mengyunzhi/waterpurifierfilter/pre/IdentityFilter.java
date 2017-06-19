@@ -36,6 +36,7 @@ public class IdentityFilter extends ZuulFilter {
 
     @Override
     public Object run() {
+        // 获取请求
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         //获取参数信息，并进行验证
@@ -43,7 +44,7 @@ public class IdentityFilter extends ZuulFilter {
         String timestamp = request.getParameter("timestamp");
         String randomString = request.getParameter("randomString");
         String encryptionInfo = request.getParameter("encryptionInfo");
-        //ctx.setSendZuulResponse(false);
+        // 验证信息是否为我们的客户发送的，若不是，拦截
         if (!identityFilterService.isTrue(id, timestamp, randomString, encryptionInfo)) {
             ctx.setSendZuulResponse(false);
         }

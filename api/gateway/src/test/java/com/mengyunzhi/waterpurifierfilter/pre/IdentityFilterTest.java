@@ -18,17 +18,17 @@ public class IdentityFilterTest {
     @Autowired
     protected MockMvc mockMvc;
 
-    @Test
-    public void login() throws Exception {
-        //测试login方法
-        this.mockMvc.perform(get("/Login/login")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id","23")
-                .param("timestamp", "1497457292548")
-                .param("randomString","unzdtggyopn1fl7sx68b8olxr")
-                .param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
-                .andDo(print());
-
-        return;
-    }
+//    @Test
+//    public void run() throws Exception {
+//        //测试过滤方法是否生效
+//        this.mockMvc.perform(get("WaterPurifier/test")
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+//                .param("id","23")
+//                .param("timestamp", "1497457292548")
+//                .param("randomString","unzdtggyopn1fl7sx68b8olxr")
+//                .param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
+//                .andDo(print());
+//
+//        return;
+//    }
 }
