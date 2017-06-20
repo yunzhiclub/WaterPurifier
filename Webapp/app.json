@@ -15,20 +15,20 @@
   "tabBar": {
     "list": [
       {
-        "selectedIconPath": "style/images/4.png",
-        "iconPath": "style/images/4.png",
+        "selectedIconPath": "style/images/8.png",
+        "iconPath": "style/images/7.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "style/images/6.png",
-        "iconPath": "style/images/6.png",
+        "selectedIconPath": "style/images/11.png",
+        "iconPath": "style/images/12.png",
         "pagePath": "pages/login/index",
         "text": "切换"
       },
       {
-        "selectedIconPath": "style/images/5.png",
-        "iconPath": "style/images/5.png",
+        "selectedIconPath": "style/images/9.png",
+        "iconPath": "style/images/10.png",
         "pagePath": "pages/recharge/index",
         "text": "点我充值"
       }
