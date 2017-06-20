@@ -23,11 +23,11 @@ public class WaterPurifierController {
     private WaterPurifierRepository waterPurifierRepository;
 
     //TODO根据净水器编号获取今日用水量、剩余用水量、剩余滤芯、净水前水质状态、净水后水质转台、最近一周用水量、
-    @ApiOperation(value = "get 获取净水器信息", nickname = "WaterPurifier_save")
-    @GetMapping("/{id}")
-    public WaterPurifier get(@ApiParam(value = "净水器编号") @PathVariable Long id) {
+    @ApiOperation(value = "get 获取净水器信息", nickname = "WaterPurifier_")
+    @GetMapping("/")
+    public String get(@ApiParam(value = "净水器编号") @RequestParam("id") String id) {
         logger.info("---- 获取净水器实体信息 -----");
-        return waterPurifierRepository.findOne(id);
+        return id;
     }
 
 }
