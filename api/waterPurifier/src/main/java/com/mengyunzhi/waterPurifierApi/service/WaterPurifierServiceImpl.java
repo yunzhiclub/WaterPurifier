@@ -4,6 +4,7 @@ import com.mengyunzhi.waterPurifierApi.controller.WaterPurifierController.WaterP
 import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetail;
 import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetailRepository;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class WaterPurifierServiceImpl implements WaterPurifierService {
+    private Logger logger = Logger.getLogger(WaterPurifierServiceImpl.class.getName());
+
     @Autowired
     private UsedWaterQuantityDetailRepository usedWaterQuantityDetailRepository;
 
@@ -39,7 +42,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
         String currentDate = this.getCurrentDate();
         WaterPurifier waterPurifier = new WaterPurifier();
         usedWaterQuantityDetailRepository.findAllByWaterPurifier(waterPurifier);
-        //List<UsedWaterQuantityDetail> list = new ArrayList<>();
+        List<UsedWaterQuantityDetail> list = new ArrayList<>();
         return 0;
     }
 
@@ -48,6 +51,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
      * 获取当前日期
      * @return
      */
+    @Override
      public String getCurrentDate(){
          //获取当前时间戳
          long time = System.currentTimeMillis();
@@ -63,9 +67,19 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
      * @param timestamp     时间戳
      * @return
      */
+    @Override
      public String convertTimestampToDate(String timestamp) {
          String format = "yyyy-MM-dd";
          SimpleDateFormat date = new SimpleDateFormat(format);
          return date.format(new Date(Long.valueOf(timestamp+"000")));
      }
+
+//    @Override
+//    public int[] getTimestampMaxAndMixByDate(String currentDate) {
+//        logger.info(currentDate);
+//
+//        return new int[0];
+//    }
+
+
 }

@@ -15,5 +15,7 @@ public interface WaterPurifierService {
     String getCurrentDate();
     //根据时间戳转化为当前日期
     String convertTimestampToDate(String timestamp);
+    //根据日期获取对应时间戳最大最小值
+    //int[] getTimestampMaxAndMixByDate(String currentDate);
 
 }
