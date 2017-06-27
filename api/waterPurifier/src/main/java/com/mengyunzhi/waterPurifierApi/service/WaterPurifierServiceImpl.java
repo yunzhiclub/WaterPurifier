@@ -1,13 +1,12 @@
 package com.mengyunzhi.waterPurifierApi.service;
 
 import com.mengyunzhi.waterPurifierApi.controller.WaterPurifierController.WaterPurifierOutput;
-import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetail;
-import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetailRepository;
-import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
+import com.mengyunzhi.waterPurifierApi.repository.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,17 +18,35 @@ import java.util.List;
 @Service
 public class WaterPurifierServiceImpl implements WaterPurifierService {
     private Logger logger = Logger.getLogger(WaterPurifierServiceImpl.class.getName());
-
     @Autowired
     private UsedWaterQuantityDetailRepository usedWaterQuantityDetailRepository;
+    @Autowired
+    private WaterPurifierRepository waterPurifierRepository;
+    @Autowired
+    private WaterPurifierService waterPurifierService;
+    @Autowired
+    private FilterChipRepository filterChipRepository;
 
     @Override
     public WaterPurifierOutput getRelateInfoById(Long id) {
         //实例化对象
         WaterPurifierOutput waterPurifierOutput = new WaterPurifierOutput();
+        //净水器编号
+        waterPurifierOutput.setId(id);
         //今日用水量
-        waterPurifierOutput.todayUsedWater = this.getTodayUsedWaterById(id);
-        return null;
+        waterPurifierOutput.setTodayUsedWater(waterPurifierService.getTodayUsedWaterById(id));
+        //剩余用水量
+        waterPurifierOutput.setLastUsedWater(this.getLastUsedWaterById(id));
+        //Todo剩余滤芯（怎么算）
+        waterPurifierOutput.setLastFilterChip(70);
+        //净水前水质状态
+        waterPurifierOutput.setUsedBeforeWaterQuality(this.getUsedBeforeWaterQualityById(id));
+        //净水后水质状态
+        waterPurifierOutput.setUsedAfterWaterQuality(this.getUsedAfterWaterQualityById(id));
+        //最近一周用水量
+
+
+        return waterPurifierOutput;
     }
 
     /**
@@ -39,11 +56,9 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
      */
     @Override
     public int getTodayUsedWaterById(Long id) {
+        //获取当前日期
         String currentDate = this.getCurrentDate();
-        WaterPurifier waterPurifier = new WaterPurifier();
-        usedWaterQuantityDetailRepository.findAllByWaterPurifier(waterPurifier);
-        List<UsedWaterQuantityDetail> list = new ArrayList<>();
-        return 0;
+        return this.getUsedWaterByDate(currentDate);
     }
 
 
@@ -74,12 +89,98 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
          return date.format(new Date(Long.valueOf(timestamp+"000")));
      }
 
-//    @Override
-//    public int[] getTimestampMaxAndMixByDate(String currentDate) {
-//        logger.info(currentDate);
-//
-//        return new int[0];
-//    }
+    @Override
+    public void save() {
+        long time = System.currentTimeMillis();
+        Long timestamp = Long.valueOf(time/1000);
+
+        WaterPurifier waterPurifier = new WaterPurifier();
+        waterPurifier.setId(23L);
+        waterPurifier.setCreateTime(timestamp);
+        waterPurifierRepository.save(waterPurifier);
+
+        //测试用水量详情
+        UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
+        usedWaterQuantityDetail.setUsedWaterQuantity(12);
+        usedWaterQuantityDetail.setCreateTime(timestamp);
+        usedWaterQuantityDetail.setWaterPurifier(waterPurifier);
+        usedWaterQuantityDetail.setUsedAfterWaterQuality(20);
+        usedWaterQuantityDetail.setUsedBeforeWaterQuality(2210);
+        usedWaterQuantityDetailRepository.save(usedWaterQuantityDetail);
+
+//        //测试滤芯实体，获取客用水量
+//        FilterChip filterChip = new FilterChip();
+//        filterChip.setAvailableWaterQuantity(1000);
+//        filterChip.setWaterPurifier(waterPurifier);
+//        filterChip.setCreateTime(timestamp);
+//        filterChipRepository.save(filterChip);
+
+
+    }
+
+    //根据净水器编号获取最后一次安装的滤芯
+    @Override
+    public int getLastUsedWaterById(Long id) {
+        FilterChip filterChip = filterChipRepository.findTopByWaterPurifierIdOrderByInstallTimeDesc(id);
+        return filterChip.getAvailableWaterQuantity();
+    }
+
+    //根据净水器编号获取最近一次的用水前水质
+    @Override
+    public int getUsedBeforeWaterQualityById(Long id) {
+        UsedWaterQuantityDetail usedWaterQuantityDetail = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(id);
+        return usedWaterQuantityDetail.getUsedBeforeWaterQuality();
+    }
+
+    //根据净水器编号获取最近一次的用水后水质
+    @Override
+    public int getUsedAfterWaterQualityById(Long id) {
+        UsedWaterQuantityDetail usedWaterQuantityDetail = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(id);
+        return usedWaterQuantityDetail.getUsedAfterWaterQuality();
+    }
+
+    //根据日期获取今日用水量
+    @Override
+    public int getUsedWaterByDate(String date) {
+        //获取当天最小、最大时间戳
+        Long[] timestamp = this.getTimestampByDate(date);
+
+        //获取今日用水记录
+        List<UsedWaterQuantityDetail> lists = new ArrayList<>();
+        lists = (List<UsedWaterQuantityDetail>)usedWaterQuantityDetailRepository.findAllByCreateTimeBetween(timestamp[0], timestamp[1]);
+
+        //将今日每次用水量累加起来
+        List<Integer> todayUsedWater = new ArrayList<>();
+        lists.forEach(list->{
+            todayUsedWater.add(list.getUsedWaterQuantity());
+        });
+        return todayUsedWater.stream().mapToInt(Integer::intValue).sum();
+    }
+
+    //获取一天中最小、最大时间戳
+    @Override
+    public Long[] getTimestampByDate(String date) {
+        // 定义数组
+        Long[] timestamp = new Long[2];
+        // 捕捉parse语句产生的异常，
+        try {
+            SimpleDateFormat format =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+            //获取一天中最早的时间戳
+            String timeEarliest = date + " 00:00:00";
+            Date timeEarliestFormat = format.parse(timeEarliest);
+            timestamp[0] = timeEarliestFormat.getTime()/1000;
+
+            //获取一天中最晚的时间戳
+            String timeLatest = date + " 23:59:59";
+            Date timeLatestFormat = format.parse(timeLatest);
+            timestamp[1] = timeLatestFormat.getTime()/1000;
+
+        } catch (ParseException e) {              // Insert this block.
+            e.printStackTrace();
+        }
+
+        return timestamp;
+    }
 
 
 }
