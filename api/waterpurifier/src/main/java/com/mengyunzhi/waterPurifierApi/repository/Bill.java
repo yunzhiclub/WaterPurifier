@@ -28,7 +28,7 @@ public class Bill implements Serializable {
 
     @ManyToOne
     @ApiModelProperty("饮水机实体")
-    private WaterPurifier waterPurifier = new WaterPurifier();
+    private WaterPurifier waterPurifier;
 
     @ManyToOne
     @ApiModelProperty("用户实体")

@@ -26,7 +26,7 @@ public class FilterChip implements Serializable {
 
     @ApiModelProperty("净水器")
     @ManyToOne
-    private WaterPurifier waterPurifier = new WaterPurifier();
+    private WaterPurifier waterPurifier;
 
     public FilterChip() {
     }
