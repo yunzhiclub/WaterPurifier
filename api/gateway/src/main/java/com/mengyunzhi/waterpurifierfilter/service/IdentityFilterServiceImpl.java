@@ -15,6 +15,7 @@ public class IdentityFilterServiceImpl implements IdentityFilterService {
         try {
             MessageDigest digest = java.security.MessageDigest
                     .getInstance("SHA-1");
+
             digest.update(data.getBytes());
             byte messageDigest[] = digest.digest();
             // Create Hex String

@@ -24,7 +24,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-
     @ApiOperation(value = "Login 登录", nickname = "Login_Login")
     @GetMapping("/")
     public String Login(@ApiParam(value = "登录凭证") @RequestParam("code") String code) {
@@ -32,10 +31,10 @@ public class LoginController {
         //请求地址https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
         String openIdAndSessionKey = loginService.sendHttpToWechat(code);
         //根据openId和会话密钥 生成3rd_session
-        //String threeRdSession = loginService.generate3RdSession(openIdAndSessionKey);
+        String threeRdSession = loginService.generate3RdSession(openIdAndSessionKey);
         //以3rd_session为key，open_id+session_key为value，写入session储存
 
         //返回3rd_session，如果用户已绑定净水器，则一并将净水器信息返回。反之
-        return openIdAndSessionKey;
+        return threeRdSession;
     }
 }

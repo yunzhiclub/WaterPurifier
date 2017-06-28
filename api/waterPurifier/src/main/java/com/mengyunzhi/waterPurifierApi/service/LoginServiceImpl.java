@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import static com.google.common.base.Predicates.equalTo;
@@ -44,6 +46,33 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String generate3RdSession(String openIdAndSessionKey) {
-        return null;
+        String spliceString = openIdAndSessionKey + "mengyunzhi";
+        return this.sha1(spliceString).substring(0, 15);
+    }
+
+    @Override
+    public String sha1(String data) {
+        try {
+            logger.info("sha1加密");
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance("SHA-1");
+            digest.update(data.getBytes());
+            byte messageDigest[] = digest.digest();
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            // 字节数组转换为 十六进制 数
+            for (int i = 0; i < messageDigest.length; i++) {
+                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
+                if (shaHex.length() <= 1) {
+                    hexString.append(0);
+                }
+                hexString.append(shaHex);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
