@@ -2,6 +2,8 @@ package com.mengyunzhi.waterPurifierApi.service;
 
 import com.mengyunzhi.waterPurifierApi.controller.WaterPurifierController.WaterPurifierOutput;
 
+import java.util.Map;
+
 /**
  * Created by chuhang on 2017/6/20.
  * 净水器service
@@ -23,9 +25,13 @@ public interface WaterPurifierService {
     int getUsedBeforeWaterQualityById(Long id);
     //根据净水器编号获取净水后水质
     int getUsedAfterWaterQualityById(Long id);
-    //根据日期获取今日用水量
-    int getUsedWaterByDate(String date);
+    //根据日期和净水器编号获取今日用水量
+    int getUsedWaterByDateAndId(String date, Long id);
     //获取一天中最小、最大时间戳
     Long[] getTimestampByDate(String date);
+    //根据净水器编号获取最近7天的用水量
+    Map<String, Integer> getSevenDayUsedWaterById(Long id);
+    //根据日期获取最近7天的日期
+    String[] getSevenDayDate();
 
 }
