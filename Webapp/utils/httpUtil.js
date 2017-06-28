@@ -5,7 +5,7 @@ module.exports = {
 }
 
 //请求项目的路由
-var baseURL = "http://localhost:/waterPurifier/";
+var baseURL = "https://localhost:/waterPurifier/";
 
 function request(api, method, header, params, success){
     wx.showToast({
@@ -28,19 +28,24 @@ function request(api, method, header, params, success){
     console.log("test");
     var encryptionInfo = sha1(encryptionString);
 
-    var encryptionParams = {
-        id: params.id,
-        timestamp: timestamp,
-        randomString: randomString,
-        encryptionInfo: encryptionInfo
-    };
+    // var encryptionParams = {
+    //     id: params.id,
+    //     timestamp: timestamp,
+    //     randomString: randomString,
+    //     encryptionInfo: encryptionInfo
+    // };
+
+    //给参数增加验证信息
+    params.timestamp = timestamp;
+    params.randomString = randomString;
+    params.encryptionInfo = encryptionInfo;
 
     //向后台发送请求
     wx.request({
         url: baseURL + api,
         method: method,
         header: header,
-        data: encryptionParams,
+        data: params,
         success: function(res) {
             wx.hideToast()
             success(res)
