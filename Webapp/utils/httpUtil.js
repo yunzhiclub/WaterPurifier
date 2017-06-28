@@ -22,18 +22,11 @@ function request(api, method, header, params, success){
     var randomString = Math.random().toString(36).substr(2);
 
     //拼接随机生成的字符串、当前时间戳、净水器编号、mengyunzhi
-    var encryptionString = params.id + timestamp + randomString + 'mengyunzhi';
-
+    var encryptionString = timestamp + randomString + 'mengyunzhi';
+    console.log(encryptionString);
     //用sha1算法加密
     console.log("test");
     var encryptionInfo = sha1(encryptionString);
-
-    // var encryptionParams = {
-    //     id: params.id,
-    //     timestamp: timestamp,
-    //     randomString: randomString,
-    //     encryptionInfo: encryptionInfo
-    // };
 
     //给参数增加验证信息
     params.timestamp = timestamp;
