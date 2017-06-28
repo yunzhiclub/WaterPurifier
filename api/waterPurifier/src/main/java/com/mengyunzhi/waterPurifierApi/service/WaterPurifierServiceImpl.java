@@ -6,11 +6,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by chuhang on 2017/6/20.
@@ -44,7 +43,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
         //净水后水质状态
         waterPurifierOutput.setUsedAfterWaterQuality(this.getUsedAfterWaterQualityById(id));
         //最近一周用水量
-
+        waterPurifierOutput.setRecentOneWeekUsedWater(this.getSevenDayUsedWaterById(id));
 
         return waterPurifierOutput;
     }
@@ -58,7 +57,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
     public int getTodayUsedWaterById(Long id) {
         //获取当前日期
         String currentDate = this.getCurrentDate();
-        return this.getUsedWaterByDate(currentDate);
+        return this.getUsedWaterByDateAndId(currentDate, id);
     }
 
 
@@ -74,7 +73,6 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
          //根据时间戳获取当前日期
          String currentDate = this.convertTimestampToDate(timestamp);
          return currentDate;
-
      }
 
     /**
@@ -108,12 +106,12 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
         usedWaterQuantityDetail.setUsedBeforeWaterQuality(2210);
         usedWaterQuantityDetailRepository.save(usedWaterQuantityDetail);
 
-//        //测试滤芯实体，获取客用水量
-//        FilterChip filterChip = new FilterChip();
-//        filterChip.setAvailableWaterQuantity(1000);
-//        filterChip.setWaterPurifier(waterPurifier);
-//        filterChip.setCreateTime(timestamp);
-//        filterChipRepository.save(filterChip);
+        //测试滤芯实体，获取客用水量
+        FilterChip filterChip = new FilterChip();
+        filterChip.setAvailableWaterQuantity(1000);
+        filterChip.setWaterPurifier(waterPurifier);
+        filterChip.setCreateTime(timestamp);
+        filterChipRepository.save(filterChip);
 
 
     }
@@ -141,13 +139,13 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
 
     //根据日期获取今日用水量
     @Override
-    public int getUsedWaterByDate(String date) {
+    public int getUsedWaterByDateAndId(String date, Long id) {
         //获取当天最小、最大时间戳
         Long[] timestamp = this.getTimestampByDate(date);
 
         //获取今日用水记录
         List<UsedWaterQuantityDetail> lists = new ArrayList<>();
-        lists = (List<UsedWaterQuantityDetail>)usedWaterQuantityDetailRepository.findAllByCreateTimeBetween(timestamp[0], timestamp[1]);
+        lists = (List<UsedWaterQuantityDetail>)usedWaterQuantityDetailRepository.findByWaterPurifierIdAndCreateTimeBetween(id, timestamp[0], timestamp[1]);
 
         //将今日每次用水量累加起来
         List<Integer> todayUsedWater = new ArrayList<>();
@@ -180,6 +178,40 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
         }
 
         return timestamp;
+    }
+
+    @Override
+    public Map<String, Integer> getSevenDayUsedWaterById(Long id) {
+        //定义数组，长度为7
+        Map<String, Integer> maps = new TreeMap<>();
+        //根据当前日期推算出最近7天的日期
+        String[] sevenDayDate = this.getSevenDayDate();
+        //获取最近7天每一天的用水量,并按日期排序
+        for (int i = 0; i < 7; i++) {
+            //赋值，（"2017-06-28": 371）形式
+            maps.put(sevenDayDate[i], this.getUsedWaterByDateAndId(sevenDayDate[i], id));
+        }
+        return maps;
+    }
+
+    @Override
+    public String[] getSevenDayDate() {
+        //定义日期格式
+        String format = "yyyy-MM-dd";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+
+        //获取当前日期
+        Date date=new Date();
+        Calendar now = Calendar.getInstance();
+        now.setTime(date);
+        //定义日期长度为7，并循环输出
+        String[] dates = new String[7];
+        dates[0] = dateFormat.format(now.getTime());
+        for (int i = 0; i < 6; i++) {
+            now.set(Calendar.DATE,now.get(Calendar.DATE) - 1);
+            dates[i + 1] = dateFormat.format(now.getTime());
+        }
+        return dates;
     }
 
 

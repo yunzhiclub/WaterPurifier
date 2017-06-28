@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -25,12 +26,15 @@ public class WaterPurifierController {
     @Autowired
     private WaterPurifierService waterPurifierService;
 
-    //TODO根据净水器编号获取今日用水量、剩余用水量、剩余滤芯、净水前水质状态、净水后水质转台、最近一周用水量、
+    // TODO根据净水器编号获取今日用水量、剩余用水量、剩余滤芯、净水前水质状态、净水后水质转台、最近一周用水量、
     @ApiOperation(value = "get 获取净水器信息", nickname = "WaterPurifier_")
     @GetMapping("/")
     public WaterPurifierOutput get(@ApiParam(value = "净水器编号") @RequestParam("id") Long id) {
         logger.info("---- 获取净水器实体信息 -----");
-        waterPurifierService.getTimestampByDate("2017-06-27");
+        //waterPurifierService.getSevenDayDate();
+        //测试代码
+        //waterPurifierService.save();
+
         //根据净水器编号获取相关信息
         WaterPurifierOutput waterPurifierOutput = waterPurifierService.getRelateInfoById(id);
 
@@ -52,12 +56,12 @@ public class WaterPurifierController {
         @ApiModelProperty("净水后水质状态")
         public int usedAfterWaterQuality;
         @ApiModelProperty("最近一周用水量")
-        public Array recentOneWeekUsedWater;
+        public Map<String, Integer> recentOneWeekUsedWater;
 
         public WaterPurifierOutput() {
         }
 
-        public WaterPurifierOutput(Long id, int todayUsedWater, int lastUsedWater, int lastFilterChip, int usedBeforeWaterQuality, int usedAfterWaterQuality, Array recentOneWeekUsedWater) {
+        public WaterPurifierOutput(Long id, int todayUsedWater, int lastUsedWater, int lastFilterChip, int usedBeforeWaterQuality, int usedAfterWaterQuality, Map<String, Integer> recentOneWeekUsedWater) {
             this.id = id;
             this.todayUsedWater = todayUsedWater;
             this.lastUsedWater = lastUsedWater;
@@ -128,11 +132,11 @@ public class WaterPurifierController {
             this.usedAfterWaterQuality = usedAfterWaterQuality;
         }
 
-        public Array getRecentOneWeekUsedWater() {
+        public Map<String, Integer> getRecentOneWeekUsedWater() {
             return recentOneWeekUsedWater;
         }
 
-        public void setRecentOneWeekUsedWater(Array recentOneWeekUsedWater) {
+        public void setRecentOneWeekUsedWater(Map<String, Integer> recentOneWeekUsedWater) {
             this.recentOneWeekUsedWater = recentOneWeekUsedWater;
         }
     }
