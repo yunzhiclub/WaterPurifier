@@ -6,13 +6,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Created by chuhang on 2017/6/20.
+ * 净水器ServiceImpl
  */
 @Service
 public class WaterPurifierServiceImpl implements WaterPurifierService {

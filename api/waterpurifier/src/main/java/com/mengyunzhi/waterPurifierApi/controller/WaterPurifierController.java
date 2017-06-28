@@ -1,13 +1,11 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
-import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifierRepository;
 import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -31,9 +29,6 @@ public class WaterPurifierController {
     @GetMapping("/")
     public WaterPurifierOutput get(@ApiParam(value = "净水器编号") @RequestParam("id") Long id) {
         logger.info("---- 获取净水器实体信息 -----");
-        //waterPurifierService.getSevenDayDate();
-        //测试代码
-        //waterPurifierService.save();
 
         //根据净水器编号获取相关信息
         WaterPurifierOutput waterPurifierOutput = waterPurifierService.getRelateInfoById(id);
