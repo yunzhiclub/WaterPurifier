@@ -14,10 +14,8 @@ import java.util.List;
  */
 @ApiModel("用水量详情实体仓库")
 public interface UsedWaterQuantityDetailRepository extends PagingAndSortingRepository<UsedWaterQuantityDetail, Long>{
-    //通过净水器对象获取所有相应的用水量详情记录
-    List<UsedWaterQuantityDetail> findAllByWaterPurifier(WaterPurifier waterPurifier);
     //根据净水器编号获取最近一次的用水量详情
     UsedWaterQuantityDetail findTopByWaterPurifierIdOrderByCreateTimeDesc(Long id);
-    //根据当天的最大、最小时间戳获取用数量详情
-    List<UsedWaterQuantityDetail> findAllByCreateTimeBetween(Long start, Long end);
+    //根据当天的最大、最小时间戳和净水器编号获取用数量详情
+    List<UsedWaterQuantityDetail> findByWaterPurifierIdAndCreateTimeBetween(Long id, Long start, Long end);
 }

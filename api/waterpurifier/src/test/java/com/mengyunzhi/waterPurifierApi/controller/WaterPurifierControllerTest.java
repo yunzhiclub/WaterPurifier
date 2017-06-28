@@ -1,23 +1,16 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
-import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifierRepository;
 import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static sun.nio.cs.Surrogate.is;
 
 
 /**
