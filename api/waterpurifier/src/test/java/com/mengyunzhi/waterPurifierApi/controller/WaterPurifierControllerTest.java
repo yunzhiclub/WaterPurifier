@@ -2,10 +2,14 @@ package com.mengyunzhi.waterPurifierApi.controller;
 
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifierRepository;
+import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -23,21 +27,27 @@ import static sun.nio.cs.Surrogate.is;
 public class WaterPurifierControllerTest extends ControllerTest {
     @Autowired
     private WaterPurifierRepository waterPurifierRepository;
+    @Autowired
+    private WaterPurifierService waterPurifierService;
+
     @Test
     public void getTest() throws Exception {
-        //添加一个实体
-        WaterPurifier waterPurifier = new WaterPurifier();
-        waterPurifierRepository.save(waterPurifier);
+        //保存实体，用于猜测是
+        waterPurifierService.save();
         //请求查询这个实体
-        this.mockMvc.perform(get("/WaterPurifier")
+        this.mockMvc.perform(get("/WaterPurifier/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id","23")
-                .param("timestamp", "1497457292548")
-                .param("randomString","unzdtggyopn1fl7sx68b8olxr")
-                .param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
+                .param("id","23"))
+                //.param("timestamp", "1497457292548")
+                //.param("randomString","unzdtggyopn1fl7sx68b8olxr")
+               //.param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
                 .andDo(print())
                 .andDo(document("WaterPurifier_", preprocessResponse(prettyPrint())));
 
         //断言查询成功
+    }
+    @Test
+    public void save() {
+        waterPurifierService.save();
     }
 }

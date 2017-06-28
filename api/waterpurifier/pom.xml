@@ -18,6 +18,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+
+
 	<!--jcenter仓库地址-->
     <repositories>
         <repository>
@@ -168,6 +170,7 @@
 			<artifactId>swagger2markup-spring-restdocs-ext</artifactId>
 			<version>${swagger2markup.version}</version>
 		</dependency>
+
 
 	</dependencies>
 

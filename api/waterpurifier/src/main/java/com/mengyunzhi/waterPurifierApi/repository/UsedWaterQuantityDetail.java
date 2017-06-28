@@ -2,6 +2,7 @@ package com.mengyunzhi.waterPurifierApi.repository;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 public class UsedWaterQuantityDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -23,12 +24,13 @@ public class UsedWaterQuantityDetail implements Serializable {
     @ApiModelProperty("上次交互时间") private Long  lastInteractionTime;
     @ApiModelProperty("本次交互时间") private Long thisInteractionTime;
     @ApiModelProperty("净水前水质") private int usedBeforeWaterQuality;
-    @ApiModelProperty("净水后水质") private int rechargeToWaterPurifierTime;
+    @ApiModelProperty("净水后水质") private int usedAfterWaterQuality;
     @ApiModelProperty("创建时间") private Long createTime;
 
-    @ManyToOne
+    @ManyToOne()
     @ApiModelProperty("净水器")
-    private WaterPurifier waterPurifier = new WaterPurifier();
+    @Lazy()
+    private WaterPurifier waterPurifier;
 
     public UsedWaterQuantityDetail() {
     }
@@ -73,12 +75,12 @@ public class UsedWaterQuantityDetail implements Serializable {
         this.usedBeforeWaterQuality = usedBeforeWaterQuality;
     }
 
-    public int getRechargeToWaterPurifierTime() {
-        return rechargeToWaterPurifierTime;
+    public int getUsedAfterWaterQuality() {
+        return usedAfterWaterQuality;
     }
 
-    public void setRechargeToWaterPurifierTime(int rechargeToWaterPurifierTime) {
-        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+    public void setUsedAfterWaterQuality(int usedAfterWaterQuality) {
+        this.usedAfterWaterQuality = usedAfterWaterQuality;
     }
 
     public Long getCreateTime() {
@@ -105,7 +107,7 @@ public class UsedWaterQuantityDetail implements Serializable {
                 ", lastInteractionTime=" + lastInteractionTime +
                 ", thisInteractionTime=" + thisInteractionTime +
                 ", usedBeforeWaterQuality=" + usedBeforeWaterQuality +
-                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
+                ", usedAfterWaterQuality=" + usedAfterWaterQuality +
                 ", createTime=" + createTime +
                 ", waterPurifier=" + waterPurifier +
                 '}';
@@ -116,7 +118,7 @@ public class UsedWaterQuantityDetail implements Serializable {
         this.lastInteractionTime = lastInteractionTime;
         this.thisInteractionTime = thisInteractionTime;
         this.usedBeforeWaterQuality = usedBeforeWaterQuality;
-        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+        this.usedAfterWaterQuality = usedAfterWaterQuality;
         this.createTime = createTime;
         this.waterPurifier = waterPurifier;
     }
