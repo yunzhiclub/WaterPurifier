@@ -13,13 +13,30 @@ App({
     }else{
       //调用登录接口
       wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
+        success: function (res) {
+          console.log(3232);
+          //发送https请求，最终目的是为了获取用户openid
+          if (res.code) {
+            console.log(232332);
+            var http = require("/utils/httpUtil.js");
+            var params = {
+                code: res.code
+            };
+            var api = "Login/";
+            
+            http.GET(api, params, function(res){
+                console.log(res.data);
+            });
+          } else {
+            console.log('获取用户登录态失败！' + res.errMsg)
+          }
+
+          // wx.getUserInfo({
+          //   success: function (res) {
+          //     that.globalData.userInfo = res.userInfo
+          //     typeof cb == "function" && cb(that.globalData.userInfo)
+          //   }
+          // })
         }
       })
     }
