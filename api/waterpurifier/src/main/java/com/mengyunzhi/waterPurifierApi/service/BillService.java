@@ -6,5 +6,5 @@ package com.mengyunzhi.waterPurifierApi.service;
  */
 public interface BillService {
     //通过净水器编号获取充值信息
-    int getRechargeInfoById(Long id);
+    Integer getRechargeInfoById(Long id);
 }

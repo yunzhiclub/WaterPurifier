@@ -2,6 +2,10 @@ package com.mengyunzhi.waterPurifierApi.controller;
 
 import com.mengyunzhi.waterPurifierApi.repository.Bill;
 import com.mengyunzhi.waterPurifierApi.repository.BillRepository;
+import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
+import com.mengyunzhi.waterPurifierApi.repository.WaterPurifierRepository;
+import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,20 +24,29 @@ public class ApiControllerTest extends ControllerTest{
     @Autowired
     private BillRepository billRepository;
 
+    @Autowired
+    private WaterPurifierRepository waterPurifierRepository;
+
+    //生成一条订单实体，用于测试
+    @Before
+    public void testData() {
+        WaterPurifier waterPurifier = new WaterPurifier();
+        waterPurifierRepository.save(waterPurifier);
+        Bill bill = new Bill();
+        bill.setRechargeWaterQuantity(23);
+        bill.setWaterPurifier(waterPurifier);
+        bill.setRechargeToWaterPurifier(Boolean.TRUE);
+        billRepository.save(bill);
+    }
+
     @Test
     public void getRechargeInfo() throws Exception {
-        //保存一条订单记录，用于测试
-        Bill bill = new Bill();
-        bill.setId(2L);
-        bill.setRechargeToWaterPurifier(false);
-        billRepository.save(bill);
         //模拟请求，获取充值信息
         this.mockMvc.perform(get("/api/getRechargeInfo/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id","2"))
+                .param("id","1"))
                 .andDo(print())
-                .andDo(document("api_getCurrentTime", preprocessResponse(prettyPrint())));
-
+                .andDo(document("api_getRechargeInfo", preprocessResponse(prettyPrint())));
     }
 
     @Test
