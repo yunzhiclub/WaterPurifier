@@ -26,21 +26,17 @@ public class WaterPurifierControllerTest extends ControllerTest {
     @Test
     public void getTest() throws Exception {
         //保存实体，用于猜测是
-        waterPurifierService.save();
+        //waterPurifierService.save();
         //请求查询这个实体
-        this.mockMvc.perform(get("/WaterPurifier/")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id","23"))
-                //.param("timestamp", "1497457292548")
-                //.param("randomString","unzdtggyopn1fl7sx68b8olxr")
-               //.param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
-                .andDo(print())
-                .andDo(document("WaterPurifier_", preprocessResponse(prettyPrint())));
+//        this.mockMvc.perform(get("/WaterPurifier/")
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+//                .param("id","23"))
+//                //.param("timestamp", "1497457292548")
+//                //.param("randomString","unzdtggyopn1fl7sx68b8olxr")
+//               //.param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
+//                .andDo(print())
+//                .andDo(document("WaterPurifier_", preprocessResponse(prettyPrint())));
 
         //断言查询成功
-    }
-    @Test
-    public void save() {
-        waterPurifierService.save();
     }
 }
