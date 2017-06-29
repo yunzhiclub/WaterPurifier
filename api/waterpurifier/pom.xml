@@ -92,7 +92,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
 		<!--引入json-lib,便捷java对象转化json对象-->
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>

@@ -19,6 +19,9 @@ Page({
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
+        //获取用户信息
+        app.getUserInfo();
+        
         var windowWidth = 320;
         try {
           var res = wx.getSystemInfoSync();
@@ -27,6 +30,7 @@ Page({
           console.error('getSystemInfoSync failed!');
         }
         
+        //折线图
         areaChart = new wxCharts({
             canvasId: 'areaCanvas',
             type: 'area',

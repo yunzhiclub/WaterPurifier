@@ -15,6 +15,7 @@ public class IdentityFilterServiceImpl implements IdentityFilterService {
         try {
             MessageDigest digest = java.security.MessageDigest
                     .getInstance("SHA-1");
+
             digest.update(data.getBytes());
             byte messageDigest[] = digest.digest();
             // Create Hex String
@@ -36,9 +37,9 @@ public class IdentityFilterServiceImpl implements IdentityFilterService {
     }
 
     @Override
-    public Boolean isTrue(Long id, String timestamp, String randomString, String encryptionInfo) {
+    public Boolean isTrue(String timestamp, String randomString, String encryptionInfo) {
         //拼接字符串
-        String spliceString = id + timestamp + randomString + "mengyunzhi";
+        String spliceString = timestamp + randomString + "mengyunzhi";
         //对拼接的字符串进行sha1加密，判断是否等于encryptionInfo
         if (this.sha1(spliceString).equals(encryptionInfo)) {
             return true;

@@ -7,5 +7,5 @@ public interface IdentityFilterService {
     //sha1加密算法
     String sha1(String data);
     //验证请求的信息真伪
-    Boolean isTrue(Long id, String timestamp, String randomString, String encryptionInfo);
+    Boolean isTrue(String timestamp, String randomString, String encryptionInfo);
 }
