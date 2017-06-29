@@ -32,7 +32,7 @@ public class Bill implements Serializable {
 
     @ManyToOne
     @ApiModelProperty("用户实体")
-    private User user = new User();
+    private User user;
 
     public Bill(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
         this.rechargeAmount = rechargeAmount;
