@@ -31,8 +31,6 @@ public class ApiController {
     @ApiOperation(value = "getRechargeInfo 获取充值信息", nickname = "api_getRechargeInfo")
     @GetMapping("/getRechargeInfo/")
     public int getRechargeInfo(@ApiParam(value = "净水器编号") @RequestParam("id") Long id) {
-
-
         int rechargeWaterQuantity = billService.getRechargeInfoById(id);
         return rechargeWaterQuantity;
     }

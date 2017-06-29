@@ -35,7 +35,34 @@ public class Bill implements Serializable {
     @ApiModelProperty("用户实体")
     private User user;
 
+    public Bill(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
+        this.rechargeAmount = rechargeAmount;
+        this.rechargeWaterQuantity = rechargeWaterQuantity;
+        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
+        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.waterPurifier = waterPurifier;
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", rechargeAmount=" + rechargeAmount +
+                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
+                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
+                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", waterPurifier=" + waterPurifier +
+                ", user=" + user +
+                '}';
+    }
+
     public Bill() {
+
     }
 
     public Long getId() {
