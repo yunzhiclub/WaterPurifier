@@ -33,7 +33,7 @@ public class LoginController {
         //根据openId和会话密钥 生成3rd_session
         String threeRdSession = loginService.generate3RdSession(openIdAndSessionKey);
         //以3rd_session为key，open_id+session_key为value，写入session储存
-
+        loginService.storeSession(threeRdSession, openIdAndSessionKey);
         //返回3rd_session，如果用户已绑定净水器，则一并将净水器信息返回。反之
         return threeRdSession;
     }

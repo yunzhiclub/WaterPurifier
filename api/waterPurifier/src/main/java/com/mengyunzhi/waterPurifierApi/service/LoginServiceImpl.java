@@ -1,7 +1,6 @@
 package com.mengyunzhi.waterPurifierApi.service;
 
 import com.mengyunzhi.waterPurifierApi.controller.WaterPurifierController;
-import io.swagger.util.Json;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,8 +10,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
-import static com.google.common.base.Predicates.equalTo;
-import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by chuhang on 2017/6/28.
  */
@@ -74,5 +71,10 @@ public class LoginServiceImpl implements LoginService {
             e.printStackTrace();
         }
         return "";
+    }
+
+    //todo 按微信官方要求储存session信息，并储存在redis中
+    @Override
+    public void storeSession(String threeRdSession, String openIdAndSessionKey) {
     }
 }
