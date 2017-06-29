@@ -19,7 +19,7 @@ public class ApiControllerTest extends ControllerTest{
         this.mockMvc.perform(get("/api/getCurrentTime")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(print())
-                .andDo(document("Api_", preprocessResponse(prettyPrint())));
+                .andDo(document("api_getCurrentTime", preprocessResponse(prettyPrint())));
     }
 
 }
