@@ -22,7 +22,7 @@ public class Bill implements Serializable {
 
     @ApiModelProperty("充值金额（分）") private int rechargeAmount;
     @ApiModelProperty("充值水量（ml）") private int rechargeWaterQuantity;
-    @ApiModelProperty("已冲值到机器(0,未充值。1,已充值)") private Boolean isRechargeToWaterPurifier;
+    @ApiModelProperty("已冲值到机器") private Boolean isRechargeToWaterPurifier;
     @ApiModelProperty("充值到净水机时间") private Long rechargeToWaterPurifierTime;
     @ApiModelProperty("创建时间") private Long createTime;
     @ApiModelProperty("更新时间") private Long updateTime;

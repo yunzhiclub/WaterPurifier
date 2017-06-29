@@ -27,7 +27,7 @@ public class ApiControllerTest extends ControllerTest{
     @Autowired
     private WaterPurifierRepository waterPurifierRepository;
 
-    //生成一条订单实体，用于测试
+    //生成一条订单记录，用于测试
     @Before
     public void testData() {
         WaterPurifier waterPurifier = new WaterPurifier();
