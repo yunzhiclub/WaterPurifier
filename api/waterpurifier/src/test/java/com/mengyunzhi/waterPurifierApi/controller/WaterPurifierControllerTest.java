@@ -20,13 +20,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class WaterPurifierControllerTest extends ControllerTest {
     @Autowired
     private WaterPurifierRepository waterPurifierRepository;
-    @Autowired
-    private WaterPurifierService waterPurifierService;
+
 
     @Test
     public void getTest() throws Exception {
         //保存实体，用于猜测是
-        waterPurifierService.save();
         //请求查询这个实体
         this.mockMvc.perform(get("/WaterPurifier/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -38,9 +36,5 @@ public class WaterPurifierControllerTest extends ControllerTest {
                 .andDo(document("WaterPurifier_", preprocessResponse(prettyPrint())));
 
         //断言查询成功
-    }
-    @Test
-    public void save() {
-        waterPurifierService.save();
     }
 }
