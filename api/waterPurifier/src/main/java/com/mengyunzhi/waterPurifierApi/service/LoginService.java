@@ -13,4 +13,7 @@ public interface LoginService {
     String generate3RdSession(String openIdAndSessionKey);
     //sha1加密算法
     String sha1(String data);
+    //储存session，3rd_session为key，open_id+session_key为value
+    void storeSession(String threeRdSession, String openIdAndSessionKey);
+
 }
