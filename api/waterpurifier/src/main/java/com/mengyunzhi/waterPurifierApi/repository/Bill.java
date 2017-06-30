@@ -2,6 +2,7 @@ package com.mengyunzhi.waterPurifierApi.repository;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.type.descriptor.sql.SmallIntTypeDescriptor;
 import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
 
 import javax.persistence.*;
@@ -22,8 +23,8 @@ public class Bill implements Serializable {
 
     @ApiModelProperty("充值金额（分）") private int rechargeAmount;
     @ApiModelProperty("充值水量（ml）") private int rechargeWaterQuantity;
-    @ApiModelProperty("已冲值到机器") private Boolean isRechargeToWaterPurifier;
     @ApiModelProperty("充值到净水机时间") private Long rechargeToWaterPurifierTime;
+    @ApiModelProperty("订单状态，0：未处理，1：处理中，2：已处理") private int status;
     @ApiModelProperty("创建时间") private Long createTime;
     @ApiModelProperty("更新时间") private Long updateTime;
 
@@ -35,34 +36,18 @@ public class Bill implements Serializable {
     @ApiModelProperty("用户实体")
     private User user;
 
-    public Bill(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
+    public Bill() {
+    }
+
+    public Bill(int rechargeAmount, int rechargeWaterQuantity, Long rechargeToWaterPurifierTime, int status, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
         this.rechargeAmount = rechargeAmount;
         this.rechargeWaterQuantity = rechargeWaterQuantity;
-        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
         this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+        this.status = status;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.waterPurifier = waterPurifier;
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Bill{" +
-                "id=" + id +
-                ", rechargeAmount=" + rechargeAmount +
-                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
-                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
-                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", waterPurifier=" + waterPurifier +
-                ", user=" + user +
-                '}';
-    }
-
-    public Bill() {
-
     }
 
     public Long getId() {
@@ -89,20 +74,20 @@ public class Bill implements Serializable {
         this.rechargeWaterQuantity = rechargeWaterQuantity;
     }
 
-    public Boolean getRechargeToWaterPurifier() {
-        return isRechargeToWaterPurifier;
-    }
-
-    public void setRechargeToWaterPurifier(Boolean rechargeToWaterPurifier) {
-        isRechargeToWaterPurifier = rechargeToWaterPurifier;
-    }
-
     public Long getRechargeToWaterPurifierTime() {
         return rechargeToWaterPurifierTime;
     }
 
     public void setRechargeToWaterPurifierTime(Long rechargeToWaterPurifierTime) {
         this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Long getCreateTime() {
@@ -135,5 +120,20 @@ public class Bill implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", rechargeAmount=" + rechargeAmount +
+                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
+                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", waterPurifier=" + waterPurifier +
+                ", user=" + user +
+                '}';
     }
 }

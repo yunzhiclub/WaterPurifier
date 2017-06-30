@@ -13,6 +13,5 @@ import java.util.List;
 @ApiModel("订单实体仓库")
 public interface BillRepository extends PagingAndSortingRepository<Bill, Long> {
     //根据净水器编号查找未充值到净水器的订单记录
-        List<Bill> findByWaterPurifierIdAndIsRechargeToWaterPurifier(Long id, Boolean isRechargeToWaterPurifier);
-
+    List<Bill> findByWaterPurifierIdAndStatus(Long id, int status);
 }
