@@ -1,6 +1,7 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
 import com.mengyunzhi.waterPurifierApi.service.BillService;
+import com.mengyunzhi.waterPurifierApi.service.UsedWaterQuantityDetailService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ public class ApiController {
 
     @Autowired
     private BillService billService;
+
+    @Autowired
+    private UsedWaterQuantityDetailService usedWaterQuantityDetailService;
 
     @ApiOperation(value = "getCurrentTime 获取当前时间", nickname = "api_getCurrentTime")
     @GetMapping("/getCurrentTime")
@@ -43,6 +47,100 @@ public class ApiController {
             billService.dealBill(rechargeResult.getId());
         }
         return;
+    }
+
+    @ApiOperation(value = "useInfo 使用信息", nickname = "api_useInfo")
+    @PostMapping("/useInfo")
+    public void useInfo(@ApiParam(value = "净水器使用信息") @RequestBody UseInfo useInfo) {
+        usedWaterQuantityDetailService.saveUseInfo(useInfo);
+    }
+
+    @ApiModel("净水器使用信息")
+    public static class UseInfo {
+        @ApiModelProperty("净水器编号")
+        private Long id;
+        @ApiModelProperty("净水前水质")
+        private int usedBeforeWaterQuality;
+        @ApiModelProperty("净水后水质")
+        private int usedAfterWaterQuality;
+        @ApiModelProperty("用水量")
+        private int usedWaterQuantity;
+        @ApiModelProperty("上次交互时间")
+        private Long lastInteractTime;
+        @ApiModelProperty("创建时间")
+        private Long createTime;
+
+        public UseInfo() {
+        }
+
+        public UseInfo(Long id, int usedBeforeWaterQuality, int usedAfterWaterQuality, int usedWaterQuantity, Long lastInteractTime, Long createTime) {
+            this.id = id;
+            this.usedBeforeWaterQuality = usedBeforeWaterQuality;
+            this.usedAfterWaterQuality = usedAfterWaterQuality;
+            this.usedWaterQuantity = usedWaterQuantity;
+            this.lastInteractTime = lastInteractTime;
+            this.createTime = createTime;
+        }
+
+        @Override
+        public String toString() {
+            return "UseInfo{" +
+                    "id=" + id +
+                    ", usedBeforeWaterQuality=" + usedBeforeWaterQuality +
+                    ", usedAfterWaterQuality=" + usedAfterWaterQuality +
+                    ", usedWaterQuantity=" + usedWaterQuantity +
+                    ", lastInteractTime=" + lastInteractTime +
+                    ", createTime=" + createTime +
+                    '}';
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public int getUsedBeforeWaterQuality() {
+            return usedBeforeWaterQuality;
+        }
+
+        public void setUsedBeforeWaterQuality(int usedBeforeWaterQuality) {
+            this.usedBeforeWaterQuality = usedBeforeWaterQuality;
+        }
+
+        public int getUsedAfterWaterQuality() {
+            return usedAfterWaterQuality;
+        }
+
+        public void setUsedAfterWaterQuality(int usedAfterWaterQuality) {
+            this.usedAfterWaterQuality = usedAfterWaterQuality;
+        }
+
+        public int getUsedWaterQuantity() {
+            return usedWaterQuantity;
+        }
+
+        public void setUsedWaterQuantity(int usedWaterQuantity) {
+            this.usedWaterQuantity = usedWaterQuantity;
+        }
+
+        public Long getLastInteractTime() {
+            return lastInteractTime;
+        }
+
+        public void setLastInteractTime(Long lastInteractTime) {
+            this.lastInteractTime = lastInteractTime;
+        }
+
+        public Long getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(Long createTime) {
+            this.createTime = createTime;
+        }
     }
 
     @ApiModel("rechargeResult 充值结果")

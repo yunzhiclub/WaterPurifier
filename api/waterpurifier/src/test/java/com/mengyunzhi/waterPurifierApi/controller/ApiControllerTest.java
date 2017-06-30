@@ -22,6 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
  * Created by chuhang on 17-6-29.
  */
 public class ApiControllerTest extends ControllerTest{
+    @Test
+    public void useInfo() throws Exception {
+    }
+
     private static Logger logger = Logger.getLogger(ApiControllerTest.class.getName());
 
     @Autowired
