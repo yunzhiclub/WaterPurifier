@@ -4,23 +4,27 @@ import com.mengyunzhi.waterPurifierApi.repository.Bill;
 import com.mengyunzhi.waterPurifierApi.repository.BillRepository;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifierRepository;
-import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.logging.Logger;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.junit.Assert.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
+import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by chuhang on 17-6-29.
  */
 public class ApiControllerTest extends ControllerTest{
+    private static Logger logger = Logger.getLogger(ApiControllerTest.class.getName());
+
     @Autowired
     private BillRepository billRepository;
 
@@ -33,10 +37,26 @@ public class ApiControllerTest extends ControllerTest{
         WaterPurifier waterPurifier = new WaterPurifier();
         waterPurifierRepository.save(waterPurifier);
         Bill bill = new Bill();
+        bill.setId(1L);
         bill.setRechargeWaterQuantity(23);
         bill.setWaterPurifier(waterPurifier);
-        bill.setRechargeToWaterPurifier(Boolean.TRUE);
+        bill.setStatus(1);
         billRepository.save(bill);
+    }
+
+    @Test
+    public void isRechargeOk() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "18");
+        jsonObject.put("shouldRecharge", 200);
+        jsonObject.put("actualRecharge", 200);
+
+        this.mockMvc.perform(post("/api/isRechargeOk")
+                .contentType(MediaType.APPLICATION_JSON).content(jsonObject.toString()))
+                .andDo(print())
+                .andDo(document("api_isRechargeOk", preprocessResponse(prettyPrint())))
+                .andReturn();
+
     }
 
     @Test

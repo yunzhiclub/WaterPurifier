@@ -20,15 +20,18 @@ public class BillServiceImpl implements BillService {
     @Override
     public Integer getRechargeInfoById(Long id) {
         //查找未充值的订单记录
-        Boolean isRechargeToWaterPurifier = Boolean.TRUE;
         List<Bill> lists = new ArrayList<>();
-        lists = (List<Bill>) billRepository.findByWaterPurifierIdAndIsRechargeToWaterPurifier(id, isRechargeToWaterPurifier);
+        lists = (List<Bill>) billRepository.findByWaterPurifierIdAndStatus(id, 0);
 
         //判断此净水器是否有充值记录
         if ( lists != null) {
-            //如果此净水器有多条充值记录，将充值的水量累加
+            //如果此净水器有多条充值记录，将充值的水量累加，并将订单状态修改为1（处理中）
             List<Integer> rechargeWaterQuantity = new ArrayList<>();
             lists.forEach(list->{
+                //修改订单状态
+                list.setStatus(1);
+                billRepository.save(list);
+                //累加水量
                 rechargeWaterQuantity.add(list.getRechargeWaterQuantity());
             });
 
@@ -37,5 +40,21 @@ public class BillServiceImpl implements BillService {
         }
         return null;
 
+    }
+
+    @Override
+    public void dealBill(Long id) {
+        //根据净水器编号查找订单转台为1（处理中）的订单
+        List<Bill> lists = new ArrayList<>();
+        lists = (List<Bill>) billRepository.findByWaterPurifierIdAndStatus(id, 1);
+        //将订单状态修改为2（已处理）
+        List<Integer> rechargeWaterQuantity = new ArrayList<>();
+        lists.forEach(list->{
+            //修改订单状态
+            list.setStatus(2);
+            billRepository.save(list);
+        });
+
+        return;
     }
 }
