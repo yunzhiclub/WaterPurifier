@@ -22,7 +22,6 @@ public class UsedWaterQuantityDetail implements Serializable {
 
     @ApiModelProperty("用水量") private int usedWaterQuantity;
     @ApiModelProperty("上次交互时间") private Long  lastInteractionTime;
-    @ApiModelProperty("本次交互时间") private Long thisInteractionTime;
     @ApiModelProperty("净水前水质") private int usedBeforeWaterQuality;
     @ApiModelProperty("净水后水质") private int usedAfterWaterQuality;
     @ApiModelProperty("创建时间") private Long createTime;
@@ -31,6 +30,12 @@ public class UsedWaterQuantityDetail implements Serializable {
     @ApiModelProperty("净水器")
     @Lazy()
     private WaterPurifier waterPurifier;
+
+    @PrePersist
+    protected void onCreate() {
+        long time = System.currentTimeMillis();
+        createTime = Long.valueOf(time/1000);
+    }
 
     public UsedWaterQuantityDetail() {
     }
@@ -57,14 +62,6 @@ public class UsedWaterQuantityDetail implements Serializable {
 
     public void setLastInteractionTime(Long lastInteractionTime) {
         this.lastInteractionTime = lastInteractionTime;
-    }
-
-    public Long getThisInteractionTime() {
-        return thisInteractionTime;
-    }
-
-    public void setThisInteractionTime(Long thisInteractionTime) {
-        this.thisInteractionTime = thisInteractionTime;
     }
 
     public int getUsedBeforeWaterQuality() {
@@ -99,27 +96,25 @@ public class UsedWaterQuantityDetail implements Serializable {
         this.waterPurifier = waterPurifier;
     }
 
+    public UsedWaterQuantityDetail(int usedWaterQuantity, Long lastInteractionTime, int usedBeforeWaterQuality, int usedAfterWaterQuality, Long createTime, WaterPurifier waterPurifier) {
+        this.usedWaterQuantity = usedWaterQuantity;
+        this.lastInteractionTime = lastInteractionTime;
+        this.usedBeforeWaterQuality = usedBeforeWaterQuality;
+        this.usedAfterWaterQuality = usedAfterWaterQuality;
+        this.createTime = createTime;
+        this.waterPurifier = waterPurifier;
+    }
+
     @Override
     public String toString() {
         return "UsedWaterQuantityDetail{" +
                 "id=" + id +
                 ", usedWaterQuantity=" + usedWaterQuantity +
                 ", lastInteractionTime=" + lastInteractionTime +
-                ", thisInteractionTime=" + thisInteractionTime +
                 ", usedBeforeWaterQuality=" + usedBeforeWaterQuality +
                 ", usedAfterWaterQuality=" + usedAfterWaterQuality +
                 ", createTime=" + createTime +
                 ", waterPurifier=" + waterPurifier +
                 '}';
-    }
-
-    public UsedWaterQuantityDetail(int usedWaterQuantity, Long lastInteractionTime, Long thisInteractionTime, int usedBeforeWaterQuality, int rechargeToWaterPurifierTime, Long createTime, WaterPurifier waterPurifier) {
-        this.usedWaterQuantity = usedWaterQuantity;
-        this.lastInteractionTime = lastInteractionTime;
-        this.thisInteractionTime = thisInteractionTime;
-        this.usedBeforeWaterQuality = usedBeforeWaterQuality;
-        this.usedAfterWaterQuality = usedAfterWaterQuality;
-        this.createTime = createTime;
-        this.waterPurifier = waterPurifier;
     }
 }

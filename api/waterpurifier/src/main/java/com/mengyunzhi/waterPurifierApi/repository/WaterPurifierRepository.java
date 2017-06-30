@@ -9,4 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 @ApiModel("净水器实体仓库")
 public interface WaterPurifierRepository extends PagingAndSortingRepository<WaterPurifier, Long> {
+    //根据净水器编号获取净水器
+    WaterPurifier findById(Long id);
 }
