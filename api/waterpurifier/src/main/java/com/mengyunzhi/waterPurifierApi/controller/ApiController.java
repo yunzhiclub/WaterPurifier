@@ -1,10 +1,13 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
+import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetail;
 import com.mengyunzhi.waterPurifierApi.service.BillService;
 import com.mengyunzhi.waterPurifierApi.service.UsedWaterQuantityDetailService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.logging.Logger;
 
 
 /**
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 public class ApiController {
+    private static Logger logger = Logger.getLogger(ApiController.class.getName());
 
     @Autowired
     private BillService billService;
@@ -52,6 +56,8 @@ public class ApiController {
     @ApiOperation(value = "useInfo 使用信息", nickname = "api_useInfo")
     @PostMapping("/useInfo")
     public void useInfo(@ApiParam(value = "净水器使用信息") @RequestBody UseInfo useInfo) {
+        logger.info("净水器使用信息");
+        UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
         usedWaterQuantityDetailService.saveUseInfo(useInfo);
     }
 

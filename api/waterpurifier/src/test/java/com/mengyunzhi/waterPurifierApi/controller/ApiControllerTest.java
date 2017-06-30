@@ -22,10 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
  * Created by chuhang on 17-6-29.
  */
 public class ApiControllerTest extends ControllerTest{
-    @Test
-    public void useInfo() throws Exception {
-    }
-
     private static Logger logger = Logger.getLogger(ApiControllerTest.class.getName());
 
     @Autowired
@@ -79,6 +75,10 @@ public class ApiControllerTest extends ControllerTest{
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(print())
                 .andDo(document("api_getCurrentTime", preprocessResponse(prettyPrint())));
+    }
+
+    @Test
+    public void useInfo() throws Exception {
     }
 
 }

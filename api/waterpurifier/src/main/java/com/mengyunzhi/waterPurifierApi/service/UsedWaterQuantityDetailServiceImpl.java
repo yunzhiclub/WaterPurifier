@@ -3,6 +3,8 @@ package com.mengyunzhi.waterPurifierApi.service;
 import com.mengyunzhi.waterPurifierApi.controller.ApiController.UseInfo;
 import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetail;
 import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetailRepository;
+import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
+import com.mengyunzhi.waterPurifierApi.repository.WaterPurifierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class UsedWaterQuantityDetailServiceImpl implements UsedWaterQuantityDetailService {
     @Autowired
     private UsedWaterQuantityDetailRepository usedWaterQuantityDetailRepository;
+    @Autowired
+    private WaterPurifierRepository waterPurifierRepository;
 
     @Override
     public void saveUseInfo(UseInfo useInfo) {
@@ -20,18 +24,21 @@ public class UsedWaterQuantityDetailServiceImpl implements UsedWaterQuantityDeta
         UsedWaterQuantityDetail lastUseInfo = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(useInfo.getId());
         //保存
         UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
-        usedWaterQuantityDetail.setId(useInfo.getId());
         usedWaterQuantityDetail.setUsedBeforeWaterQuality(useInfo.getUsedBeforeWaterQuality());
         usedWaterQuantityDetail.setUsedAfterWaterQuality(useInfo.getUsedAfterWaterQuality());
         usedWaterQuantityDetail.setUsedWaterQuantity(useInfo.getUsedWaterQuantity());
-        usedWaterQuantityDetail.setThisInteractionTime(useInfo.getLastInteractTime());
+        //获取关联的净水器
+        WaterPurifier waterPurifier = waterPurifierRepository.findById(useInfo.getId());
+        usedWaterQuantityDetail.setWaterPurifier(waterPurifier);
+
 
         //判断上次使用信息是否为null
         if (lastUseInfo == null) {
             usedWaterQuantityDetail.setLastInteractionTime(0L);
+        } else {
+            usedWaterQuantityDetail.setLastInteractionTime(lastUseInfo.getThisInteractionTime());
         }
-        usedWaterQuantityDetail.setLastInteractionTime(lastUseInfo.getThisInteractionTime());
-
+        usedWaterQuantityDetailRepository.save(usedWaterQuantityDetail);
         return;
     }
 }
