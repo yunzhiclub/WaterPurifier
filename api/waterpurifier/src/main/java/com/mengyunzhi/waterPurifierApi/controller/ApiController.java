@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @RestController
 public class ApiController {
+
     @Autowired
     private BillService billService;
 
@@ -27,6 +28,7 @@ public class ApiController {
         String timestamp = String.valueOf(time/1000);
         return timestamp;
     }
+
 
     @ApiOperation(value = "getRechargeInfo 获取充值信息", nickname = "api_getRechargeInfo")
     @GetMapping("/getRechargeInfo/")

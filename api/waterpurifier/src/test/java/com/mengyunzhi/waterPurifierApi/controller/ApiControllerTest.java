@@ -49,6 +49,7 @@ public class ApiControllerTest extends ControllerTest{
                 .andDo(document("api_getRechargeInfo", preprocessResponse(prettyPrint())));
     }
 
+
     @Test
     public void getCurrentTime() throws Exception {
         this.mockMvc.perform(get("/api/getCurrentTime")
