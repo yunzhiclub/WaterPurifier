@@ -2,6 +2,7 @@ package com.mengyunzhi.waterPurifierApi.repository;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,7 +33,7 @@ public class Bill implements Serializable {
 
     @ManyToOne
     @ApiModelProperty("用户实体")
-    private User user = new User();
+    private User user;
 
     public Bill(int rechargeAmount, int rechargeWaterQuantity, Boolean isRechargeToWaterPurifier, Long rechargeToWaterPurifierTime, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
         this.rechargeAmount = rechargeAmount;
@@ -43,9 +44,6 @@ public class Bill implements Serializable {
         this.updateTime = updateTime;
         this.waterPurifier = waterPurifier;
         this.user = user;
-    }
-
-    public Bill() {
     }
 
     @Override
@@ -61,6 +59,10 @@ public class Bill implements Serializable {
                 ", waterPurifier=" + waterPurifier +
                 ", user=" + user +
                 '}';
+    }
+
+    public Bill() {
+
     }
 
     public Long getId() {
