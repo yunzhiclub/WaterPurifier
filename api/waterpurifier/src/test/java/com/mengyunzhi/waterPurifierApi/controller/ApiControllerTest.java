@@ -53,8 +53,7 @@ public class ApiControllerTest extends ControllerTest{
         this.mockMvc.perform(post("/api/isRechargeOk")
                 .contentType(MediaType.APPLICATION_JSON).content(jsonObject.toString()))
                 .andDo(print())
-                .andDo(document("api_isRechargeOk", preprocessResponse(prettyPrint())))
-                .andReturn();
+                .andDo(document("api_isRechargeOk", preprocessResponse(prettyPrint())));
 
     }
 
@@ -79,6 +78,17 @@ public class ApiControllerTest extends ControllerTest{
 
     @Test
     public void useInfo() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "1");
+        jsonObject.put("usedBeforeWaterQuality", 2);
+        jsonObject.put("usedAfterWaterQuality", 3);
+        jsonObject.put("usedWaterQuantity", 4);
+        jsonObject.put("lastInteractTime", 5);
+
+        this.mockMvc.perform(post("/api/useInfo")
+                .contentType(MediaType.APPLICATION_JSON).content(jsonObject.toString()))
+                .andDo(print())
+                .andDo(document("api_useInfo", preprocessResponse(prettyPrint())));
     }
 
 }

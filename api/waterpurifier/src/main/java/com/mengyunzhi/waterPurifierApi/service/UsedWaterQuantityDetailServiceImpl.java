@@ -20,24 +20,16 @@ public class UsedWaterQuantityDetailServiceImpl implements UsedWaterQuantityDeta
 
     @Override
     public void saveUseInfo(UseInfo useInfo) {
-        //获取上次使用信息
-        UsedWaterQuantityDetail lastUseInfo = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(useInfo.getId());
         //保存
         UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
         usedWaterQuantityDetail.setUsedBeforeWaterQuality(useInfo.getUsedBeforeWaterQuality());
         usedWaterQuantityDetail.setUsedAfterWaterQuality(useInfo.getUsedAfterWaterQuality());
         usedWaterQuantityDetail.setUsedWaterQuantity(useInfo.getUsedWaterQuantity());
+        usedWaterQuantityDetail.setLastInteractionTime(useInfo.getLastInteractTime());
         //获取关联的净水器
         WaterPurifier waterPurifier = waterPurifierRepository.findById(useInfo.getId());
         usedWaterQuantityDetail.setWaterPurifier(waterPurifier);
 
-
-        //判断上次使用信息是否为null
-        if (lastUseInfo == null) {
-            usedWaterQuantityDetail.setLastInteractionTime(0L);
-        } else {
-            usedWaterQuantityDetail.setLastInteractionTime(lastUseInfo.getThisInteractionTime());
-        }
         usedWaterQuantityDetailRepository.save(usedWaterQuantityDetail);
         return;
     }

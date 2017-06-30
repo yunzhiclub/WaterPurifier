@@ -73,19 +73,16 @@ public class ApiController {
         private int usedWaterQuantity;
         @ApiModelProperty("上次交互时间")
         private Long lastInteractTime;
-        @ApiModelProperty("创建时间")
-        private Long createTime;
 
         public UseInfo() {
         }
 
-        public UseInfo(Long id, int usedBeforeWaterQuality, int usedAfterWaterQuality, int usedWaterQuantity, Long lastInteractTime, Long createTime) {
+        public UseInfo(Long id, int usedBeforeWaterQuality, int usedAfterWaterQuality, int usedWaterQuantity, Long lastInteractTime) {
             this.id = id;
             this.usedBeforeWaterQuality = usedBeforeWaterQuality;
             this.usedAfterWaterQuality = usedAfterWaterQuality;
             this.usedWaterQuantity = usedWaterQuantity;
             this.lastInteractTime = lastInteractTime;
-            this.createTime = createTime;
         }
 
         @Override
@@ -96,7 +93,6 @@ public class ApiController {
                     ", usedAfterWaterQuality=" + usedAfterWaterQuality +
                     ", usedWaterQuantity=" + usedWaterQuantity +
                     ", lastInteractTime=" + lastInteractTime +
-                    ", createTime=" + createTime +
                     '}';
         }
 
@@ -140,13 +136,6 @@ public class ApiController {
             this.lastInteractTime = lastInteractTime;
         }
 
-        public Long getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(Long createTime) {
-            this.createTime = createTime;
-        }
     }
 
     @ApiModel("rechargeResult 充值结果")
