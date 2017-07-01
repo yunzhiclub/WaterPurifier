@@ -39,6 +39,7 @@ public class IdentityFilter extends ZuulFilter {
         // 获取请求
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
+
         //获取参数信息，并进行验证
         String timestamp = request.getParameter("timestamp");
         String randomString = request.getParameter("randomString");

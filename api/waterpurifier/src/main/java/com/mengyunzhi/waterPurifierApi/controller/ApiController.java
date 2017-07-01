@@ -26,7 +26,7 @@ public class ApiController {
     @Autowired
     private UsedWaterQuantityDetailService usedWaterQuantityDetailService;
 
-    @ApiOperation(value = "getCurrentTime 获取当前时间", nickname = "api_getCurrentTime")
+    @ApiOperation(value = "getCurrentTime 获取服务器当前时间", nickname = "api_getCurrentTime")
     @GetMapping("/getCurrentTime")
     public String getCurrentTime() {
         long time = System.currentTimeMillis();
@@ -35,8 +35,8 @@ public class ApiController {
     }
 
 
-    @ApiOperation(value = "getRechargeInfo 获取充值信息", nickname = "api_getRechargeInfo")
-    @GetMapping("/getRechargeInfo/")
+    @ApiOperation(value = "getRechargeInfo 获取充值水量", nickname = "api_getRechargeInfo")
+    @GetMapping("/getRechargeInfo")
     public int getRechargeInfo(@ApiParam(value = "净水器编号") @RequestParam("id") Long id) {
         int rechargeWaterQuantity = billService.getRechargeInfoById(id);
         return rechargeWaterQuantity;

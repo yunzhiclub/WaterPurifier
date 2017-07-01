@@ -60,7 +60,7 @@ public class ApiControllerTest extends ControllerTest{
     @Test
     public void getRechargeInfo() throws Exception {
         //模拟请求，获取充值信息
-        this.mockMvc.perform(get("/api/getRechargeInfo/")
+        this.mockMvc.perform(get("/api/getRechargeInfo")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id","1"))
                 .andDo(print())
