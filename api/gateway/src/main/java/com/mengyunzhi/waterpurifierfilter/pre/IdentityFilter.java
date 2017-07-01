@@ -44,7 +44,6 @@ public class IdentityFilter extends ZuulFilter {
         String randomString = request.getParameter("randomString");
         String encryptionInfo = request.getParameter("encryptionInfo");
         // 验证信息是否为我们的客户发送的，若不是，拦截
-
         if (!identityFilterService.isTrue(timestamp, randomString, encryptionInfo)) {
             ctx.setSendZuulResponse(false);
         }

@@ -33,7 +33,7 @@ public class WaterPurifierControllerTest extends ControllerTest {
 //                .param("id","23"))
 //                //.param("timestamp", "1497457292548")
 //                //.param("randomString","unzdtggyopn1fl7sx68b8olxr")
-//               //.param("encryptionInfo", "608c1c5acda5f1abc46a73bc181bf60b62ad604d"))
+//               //.param("encryptionInfo", "37cde59cfa3384c84d9bf7545be348bc880c79bd"))
 //                .andDo(print())
 //                .andDo(document("WaterPurifier_", preprocessResponse(prettyPrint())));
 
