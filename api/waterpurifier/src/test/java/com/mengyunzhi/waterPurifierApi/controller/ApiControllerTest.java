@@ -49,6 +49,9 @@ public class ApiControllerTest extends ControllerTest{
         jsonObject.put("id", "18");
         jsonObject.put("shouldRecharge", 200);
         jsonObject.put("actualRecharge", 200);
+        jsonObject.put("timestamp", 1497457292548L);
+        jsonObject.put("randomString", "unzdtggyopn1fl7sx68b8olxr");
+        jsonObject.put("encryptionInfo", "37cde59cfa3384c84d9bf7545be348bc880c79bd");
 
         this.mockMvc.perform(post("/api/isRechargeOk")
                 .contentType(MediaType.APPLICATION_JSON).content(jsonObject.toString()))
@@ -84,6 +87,10 @@ public class ApiControllerTest extends ControllerTest{
         jsonObject.put("usedAfterWaterQuality", 3);
         jsonObject.put("usedWaterQuantity", 4);
         jsonObject.put("lastInteractTime", 5);
+        jsonObject.put("timestamp", 1497457292548L);
+        jsonObject.put("randomString", "unzdtggyopn1fl7sx68b8olxr");
+        jsonObject.put("encryptionInfo", "37cde59cfa3384c84d9bf7545be348bc880c79bd");
+
 
         this.mockMvc.perform(post("/api/useInfo")
                 .contentType(MediaType.APPLICATION_JSON).content(jsonObject.toString()))

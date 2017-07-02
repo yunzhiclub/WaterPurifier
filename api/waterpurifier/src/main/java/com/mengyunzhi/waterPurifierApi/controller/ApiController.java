@@ -59,6 +59,7 @@ public class ApiController {
         logger.info("净水器使用信息");
         UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
         usedWaterQuantityDetailService.saveUseInfo(useInfo);
+        return;
     }
 
     @ApiModel("净水器使用信息")
@@ -73,16 +74,25 @@ public class ApiController {
         private int usedWaterQuantity;
         @ApiModelProperty("上次交互时间")
         private Long lastInteractTime;
+        @ApiModelProperty("时间戳")
+        private Long timestamp;
+        @ApiModelProperty("随机字符串")
+        private String randomString;
+        @ApiModelProperty("加密信息")
+        private String encryptionInfo;
 
         public UseInfo() {
         }
 
-        public UseInfo(Long id, int usedBeforeWaterQuality, int usedAfterWaterQuality, int usedWaterQuantity, Long lastInteractTime) {
+        public UseInfo(Long id, int usedBeforeWaterQuality, int usedAfterWaterQuality, int usedWaterQuantity, Long lastInteractTime, Long timestamp, String randomString, String encryptionInfo) {
             this.id = id;
             this.usedBeforeWaterQuality = usedBeforeWaterQuality;
             this.usedAfterWaterQuality = usedAfterWaterQuality;
             this.usedWaterQuantity = usedWaterQuantity;
             this.lastInteractTime = lastInteractTime;
+            this.timestamp = timestamp;
+            this.randomString = randomString;
+            this.encryptionInfo = encryptionInfo;
         }
 
         @Override
@@ -93,6 +103,9 @@ public class ApiController {
                     ", usedAfterWaterQuality=" + usedAfterWaterQuality +
                     ", usedWaterQuantity=" + usedWaterQuantity +
                     ", lastInteractTime=" + lastInteractTime +
+                    ", timestamp=" + timestamp +
+                    ", randomString='" + randomString + '\'' +
+                    ", encryptionInfo='" + encryptionInfo + '\'' +
                     '}';
         }
 
@@ -136,6 +149,29 @@ public class ApiController {
             this.lastInteractTime = lastInteractTime;
         }
 
+        public Long getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(Long timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getRandomString() {
+            return randomString;
+        }
+
+        public void setRandomString(String randomString) {
+            this.randomString = randomString;
+        }
+
+        public String getEncryptionInfo() {
+            return encryptionInfo;
+        }
+
+        public void setEncryptionInfo(String encryptionInfo) {
+            this.encryptionInfo = encryptionInfo;
+        }
     }
 
     @ApiModel("rechargeResult 充值结果")
@@ -146,22 +182,34 @@ public class ApiController {
         private int shouldRecharge;
         @ApiModelProperty("实际充值水量")
         private int actualRecharge;
+        @ApiModelProperty("时间戳")
+        private Long timestamp;
+        @ApiModelProperty("随机字符串")
+        private String randomString;
+        @ApiModelProperty("加密信息")
+        private String encryptionInfo;
 
         public RechargeResult() {
         }
 
-        public RechargeResult(Long id, int shouldRecharge, int actualRecharge) {
+        public RechargeResult(Long id, int shouldRecharge, int actualRecharge, Long timestamp, String randomString, String encryptionInfo) {
             this.id = id;
             this.shouldRecharge = shouldRecharge;
             this.actualRecharge = actualRecharge;
+            this.timestamp = timestamp;
+            this.randomString = randomString;
+            this.encryptionInfo = encryptionInfo;
         }
 
         @Override
         public String toString() {
-            return "rechargeResult{" +
+            return "RechargeResult{" +
                     "id=" + id +
                     ", shouldRecharge=" + shouldRecharge +
                     ", actualRecharge=" + actualRecharge +
+                    ", timestamp=" + timestamp +
+                    ", randomString='" + randomString + '\'' +
+                    ", encryptionInfo='" + encryptionInfo + '\'' +
                     '}';
         }
 
@@ -187,6 +235,30 @@ public class ApiController {
 
         public void setActualRecharge(int actualRecharge) {
             this.actualRecharge = actualRecharge;
+        }
+
+        public Long getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(Long timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getRandomString() {
+            return randomString;
+        }
+
+        public void setRandomString(String randomString) {
+            this.randomString = randomString;
+        }
+
+        public String getEncryptionInfo() {
+            return encryptionInfo;
+        }
+
+        public void setEncryptionInfo(String encryptionInfo) {
+            this.encryptionInfo = encryptionInfo;
         }
     }
 }
