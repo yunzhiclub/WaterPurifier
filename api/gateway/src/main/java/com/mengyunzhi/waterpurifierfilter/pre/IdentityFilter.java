@@ -46,7 +46,7 @@ public class IdentityFilter extends ZuulFilter {
 
         //定义并赋空值
         String timestamp, randomString, encryptionInfo;
-        timestamp = randomString = encryptionInfo ="";
+        timestamp = randomString = encryptionInfo = "";
         //判断请求方法
         if (request.getMethod().equals("GET")) {
             timestamp = request.getParameter("timestamp");
@@ -83,7 +83,7 @@ public class IdentityFilter extends ZuulFilter {
             }
         }
         // 验证信息是否为我们的客户发送的，若不是(除获取当前时间戳外)，拦截
-        if (!identityFilterService.isTrue(timestamp, randomString, encryptionInfo) || request.getRequestURL().indexOf("/api/getCurrentTime") > 0) {
+        if (!identityFilterService.isTrue(timestamp, randomString, encryptionInfo) && request.getRequestURL().indexOf("/api/getCurrentTime") < 0) {
             ctx.setSendZuulResponse(false);
         }
         return null;
