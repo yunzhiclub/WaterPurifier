@@ -1,4 +1,4 @@
-package com.mengyunzhi.waterPurifierApi.config;
+package com.mengyunzhi.waterpurifierfilter.config;
 
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 /**

@@ -1,6 +1,6 @@
-package com.mengyunzhi.waterPurifierApi.service;
+package com.mengyunzhi.waterpurifierfilter.service;
 
-import com.mengyunzhi.waterPurifierApi.controller.WaterPurifierController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,12 +12,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 /**
- * Created by chuhang on 2017/6/28.
+ * Created by chuhang on 2017/7/3.
  */
 @Service
 public class LoginServiceImpl implements LoginService {
-    private static Logger logger = Logger.getLogger(WaterPurifierController.class.getName());
+    private static Logger logger = Logger.getLogger(LoginServiceImpl.class.getName());
 
+    @Autowired
+    private IdentityFilterService identityFilterService;
     @Override
     public String sendHttpToWechat(String code) {
         //设置http请求的头信息
@@ -45,38 +47,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String generate3RdSession(String openIdAndSessionKey) {
         String spliceString = openIdAndSessionKey + "mengyunzhi";
-        return this.sha1(spliceString).substring(0, 15);
+        return identityFilterService.sha1(spliceString).substring(0, 15);
     }
 
-    @Override
-    public String sha1(String data) {
-        try {
-            logger.info("sha1加密");
-            MessageDigest digest = java.security.MessageDigest
-                    .getInstance("SHA-1");
-            digest.update(data.getBytes());
-            byte messageDigest[] = digest.digest();
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            // 字节数组转换为 十六进制 数
-            for (int i = 0; i < messageDigest.length; i++) {
-                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
-                if (shaHex.length() <= 1) {
-                    hexString.append(0);
-                }
-                hexString.append(shaHex);
-            }
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    @Override
-    public void storeSession(String threeRdSession, String openIdAndSessionKey, HttpSession session) {
-        session.setAttribute(threeRdSession, openIdAndSessionKey);
-        return;
-    }
 }
