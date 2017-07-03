@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.session.Session;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -86,6 +87,13 @@ public class IdentityFilter extends ZuulFilter {
         if (!identityFilterService.isTrue(timestamp, randomString, encryptionInfo) && request.getRequestURL().indexOf("/api/getCurrentTime") < 0) {
             ctx.setSendZuulResponse(false);
         }
+        Session session = null;
+        session.setAttribute("fds", "fdf");
+        session.setAttribute("id", "fdf");
+        session.getAttribute("fds");
+        session.getId();
+        session.getAttributeNames();
+        session.getAttribute("fds");
         return null;
     }
 
