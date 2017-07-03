@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
@@ -73,8 +74,9 @@ public class LoginServiceImpl implements LoginService {
         return "";
     }
 
-    //todo 按微信官方要求储存session信息，并储存在redis中
     @Override
-    public void storeSession(String threeRdSession, String openIdAndSessionKey) {
+    public void storeSession(String threeRdSession, String openIdAndSessionKey, HttpSession session) {
+        session.setAttribute(threeRdSession, openIdAndSessionKey);
+        return;
     }
 }

@@ -2,6 +2,8 @@ package com.mengyunzhi.waterPurifierApi.service;
 
 import io.swagger.util.Json;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by chuhang on 2017/6/28.
  * 登录service
@@ -14,6 +16,6 @@ public interface LoginService {
     //sha1加密算法
     String sha1(String data);
     //储存session，3rd_session为key，open_id+session_key为value
-    void storeSession(String threeRdSession, String openIdAndSessionKey);
+    void storeSession(String threeRdSession, String openIdAndSessionKey, HttpSession session);
 
 }
