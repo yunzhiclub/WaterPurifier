@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class UsedWaterQuantityDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -31,11 +31,11 @@ public class UsedWaterQuantityDetail implements Serializable {
     @Lazy()
     private WaterPurifier waterPurifier;
 
-    @PrePersist
-    protected void onCreate() {
-        long time = System.currentTimeMillis();
-        createTime = Long.valueOf(time/1000);
-    }
+//    @PrePersist
+//    protected void onCreate() {
+//        long time = System.currentTimeMillis();
+//        createTime = Long.valueOf(time/1000);
+//    }
 
     public UsedWaterQuantityDetail() {
     }

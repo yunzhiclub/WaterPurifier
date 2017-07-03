@@ -25,7 +25,7 @@ Page({
     var params = {
         id: app.number
     };
-    var api = "WaterPurifier/";
+    var api = "waterPurifier/WaterPurifier/";
     
     http.GET(api, params, function(res){
         console.log(res.data);

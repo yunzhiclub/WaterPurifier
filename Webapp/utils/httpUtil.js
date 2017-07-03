@@ -5,7 +5,7 @@ module.exports = {
 }
 
 //请求项目的路由
-var baseURL = "https://localhost:/waterPurifier/";
+var baseURL = "https://localhost:/";
 
 function request(api, method, header, params, success){
     wx.showToast({
