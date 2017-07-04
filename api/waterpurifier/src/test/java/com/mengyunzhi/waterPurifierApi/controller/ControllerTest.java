@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(outputDir = "target/asciidoc/snippets")
 public abstract class ControllerTest {

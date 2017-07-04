@@ -54,7 +54,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
      * @return      用水量
      */
     @Override
-    public int getTodayUsedWaterById(Long id) {
+    public Integer getTodayUsedWaterById(Long id) {
         //获取当前日期
         String currentDate = this.getCurrentDate();
         return this.getUsedWaterByDateAndId(currentDate, id);
@@ -91,16 +91,14 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
     public void save() {
         long time = System.currentTimeMillis();
         Long timestamp = Long.valueOf(time/1000);
-
+        //净水器实体
         WaterPurifier waterPurifier = new WaterPurifier();
-        waterPurifier.setId(23L);
         waterPurifier.setCreateTime(timestamp);
         waterPurifierRepository.save(waterPurifier);
 
         //测试用水量详情
         UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
         usedWaterQuantityDetail.setUsedWaterQuantity(12);
-        usedWaterQuantityDetail.setCreateTime(timestamp);
         usedWaterQuantityDetail.setWaterPurifier(waterPurifier);
         usedWaterQuantityDetail.setUsedAfterWaterQuality(20);
         usedWaterQuantityDetail.setUsedBeforeWaterQuality(2210);
@@ -118,28 +116,37 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
 
     //根据净水器编号获取最后一次安装的滤芯
     @Override
-    public int getLastUsedWaterById(Long id) {
+    public Integer getLastUsedWaterById(Long id) {
         FilterChip filterChip = filterChipRepository.findTopByWaterPurifierIdOrderByInstallTimeDesc(id);
+        if (filterChip == null) {
+            return null;
+        }
         return filterChip.getAvailableWaterQuantity();
     }
 
     //根据净水器编号获取最近一次的用水前水质
     @Override
-    public int getUsedBeforeWaterQualityById(Long id) {
+    public Integer getUsedBeforeWaterQualityById(Long id) {
         UsedWaterQuantityDetail usedWaterQuantityDetail = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(id);
+        if (usedWaterQuantityDetail == null) {
+            return null;
+        }
         return usedWaterQuantityDetail.getUsedBeforeWaterQuality();
     }
 
     //根据净水器编号获取最近一次的用水后水质
     @Override
-    public int getUsedAfterWaterQualityById(Long id) {
+    public Integer getUsedAfterWaterQualityById(Long id) {
         UsedWaterQuantityDetail usedWaterQuantityDetail = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(id);
+        if (usedWaterQuantityDetail == null) {
+            return null;
+        }
         return usedWaterQuantityDetail.getUsedAfterWaterQuality();
     }
 
     //根据日期获取今日用水量
     @Override
-    public int getUsedWaterByDateAndId(String date, Long id) {
+    public Integer getUsedWaterByDateAndId(String date, Long id) {
         //获取当天最小、最大时间戳
         Long[] timestamp = this.getTimestampByDate(date);
 

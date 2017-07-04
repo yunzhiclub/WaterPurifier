@@ -14,10 +14,15 @@ App({
       //调用登录接口
       wx.login({
         success: function (res) {
-          console.log(3232);
+          //获取用户基本信息
+          wx.getUserInfo({
+            success: function (res) {
+              that.globalData.userInfo = res.userInfo
+              typeof cb == "function" && cb(that.globalData.userInfo)
+            }
+          })
           //发送https请求，最终目的是为了获取用户openid
           if (res.code) {
-            console.log(232332);
             var http = require("/utils/httpUtil.js");
             var params = {
                 code: res.code
@@ -26,17 +31,16 @@ App({
             
             http.GET(api, params, function(res){
                 console.log(res.data);
+                //将3rdsession存入缓存中
+                wx.setStorage({
+                  key: "test",
+                  data: res.data
+                });
             });
+            
           } else {
             console.log('获取用户登录态失败！' + res.errMsg)
           }
-
-          // wx.getUserInfo({
-          //   success: function (res) {
-          //     that.globalData.userInfo = res.userInfo
-          //     typeof cb == "function" && cb(that.globalData.userInfo)
-          //   }
-          // })
         }
       })
     }

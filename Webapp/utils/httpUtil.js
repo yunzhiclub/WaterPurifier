@@ -5,17 +5,11 @@ module.exports = {
 }
 
 //请求项目的路由
-var baseURL = "https://localhost:/";
+var baseURL = "https://api.water.mengyunzhi.com/";
 
 function request(api, method, header, params, success){
-    wx.showToast({
-        icon: "loading",
-        title: "加载中...",
-        duration: 10000
-    })
 
     //设置参数信息
-    console.log("加密处理");
     var timestamp = (new Date()).valueOf().toString();
 
     //随机生成字符串
@@ -23,16 +17,13 @@ function request(api, method, header, params, success){
 
     //拼接随机生成的字符串、当前时间戳、净水器编号、mengyunzhi
     var encryptionString = timestamp + randomString + 'mengyunzhi';
-    console.log(encryptionString);
     //用sha1算法加密
-    console.log("test");
     var encryptionInfo = sha1(encryptionString);
 
     //给参数增加验证信息
     params.timestamp = timestamp;
     params.randomString = randomString;
     params.encryptionInfo = encryptionInfo;
-
     //向后台发送请求
     wx.request({
         url: baseURL + api,
@@ -43,11 +34,8 @@ function request(api, method, header, params, success){
             wx.hideToast()
             success(res)
         },
-        fail: function(){
-            wx.showToast({
-                icon: "loading",
-                title: "请检查网络..."
-            })
+        fail: function(res){
+            console.log("fdd23f");
         }
     })
 }
