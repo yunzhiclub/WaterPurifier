@@ -41,28 +41,84 @@ public class WaterPurifierController {
         @ApiModelProperty("净水器编号")
         public Long id;
         @ApiModelProperty("今日用水量")
-        public int todayUsedWater;
+        public Integer todayUsedWater;
         @ApiModelProperty("剩余用水量")
-        public int lastUsedWater;
+        public Integer lastUsedWater;
         @ApiModelProperty("剩余滤芯")
-        public int lastFilterChip;
+        public Integer lastFilterChip;
         @ApiModelProperty("净水前水质状态")
-        public int usedBeforeWaterQuality;
+        public Integer usedBeforeWaterQuality;
         @ApiModelProperty("净水后水质状态")
-        public int usedAfterWaterQuality;
+        public Integer usedAfterWaterQuality;
         @ApiModelProperty("最近一周用水量")
         public Map<String, Integer> recentOneWeekUsedWater;
 
         public WaterPurifierOutput() {
         }
 
-        public WaterPurifierOutput(Long id, int todayUsedWater, int lastUsedWater, int lastFilterChip, int usedBeforeWaterQuality, int usedAfterWaterQuality, Map<String, Integer> recentOneWeekUsedWater) {
+        public WaterPurifierOutput(Long id, Integer todayUsedWater, Integer lastUsedWater, Integer lastFilterChip, Integer usedBeforeWaterQuality, Integer usedAfterWaterQuality, Map<String, Integer> recentOneWeekUsedWater) {
             this.id = id;
             this.todayUsedWater = todayUsedWater;
             this.lastUsedWater = lastUsedWater;
             this.lastFilterChip = lastFilterChip;
             this.usedBeforeWaterQuality = usedBeforeWaterQuality;
             this.usedAfterWaterQuality = usedAfterWaterQuality;
+            this.recentOneWeekUsedWater = recentOneWeekUsedWater;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public Integer getTodayUsedWater() {
+            return todayUsedWater;
+        }
+
+        public void setTodayUsedWater(Integer todayUsedWater) {
+            this.todayUsedWater = todayUsedWater;
+        }
+
+        public Integer getLastUsedWater() {
+            return lastUsedWater;
+        }
+
+        public void setLastUsedWater(Integer lastUsedWater) {
+            this.lastUsedWater = lastUsedWater;
+        }
+
+        public Integer getLastFilterChip() {
+            return lastFilterChip;
+        }
+
+        public void setLastFilterChip(Integer lastFilterChip) {
+            this.lastFilterChip = lastFilterChip;
+        }
+
+        public Integer getUsedBeforeWaterQuality() {
+            return usedBeforeWaterQuality;
+        }
+
+        public void setUsedBeforeWaterQuality(Integer usedBeforeWaterQuality) {
+            this.usedBeforeWaterQuality = usedBeforeWaterQuality;
+        }
+
+        public Integer getUsedAfterWaterQuality() {
+            return usedAfterWaterQuality;
+        }
+
+        public void setUsedAfterWaterQuality(Integer usedAfterWaterQuality) {
+            this.usedAfterWaterQuality = usedAfterWaterQuality;
+        }
+
+        public Map<String, Integer> getRecentOneWeekUsedWater() {
+            return recentOneWeekUsedWater;
+        }
+
+        public void setRecentOneWeekUsedWater(Map<String, Integer> recentOneWeekUsedWater) {
             this.recentOneWeekUsedWater = recentOneWeekUsedWater;
         }
 
@@ -78,64 +134,5 @@ public class WaterPurifierController {
                     ", recentOneWeekUsedWater=" + recentOneWeekUsedWater +
                     '}';
         }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public int getTodayUsedWater() {
-            return todayUsedWater;
-        }
-
-        public void setTodayUsedWater(int todayUsedWater) {
-            this.todayUsedWater = todayUsedWater;
-        }
-
-        public int getLastUsedWater() {
-            return lastUsedWater;
-        }
-
-        public void setLastUsedWater(int lastUsedWater) {
-            this.lastUsedWater = lastUsedWater;
-        }
-
-        public int getLastFilterChip() {
-            return lastFilterChip;
-        }
-
-        public void setLastFilterChip(int lastFilterChip) {
-            this.lastFilterChip = lastFilterChip;
-        }
-
-        public int getUsedBeforeWaterQuality() {
-            return usedBeforeWaterQuality;
-        }
-
-        public void setUsedBeforeWaterQuality(int usedBeforeWaterQuality) {
-            this.usedBeforeWaterQuality = usedBeforeWaterQuality;
-        }
-
-        public int getUsedAfterWaterQuality() {
-            return usedAfterWaterQuality;
-        }
-
-        public void setUsedAfterWaterQuality(int usedAfterWaterQuality) {
-            this.usedAfterWaterQuality = usedAfterWaterQuality;
-        }
-
-        public Map<String, Integer> getRecentOneWeekUsedWater() {
-            return recentOneWeekUsedWater;
-        }
-
-        public void setRecentOneWeekUsedWater(Map<String, Integer> recentOneWeekUsedWater) {
-            this.recentOneWeekUsedWater = recentOneWeekUsedWater;
-        }
     }
-
-
-
 }

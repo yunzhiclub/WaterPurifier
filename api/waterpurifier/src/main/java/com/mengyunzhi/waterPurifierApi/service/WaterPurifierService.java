@@ -12,7 +12,7 @@ public interface WaterPurifierService {
     //根据净水器编号获取关联信息
     WaterPurifierOutput getRelateInfoById(Long id);
     //根据净水器编号获取今日用水量
-    int getTodayUsedWaterById(Long id);
+    Integer getTodayUsedWaterById(Long id);
     //获取当前日期
     String getCurrentDate();
     //根据时间戳转化为当前日期
@@ -20,13 +20,13 @@ public interface WaterPurifierService {
     //保存，用于测试
     void save();
     //根据净水器编号获取可用水量
-    int getLastUsedWaterById(Long id);
+    Integer getLastUsedWaterById(Long id);
     //根据净水器编号获取净水前水质
-    int getUsedBeforeWaterQualityById(Long id);
+    Integer getUsedBeforeWaterQualityById(Long id);
     //根据净水器编号获取净水后水质
-    int getUsedAfterWaterQualityById(Long id);
+    Integer getUsedAfterWaterQualityById(Long id);
     //根据日期和净水器编号获取今日用水量
-    int getUsedWaterByDateAndId(String date, Long id);
+    Integer getUsedWaterByDateAndId(String date, Long id);
     //获取一天中最小、最大时间戳
     Long[] getTimestampByDate(String date);
     //根据净水器编号获取最近7天的用水量
