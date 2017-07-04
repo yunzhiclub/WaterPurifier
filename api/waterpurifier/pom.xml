@@ -170,7 +170,6 @@
 			<version>${swagger2markup.version}</version>
 		</dependency>
 
-
 	</dependencies>
 
 	<build>

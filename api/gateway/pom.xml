@@ -35,6 +35,16 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!--引入session依赖-->
+    <dependency>
+      <groupId>org.springframework.session</groupId>
+      <artifactId>spring-session</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-redis</artifactId>
+    </dependency>
   </dependencies>
   
   <dependencyManagement>
@@ -46,6 +56,8 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
+
     </dependencies>
   </dependencyManagement>
   
