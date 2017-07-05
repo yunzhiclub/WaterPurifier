@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 
 @EnableZuulProxy
 @SpringBootApplication
@@ -19,8 +20,9 @@ public class GatewayApplication {
     return new IdentityFilter();
   }
 
-
-
-
-
+  // 设置HttpSession策略。默认读取header中的X-Auth-Token,作为sessionId。
+  @Bean
+  HeaderHttpSessionStrategy sessionStrategy()	 {
+    return new HeaderHttpSessionStrategy();
+  }
 }

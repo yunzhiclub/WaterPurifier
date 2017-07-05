@@ -1,4 +1,3 @@
-//app.js
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
@@ -14,37 +13,40 @@ App({
       //调用登录接口
       wx.login({
         success: function (res) {
-          //获取用户基本信息
           wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
+            success: function (re) {
+              that.globalData.userInfo = re.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
+
+              //发送https请求，最终目的是为了获取用户openid
+              if (res.code) {
+                //发送http请求，获取3rdsession
+                var http = require("/utils/httpUtil.js");
+                var params = {
+                  code: res.code,
+                  nickname: re.userInfo.nickName
+                };
+                var api = "Login/";
+                http.GET(api, params, function(res){
+                  console.log(res);
+                  //将3rdsession存入缓存中
+                  wx.setStorage({
+                    key: re.userInfo.nickName,
+                    data: res.data
+                  });
+                  //将threeRdSession/x-auth-token绑定到用户信息中
+                  that.globalData.userInfo.threeRdSession = res.data;
+                  that.globalData.userInfo.authToken = res.header['x-auth-token'];
+                });
+              } else {
+                console.log('获取用户登录态失败！' + res.errMsg)
+              }
             }
           })
-          //发送https请求，最终目的是为了获取用户openid
-          if (res.code) {
-            var http = require("/utils/httpUtil.js");
-            var params = {
-                code: res.code
-            };
-            var api = "Login/";
-            
-            http.GET(api, params, function(res){
-                console.log(res.data);
-                //将3rdsession存入缓存中
-                wx.setStorage({
-                  key: "test",
-                  data: res.data
-                });
-            });
-            
-          } else {
-            console.log('获取用户登录态失败！' + res.errMsg)
-          }
         }
       })
-    }
-  },
+  }},
+
   globalData:{
     userInfo:null
   }

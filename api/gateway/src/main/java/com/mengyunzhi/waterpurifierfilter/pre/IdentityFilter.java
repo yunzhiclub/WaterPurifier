@@ -1,24 +1,34 @@
 package com.mengyunzhi.waterpurifierfilter.pre;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import com.mengyunzhi.waterpurifierfilter.service.IdentityFilterService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
  * Created by chuhang on 2017/6/19.
  * 身份验证过滤器（用于判断请求是不是我们的用户发出的）
  */
+@SessionAttributes("user")
 public class IdentityFilter extends ZuulFilter {
 
-    private static Logger log = LoggerFactory.getLogger(IdentityFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(IdentityFilter.class);
 
     @Autowired
     private IdentityFilterService identityFilterService;
@@ -37,17 +47,52 @@ public class IdentityFilter extends ZuulFilter {
         return true;
     }
 
-
     @Override
     public Object run()  {
-        // 获取请求
+        // 获取请求内容
         RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
+        //获取3rd_session
+        String threeRdSession = ctx.getRequest().getParameter("threeRdSession");
+        //获取openId
+        HttpSession session = ctx.getRequest().getSession();
+        Object openIdAndSessionKey = session.getAttribute(threeRdSession);
+        String openid = JSONObject.fromObject(openIdAndSessionKey).getString("openid");
+        //增加请求参数，根据客户端请求的参数3rd_session，从session中获取客户的openId
+        this.addParams(openid, ctx);
+        //验证请求，若不合法，则拦截，反之
+        this.verifyRequest(ctx);
+        return null;
+    }
 
+    /**
+     * 增加请求参数，根据客户端请求的参数3rd_session，从session中获取客户的openId
+     * @param openid
+     * @param ctx
+     */
+    public void addParams(String openid, RequestContext ctx) {
+        Map<String, List<String>> params = ctx.getRequestQueryParams();
+        //若无请求参数，则new一个map
+        if (params == null) {
+            params = Maps.newHashMap();
+        }
+        //添加参数
+        List<String> param = new ArrayList<String>();
+        param.add(0, openid);
+        params.put("openid", param);
+        ctx.setRequestQueryParams(params);
+    }
+
+    /**
+     * 验证请求，若不合法，则拦截，反之
+     * @param ctx
+     */
+    public void verifyRequest(RequestContext ctx) {
+        //获取请求
+        HttpServletRequest request = ctx.getRequest();
         //定义并赋空值
         String timestamp, randomString, encryptionInfo;
         timestamp = randomString = encryptionInfo = "";
-        //判断请求方法
+        //判断请求方法，并获取相关加密信息
         if (request.getMethod().equals("GET")) {
             timestamp = request.getParameter("timestamp");
             randomString = request.getParameter("randomString");
@@ -86,7 +131,6 @@ public class IdentityFilter extends ZuulFilter {
         if (!identityFilterService.isTrue(timestamp, randomString, encryptionInfo) && request.getRequestURL().indexOf("/api/getCurrentTime") < 0) {
             ctx.setSendZuulResponse(false);
         }
-        return null;
+        return;
     }
-
 }

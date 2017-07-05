@@ -1,3 +1,4 @@
+var app = getApp();
 //将get和post方法输出
 module.exports = {
     GET: get,
@@ -8,7 +9,7 @@ module.exports = {
 var baseURL = "https://api.water.mengyunzhi.com/";
 
 function request(api, method, header, params, success){
-
+    var self = this;
     //设置参数信息
     var timestamp = (new Date()).valueOf().toString();
 
@@ -24,20 +25,27 @@ function request(api, method, header, params, success){
     params.timestamp = timestamp;
     params.randomString = randomString;
     params.encryptionInfo = encryptionInfo;
-    //向后台发送请求
-    wx.request({
-        url: baseURL + api,
-        method: method,
-        header: header,
-        data: params,
-        success: function(res) {
-            wx.hideToast()
-            success(res)
-        },
-        fail: function(res){
-            console.log("fdd23f");
-        }
+    //获取3rd_session
+    app.getUserInfo(function(userInfo){
+        params.threeRdSession = userInfo.threeRdSession;
+        //向后台发送请求
+        wx.request({
+            url: baseURL + api,
+            method: method,
+            header: {
+                'x-auth-token': userInfo.authToken
+            },
+            data: params,
+            success: function(res) {
+                wx.hideToast()
+                success(res)
+            },
+            fail: function(res){
+                console.log("fdd23f");
+            }
+        })
     })
+    
 }
 
 //实现get请求

@@ -10,6 +10,5 @@ public interface LoginService {
     String sendHttpToWechat(String code);
     //根据openId和会话密钥生成16位的3rd_session
     String generate3RdSession(String openIdAndSessionKey);
-
 }
 
