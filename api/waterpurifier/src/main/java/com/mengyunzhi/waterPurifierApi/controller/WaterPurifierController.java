@@ -29,8 +29,6 @@ public class WaterPurifierController {
     @GetMapping("/")
     public WaterPurifierOutput get(@ApiParam(value = "净水器编号") @RequestParam("id") Long id, @RequestParam("openid") String openid) {
         logger.info("---- 获取净水器实体信息 -----");
-        System.out.println(openid);
-        System.out.println("fdsf");
         //根据净水器编号获取相关信息
         WaterPurifierOutput waterPurifierOutput = waterPurifierService.getRelateInfoById(id);
 

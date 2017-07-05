@@ -2,8 +2,6 @@ package com.mengyunzhi.waterpurifierfilter.controller;
 
 import com.mengyunzhi.waterpurifierfilter.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
