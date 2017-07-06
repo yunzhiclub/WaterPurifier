@@ -24,7 +24,7 @@
                     <view class="weui-label">水量(升)</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" type="number" min="0" value="{{waterValue}}" />
+                    <input class="weui-input" disabled="true" type="number" min="0" value="{{waterValue}}" />
                 </view>
             </view>
         </view>

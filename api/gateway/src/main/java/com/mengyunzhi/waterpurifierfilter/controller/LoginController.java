@@ -28,7 +28,7 @@ public class LoginController {
         //以3rd_session为key，open_id+session_key为value，写入session储存
         HttpSession session = request.getSession();
         session.setAttribute(threeRdSession,openIdAndSessionKey);
-        //返回3rd_session，如果用户已绑定净水器，则一并将净水器信息返回。反之
+        //返回3rd_session
         return threeRdSession;
     }
 

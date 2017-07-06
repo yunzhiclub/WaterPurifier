@@ -15,12 +15,10 @@ Page({
       duration: 1000
     },
     touchHandler: function (e) {
-        console.log(areaChart.getCurrentDataIndex(e));
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
-        //获取用户信息
-        app.getUserInfo();
+        //判断用户是否已绑定净水器
         
         var windowWidth = 320;
         try {

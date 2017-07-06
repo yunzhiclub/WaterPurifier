@@ -5,7 +5,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" bindinput="bindNumber" placeholder="请输入净水器编号" type="number" min="0" />
+                    <input type="number" class="weui-input" bindinput="bindNumber" placeholder="请输入净水器编号" min="0" />
                 </view>
             </view>
         </view>
