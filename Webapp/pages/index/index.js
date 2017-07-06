@@ -19,6 +19,12 @@ Page({
     },    
     onLoad: function (e) {
         //判断用户是否已绑定净水器
+        var http = require("/utils/httpUtil.js");
+        var params = {};
+        var api = "Login/";
+        http.GET(api, params, function(res){
+
+        }
         
         var windowWidth = 320;
         try {
