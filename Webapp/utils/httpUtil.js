@@ -25,25 +25,37 @@ function request(api, method, header, params, success){
     params.timestamp = timestamp;
     params.randomString = randomString;
     params.encryptionInfo = encryptionInfo;
+    var authToken = wx.getStorageSync('authToken');
     // 同步获取threeRdSession缓存
     params.threeRdSession = wx.getStorageSync('threeRdSession');
-
-    //向后台发送请求
-    wx.request({
-        url: baseURL + api,
-        method: method,
-        header: {
-            'x-auth-token': wx.getStorageSync('authToken')
-        },
-        data: params,
-        success: function(res) {
-            wx.hideToast()
-            success(res)
-        },
-        fail: function(res){
-            console.log("发送http请求失败" + res);
-        }
+    //异步获取authToken缓存
+    wx.getStorage({
+      key: 'authToken',
+      success: function(res) {
+           console.log("token信息" + res.data);
+           console.log(authToken);
+           console.log(params);
+          //向后台发送请求
+          wx.request({
+              url: baseURL + api,
+              method: method,
+              header: {
+                  'x-auth-token': res.data
+              },
+              data: params,
+              success: function(res) {
+                  wx.hideToast()
+                  success(res)
+              },
+              fail: function(res){
+                  console.log("发送http请求失败" + res);
+              }
+          })
+      } 
     })
+    var authToken = wx.getStorageSync('authToken');
+
+    
     
 }
 

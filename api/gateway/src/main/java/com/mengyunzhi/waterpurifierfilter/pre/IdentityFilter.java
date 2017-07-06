@@ -51,12 +51,15 @@ public class IdentityFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         //获取3rd_session
         String threeRdSession = ctx.getRequest().getParameter("threeRdSession");
-        //获取openId
-        HttpSession session = ctx.getRequest().getSession();
-        Object openIdAndSessionKey = session.getAttribute(threeRdSession);
-        String openid = JSONObject.fromObject(openIdAndSessionKey).getString("openid");
-        //增加请求参数，根据客户端请求的参数3rd_session，从session中获取客户的openId
-        this.addParams(openid, ctx);
+        //如果threeRdSession不为空，则认为是微信端发送送的请求
+        if (threeRdSession != null) {
+            //获取openId
+            HttpSession session = ctx.getRequest().getSession();
+            Object openIdAndSessionKey = session.getAttribute(threeRdSession);
+            String openid = JSONObject.fromObject(openIdAndSessionKey).getString("openid");
+            //增加请求参数，根据客户端请求的参数3rd_session，从session中获取客户的openId
+            this.addParams(openid, ctx);
+        }
         //验证请求，若不合法，则拦截，反之
         this.verifyRequest(ctx);
         return null;

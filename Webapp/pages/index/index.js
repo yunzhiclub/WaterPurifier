@@ -12,19 +12,32 @@ Page({
       indicatorDots: true,
       autoplay: true,
       interval: 3000,
-      duration: 1000
+      duration: 1000,
     },
     touchHandler: function (e) {
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
+        //调用登录接口
+        app.getUserInfo();
         //判断用户是否已绑定净水器
-        var http = require("/utils/httpUtil.js");
-        var params = {};
-        var api = "Login/";
+        var http = require("../../utils/httpUtil.js");
+        var params = {
+            id: 1 
+        };
+        var api = "waterPurifier/WechatCustomer/";
         http.GET(api, params, function(res){
-
-        }
+            console.log("修改")
+            console.log(res.data);
+            if (res.data == false) {
+                //跳转至登录界面
+                wx.switchTab({
+                  url: '/pages/login/index'
+                })
+            } else {
+                app.info = res.data;
+            }
+        });
         
         var windowWidth = 320;
         try {

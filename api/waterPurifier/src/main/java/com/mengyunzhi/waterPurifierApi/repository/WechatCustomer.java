@@ -2,6 +2,7 @@ package com.mengyunzhi.waterPurifierApi.repository;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,8 +17,9 @@ public class WechatCustomer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "ID",unique=true, columnDefinition="VARCHAR(100)")
+    @ApiModelProperty("id")
+    private String id;
 
     @ApiModelProperty("昵称")
     private String nickname;
@@ -29,25 +31,22 @@ public class WechatCustomer implements Serializable {
     public WechatCustomer() {
     }
 
-    @Override
-    public String toString() {
-        return "WechatCustomer{" +
-                "id=" + id +
-                ", nickname='" + nickname + '\'' +
-                ", waterPurifier=" + waterPurifier +
-                '}';
-    }
-
-    public WechatCustomer(String nickname, WaterPurifier waterPurifier) {
+    public WechatCustomer(String id, String nickname, WaterPurifier waterPurifier) {
+        this.id = id;
         this.nickname = nickname;
         this.waterPurifier = waterPurifier;
     }
 
-    public Long getId() {
+    @Override
+    public String toString() {
+        return "WechatCustomer{}";
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

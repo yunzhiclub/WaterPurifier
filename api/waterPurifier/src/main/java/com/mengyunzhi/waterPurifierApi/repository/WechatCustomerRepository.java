@@ -9,4 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 @ApiModel("微信客户实体仓库")
 public interface WechatCustomerRepository extends PagingAndSortingRepository<WechatCustomer, Long> {
+    //查找微信客户
+    WechatCustomer findById(String id);
 }

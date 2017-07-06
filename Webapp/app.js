@@ -28,16 +28,17 @@ App({
                 };
                 var api = "Login/";
                 http.GET(api, params, function(res){
-                  //将3rdsession存入缓存中
-                  wx.setStorage({
-                    key: "threeRdSession",
-                    data: res.data
-                  });
                   //将x-auth-token存入缓存中
                   wx.setStorage({
                     key: "authToken",
                     data: res.header['x-auth-token']
                   })
+                  //将3rdsession存入缓存中
+                  wx.setStorage({
+                    key: "threeRdSession",
+                    data: res.data
+                  });
+                  
                 });
               } else {
                 console.log('获取用户登录态失败！' + res.errMsg)
