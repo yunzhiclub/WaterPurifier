@@ -19,17 +19,12 @@ import java.util.logging.Logger;
 public class WaterPurifierController {
     private static Logger logger = Logger.getLogger(WaterPurifierController.class.getName());
     @Autowired
-    private WaterPurifierRepository waterPurifierRepository;
-
-    @Autowired
     private WaterPurifierService waterPurifierService;
 
-    // TODO根据净水器编号获取今日用水量、剩余用水量、剩余滤芯、净水前水质状态、净水后水质转台、最近一周用水量、
     @ApiOperation(value = "get 获取净水器信息", nickname = "WaterPurifier_")
     @GetMapping("/")
     public WaterPurifierOutput get(@ApiParam(value = "净水器编号") @RequestParam("id") Long id) {
         logger.info("---- 获取净水器实体信息 -----");
-
         //根据净水器编号获取相关信息
         WaterPurifierOutput waterPurifierOutput = waterPurifierService.getRelateInfoById(id);
 

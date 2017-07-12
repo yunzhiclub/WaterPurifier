@@ -1,7 +1,10 @@
 // home.js
 var wxCharts = require('../../utils/wxcharts-min.js');
 var app = getApp();
+//调用登录接口
+app.getUserInfo();
 var areaChart = null;
+
 Page({
     data: {
       imgUrls: [
@@ -12,15 +15,56 @@ Page({
       indicatorDots: true,
       autoplay: true,
       interval: 3000,
-      duration: 1000
+      duration: 1000,
+      todayUsedWater: 0,
+      lastUsedWater: 0,
+      lastFilterChip: 0,
+      usedBeforeWaterQuality: 0,
+      usedAfterWaterQuality: 0
     },
     touchHandler: function (e) {
-        console.log(areaChart.getCurrentDataIndex(e));
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
-        //获取用户信息
-        app.getUserInfo();
+        var self = this;
+
+        //初始化信息，发送请求
+        var http = require("../../utils/httpUtil.js");
+        var params = {
+            id: 1 
+        };
+        var api = "WechatCustomer/";
+        http.GET(api, params, function(res){
+            //如果未成功请求微信服务器
+            if (res.data == "error") {
+                wx.showToast({
+                    title: '请求失败',
+                    icon: 'loading',
+                    duration: 2000
+                })
+                wx.switchTab({
+                  url: '/pages/login/index'
+                })
+            }
+            //判断用户是否已绑定净水器
+            if (res.data == false) {
+                //跳转至登录界面
+                wx.switchTab({
+                  url: '/pages/login/index'
+                })
+            } else {
+                app.info = res.data;
+                console.log(app.info)
+                //更新视图
+                self.setData({
+                    todayUsedWater: app.info.todayUsedWater,
+                    lastUsedWater: app.info.lastUsedWater,
+                    lastFilterChip: app.info.lastFilterChip,
+                    usedBeforeWaterQuality: app.info.usedBeforeWaterQuality,
+                    usedAfterWaterQuality: app.info.usedAfterWaterQuality
+                })
+            }
+        });
         
         var windowWidth = 320;
         try {
@@ -30,6 +74,7 @@ Page({
           console.error('getSystemInfoSync failed!');
         }
         
+        console.log(app.info);
         //折线图
         areaChart = new wxCharts({
             canvasId: 'areaCanvas',

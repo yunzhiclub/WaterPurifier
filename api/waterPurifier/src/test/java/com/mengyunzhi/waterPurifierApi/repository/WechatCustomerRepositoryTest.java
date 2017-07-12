@@ -16,6 +16,7 @@ public class WechatCustomerRepositoryTest extends RepositoryTest{
     @Test
     public void save() {
         WechatCustomer wechatCustomer = new WechatCustomer();
+        wechatCustomer.setId("olyYc0eYmPvEY6McyR4QxfMZjiD8");
         wechatCustomerRepository.save(wechatCustomer);
     }
 
