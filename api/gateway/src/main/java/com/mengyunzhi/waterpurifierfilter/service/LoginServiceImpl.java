@@ -1,14 +1,12 @@
 package com.mengyunzhi.waterpurifierfilter.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpSession;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 /**
@@ -17,6 +15,11 @@ import java.util.logging.Logger;
 @Service
 public class LoginServiceImpl implements LoginService {
     private static Logger logger = Logger.getLogger(LoginServiceImpl.class.getName());
+
+    @Value("${wechat.secret}")
+    private String secret;
+    @Value("${wechat.appid}")
+    private String appid;
 
     @Autowired
     private IdentityFilterService identityFilterService;
@@ -30,11 +33,10 @@ public class LoginServiceImpl implements LoginService {
         //实例化restTemplate，并设置请求路由
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.weixin.qq.com/sns/jscode2session";
-
         //发送请求
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("appid", "wxa84c8afd480f058c")
-                .queryParam("secret", "ec1c821f512da4895eac961eed649206")
+                .queryParam("appid", appid)
+                .queryParam("secret", secret)
                 .queryParam("js_code", code)
                 .queryParam("grant_type", "authorization_code");
 

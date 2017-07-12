@@ -6,7 +6,7 @@ module.exports = {
 }
 
 //请求项目的路由
-var baseURL = "https://api.water.mengyunzhi.com/";
+var baseURL = "https://api.water.mengyunzhi.com/waterPurifier/";
 
 function request(api, method, header, params, success){
     var self = this;
@@ -20,31 +20,57 @@ function request(api, method, header, params, success){
     var encryptionString = timestamp + randomString + 'mengyunzhi';
     //用sha1算法加密
     var encryptionInfo = sha1(encryptionString);
+    // 同步获取threeRdSession缓存
+    var threeRdSession = wx.getStorageSync('threeRdSession');
+    //同步获取authToken信息
+    var authToken = wx.getStorageSync('authToken');
 
-    //给参数增加验证信息
-    params.timestamp = timestamp;
-    params.randomString = randomString;
-    params.encryptionInfo = encryptionInfo;
-    //获取3rd_session
-    app.getUserInfo(function(userInfo){
-        params.threeRdSession = userInfo.threeRdSession;
+    if (method == "POST") {
         //向后台发送请求
         wx.request({
-            url: baseURL + api,
-            method: method,
-            header: {
-                'x-auth-token': userInfo.authToken
-            },
-            data: params,
-            success: function(res) {
-                wx.hideToast()
-                success(res)
-            },
-            fail: function(res){
-                console.log("fdd23f");
-            }
+          url: baseURL + api,
+          method: method,
+          header: {
+                'timestamp': timestamp,
+                'randomString': randomString,
+                'encryptionInfo': encryptionInfo,
+                'x-auth-token': res.data
+          },
+          data: params,
+          success: function(res) {
+              wx.hideToast()
+              success(res)
+          },
+          fail: function(res){
+              console.log("发送http请求失败" + res);
+          }
         })
-    })
+    } else {
+        //给参数增加验证信息
+        params.timestamp = timestamp;
+        params.randomString = randomString;
+        params.encryptionInfo = encryptionInfo;
+        params.threeRdSession = threeRdSession;
+        
+        //向后台发送请求
+        wx.request({
+          url: baseURL + api,
+          method: method,
+          header: {
+              'x-auth-token': authToken
+          },
+          data: params,
+          success: function(res) {
+              wx.hideToast()
+              success(res)
+          },
+          fail: function(res){
+              console.log("发送http请求失败" + res);
+          }
+        })
+    }
+
+    
     
 }
 

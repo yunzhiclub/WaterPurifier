@@ -18,26 +18,26 @@ App({
               that.globalData.userInfo = re.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
 
-              //发送https请求，最终目的是为了获取用户openid
+              //判断是否获取登录凭证
               if (res.code) {
-                //发送http请求，获取3rdsession
-                var http = require("/utils/httpUtil.js");
-                var params = {
-                  code: res.code,
-                  nickname: re.userInfo.nickName
-                };
-                var api = "Login/";
-                http.GET(api, params, function(res){
-                  console.log(res);
-                  //将3rdsession存入缓存中
-                  wx.setStorage({
-                    key: re.userInfo.nickName,
-                    data: res.data
-                  });
-                  //将threeRdSession/x-auth-token绑定到用户信息中
-                  that.globalData.userInfo.threeRdSession = res.data;
-                  that.globalData.userInfo.authToken = res.header['x-auth-token'];
-                });
+                //发送https请求，获取后续请求头信息和获取3rdsession
+                wx.request({
+                  url: 'https://api.water.mengyunzhi.com/Login/', //仅为示例，并非真实的接口地址
+                  data: {
+                     code: res.code,
+                     nickname: re.userInfo.nickName
+                  },
+                  header: {
+                      'content-type': 'application/json'
+                  },
+                  success: function(res) {
+                    //将x-auth-token存入缓存中
+                    wx.setStorageSync('authToken', res.header['x-auth-token']);
+                  
+                    //将3rdsession存入缓存中
+                    wx.setStorageSync('threeRdSession', res.data);
+                  }
+                })
               } else {
                 console.log('获取用户登录态失败！' + res.errMsg)
               }
