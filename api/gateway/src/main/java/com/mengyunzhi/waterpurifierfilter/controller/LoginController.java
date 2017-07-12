@@ -18,8 +18,6 @@ import java.util.logging.Logger;
 public class LoginController {
     private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
-
-
     @Autowired
     private LoginService loginService;
     @GetMapping("/")

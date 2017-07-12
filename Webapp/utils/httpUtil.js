@@ -22,34 +22,28 @@ function request(api, method, header, params, success){
     var encryptionInfo = sha1(encryptionString);
     // 同步获取threeRdSession缓存
     var threeRdSession = wx.getStorageSync('threeRdSession');
+    //同步获取authToken信息
+    var authToken = wx.getStorageSync('authToken');
 
     if (method == "POST") {
-        //异步获取authToken缓存
-        wx.getStorage({
-          key: 'authToken',
+        //向后台发送请求
+        wx.request({
+          url: baseURL + api,
+          method: method,
+          header: {
+                'timestamp': timestamp,
+                'randomString': randomString,
+                'encryptionInfo': encryptionInfo,
+                'x-auth-token': res.data
+          },
+          data: params,
           success: function(res) {
-               console.log("token信息" + res.data);
-               console.log(params);
-              //向后台发送请求
-              wx.request({
-                  url: baseURL + api,
-                  method: method,
-                  header: {
-                        'timestamp': timestamp,
-                        'randomString': randomString,
-                        'encryptionInfo': encryptionInfo,
-                        'x-auth-token': res.data
-                  },
-                  data: params,
-                  success: function(res) {
-                      wx.hideToast()
-                      success(res)
-                  },
-                  fail: function(res){
-                      console.log("发送http请求失败" + res);
-                  }
-              })
-          } 
+              wx.hideToast()
+              success(res)
+          },
+          fail: function(res){
+              console.log("发送http请求失败" + res);
+          }
         })
     } else {
         //给参数增加验证信息
@@ -57,32 +51,22 @@ function request(api, method, header, params, success){
         params.randomString = randomString;
         params.encryptionInfo = encryptionInfo;
         params.threeRdSession = threeRdSession;
-        var authToken = wx.getStorageSync('authToken');
         
-        //异步获取authToken缓存
-        wx.getStorage({
-          key: 'authToken',
+        //向后台发送请求
+        wx.request({
+          url: baseURL + api,
+          method: method,
+          header: {
+              'x-auth-token': authToken
+          },
+          data: params,
           success: function(res) {
-               console.log("token信息" + res.data);
-               console.log(authToken);
-               console.log(params);
-              //向后台发送请求
-              wx.request({
-                  url: baseURL + api,
-                  method: method,
-                  header: {
-                      'x-auth-token': res.data
-                  },
-                  data: params,
-                  success: function(res) {
-                      wx.hideToast()
-                      success(res)
-                  },
-                  fail: function(res){
-                      console.log("发送http请求失败" + res);
-                  }
-              })
-          } 
+              wx.hideToast()
+              success(res)
+          },
+          fail: function(res){
+              console.log("发送http请求失败" + res);
+          }
         })
     }
 

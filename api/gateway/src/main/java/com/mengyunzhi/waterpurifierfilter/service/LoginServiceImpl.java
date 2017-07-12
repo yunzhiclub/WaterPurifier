@@ -33,10 +33,9 @@ public class LoginServiceImpl implements LoginService {
         //实例化restTemplate，并设置请求路由
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.weixin.qq.com/sns/jscode2session";
-
         //发送请求
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("appid", secret)
+                .queryParam("appid", appid)
                 .queryParam("secret", secret)
                 .queryParam("js_code", code)
                 .queryParam("grant_type", "authorization_code");
