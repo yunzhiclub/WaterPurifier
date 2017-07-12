@@ -1,7 +1,10 @@
 // home.js
 var wxCharts = require('../../utils/wxcharts-min.js');
 var app = getApp();
+//调用登录接口
+app.getUserInfo();
 var areaChart = null;
+
 Page({
     data: {
       imgUrls: [
@@ -18,17 +21,25 @@ Page({
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
-        //调用登录接口
-        app.getUserInfo();
-        //判断用户是否已绑定净水器
+        //初始化信息
         var http = require("../../utils/httpUtil.js");
         var params = {
             id: 1 
         };
-        var api = "waterPurifier/WechatCustomer/";
+        var api = "WechatCustomer/";
         http.GET(api, params, function(res){
-            console.log("修改")
-            console.log(res.data);
+            //如果未成功请求微信服务器
+            if (res.data == "error") {
+                wx.showToast({
+                    title: '请求失败',
+                    icon: 'loading',
+                    duration: 2000
+                })
+                wx.switchTab({
+                  url: '/pages/login/index'
+                })
+            }
+            //判断用户是否已绑定净水器
             if (res.data == false) {
                 //跳转至登录界面
                 wx.switchTab({

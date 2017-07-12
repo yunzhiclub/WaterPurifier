@@ -30,7 +30,7 @@ public class ApiController {
     @GetMapping("/getCurrentTime")
     public String getCurrentTime() {
         long time = System.currentTimeMillis();
-        String timestamp = String.valueOf(time/1000);
+        String timestamp = String.valueOf(time / 1000);
         return timestamp;
     }
 
@@ -182,23 +182,14 @@ public class ApiController {
         private int shouldRecharge;
         @ApiModelProperty("实际充值水量")
         private int actualRecharge;
-        @ApiModelProperty("时间戳")
-        private Long timestamp;
-        @ApiModelProperty("随机字符串")
-        private String randomString;
-        @ApiModelProperty("加密信息")
-        private String encryptionInfo;
 
         public RechargeResult() {
         }
 
-        public RechargeResult(Long id, int shouldRecharge, int actualRecharge, Long timestamp, String randomString, String encryptionInfo) {
+        public RechargeResult(Long id, int shouldRecharge, int actualRecharge) {
             this.id = id;
             this.shouldRecharge = shouldRecharge;
             this.actualRecharge = actualRecharge;
-            this.timestamp = timestamp;
-            this.randomString = randomString;
-            this.encryptionInfo = encryptionInfo;
         }
 
         @Override
@@ -207,9 +198,6 @@ public class ApiController {
                     "id=" + id +
                     ", shouldRecharge=" + shouldRecharge +
                     ", actualRecharge=" + actualRecharge +
-                    ", timestamp=" + timestamp +
-                    ", randomString='" + randomString + '\'' +
-                    ", encryptionInfo='" + encryptionInfo + '\'' +
                     '}';
         }
 
@@ -235,30 +223,6 @@ public class ApiController {
 
         public void setActualRecharge(int actualRecharge) {
             this.actualRecharge = actualRecharge;
-        }
-
-        public Long getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(Long timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getRandomString() {
-            return randomString;
-        }
-
-        public void setRandomString(String randomString) {
-            this.randomString = randomString;
-        }
-
-        public String getEncryptionInfo() {
-            return encryptionInfo;
-        }
-
-        public void setEncryptionInfo(String encryptionInfo) {
-            this.encryptionInfo = encryptionInfo;
         }
     }
 }

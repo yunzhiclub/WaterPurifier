@@ -6,7 +6,7 @@ module.exports = {
 }
 
 //请求项目的路由
-var baseURL = "https://api.water.mengyunzhi.com/";
+var baseURL = "https://api.water.mengyunzhi.com/waterPurifier/";
 
 function request(api, method, header, params, success){
     var self = this;
@@ -20,40 +20,71 @@ function request(api, method, header, params, success){
     var encryptionString = timestamp + randomString + 'mengyunzhi';
     //用sha1算法加密
     var encryptionInfo = sha1(encryptionString);
-
-    //给参数增加验证信息
-    params.timestamp = timestamp;
-    params.randomString = randomString;
-    params.encryptionInfo = encryptionInfo;
-    var authToken = wx.getStorageSync('authToken');
     // 同步获取threeRdSession缓存
-    params.threeRdSession = wx.getStorageSync('threeRdSession');
-    //异步获取authToken缓存
-    wx.getStorage({
-      key: 'authToken',
-      success: function(res) {
-           console.log("token信息" + res.data);
-           console.log(authToken);
-           console.log(params);
-          //向后台发送请求
-          wx.request({
-              url: baseURL + api,
-              method: method,
-              header: {
-                  'x-auth-token': res.data
-              },
-              data: params,
-              success: function(res) {
-                  wx.hideToast()
-                  success(res)
-              },
-              fail: function(res){
-                  console.log("发送http请求失败" + res);
-              }
-          })
-      } 
-    })
-    var authToken = wx.getStorageSync('authToken');
+    var threeRdSession = wx.getStorageSync('threeRdSession');
+
+    if (method == "POST") {
+        //异步获取authToken缓存
+        wx.getStorage({
+          key: 'authToken',
+          success: function(res) {
+               console.log("token信息" + res.data);
+               console.log(params);
+              //向后台发送请求
+              wx.request({
+                  url: baseURL + api,
+                  method: method,
+                  header: {
+                        'timestamp': timestamp,
+                        'randomString': randomString,
+                        'encryptionInfo': encryptionInfo,
+                        'x-auth-token': res.data
+                  },
+                  data: params,
+                  success: function(res) {
+                      wx.hideToast()
+                      success(res)
+                  },
+                  fail: function(res){
+                      console.log("发送http请求失败" + res);
+                  }
+              })
+          } 
+        })
+    } else {
+        //给参数增加验证信息
+        params.timestamp = timestamp;
+        params.randomString = randomString;
+        params.encryptionInfo = encryptionInfo;
+        params.threeRdSession = threeRdSession;
+        var authToken = wx.getStorageSync('authToken');
+        
+        //异步获取authToken缓存
+        wx.getStorage({
+          key: 'authToken',
+          success: function(res) {
+               console.log("token信息" + res.data);
+               console.log(authToken);
+               console.log(params);
+              //向后台发送请求
+              wx.request({
+                  url: baseURL + api,
+                  method: method,
+                  header: {
+                      'x-auth-token': res.data
+                  },
+                  data: params,
+                  success: function(res) {
+                      wx.hideToast()
+                      success(res)
+                  },
+                  fail: function(res){
+                      console.log("发送http请求失败" + res);
+                  }
+              })
+          } 
+        })
+    }
 
     
     

@@ -21,25 +21,23 @@ App({
               //判断是否获取登录凭证
               if (res.code) {
                 //发送https请求，获取后续请求头信息和获取3rdsession
-                var http = require("/utils/httpUtil.js");
-                var params = {
-                  code: res.code,
-                  nickname: re.userInfo.nickName
-                };
-                var api = "Login/";
-                http.GET(api, params, function(res){
-                  //将x-auth-token存入缓存中
-                  wx.setStorage({
-                    key: "authToken",
-                    data: res.header['x-auth-token']
-                  })
-                  //将3rdsession存入缓存中
-                  wx.setStorage({
-                    key: "threeRdSession",
-                    data: res.data
-                  });
+                wx.request({
+                  url: 'https://api.water.mengyunzhi.com/Login/', //仅为示例，并非真实的接口地址
+                  data: {
+                     code: res.code,
+                     nickname: re.userInfo.nickName
+                  },
+                  header: {
+                      'content-type': 'application/json'
+                  },
+                  success: function(res) {
+                    //将x-auth-token存入缓存中
+                    wx.setStorageSync('authToken', res.header['x-auth-token']);
                   
-                });
+                    //将3rdsession存入缓存中
+                    wx.setStorageSync('threeRdSession', res.data);
+                  }
+                })
               } else {
                 console.log('获取用户登录态失败！' + res.errMsg)
               }

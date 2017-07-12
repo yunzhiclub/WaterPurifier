@@ -28,6 +28,10 @@ public class WechatCustomerController {
     @ApiOperation(value = "get 是否绑定净水器", nickname = "WechatCustomer_")
     @GetMapping("/")
     public Object isBind(@ApiParam(value = "openid") @RequestParam("openid") String openid) {
+        //判断是否获取到用户的openid
+        if (openid == "") {
+            return "error";
+        }
         //判断用户是否绑定净水器
         WechatCustomer wechatCustomer = wechatCustomerRepository.findById(openid);
         if (wechatCustomer == null) {
