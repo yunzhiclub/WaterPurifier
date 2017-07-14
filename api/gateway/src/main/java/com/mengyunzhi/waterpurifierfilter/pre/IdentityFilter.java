@@ -50,12 +50,13 @@ public class IdentityFilter extends ZuulFilter {
     public Object run()  {
         // 获取请求内容
         RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletRequest request = ctx.getRequest();
         //获取3rd_session
-        String threeRdSession = ctx.getRequest().getParameter("threeRdSession");
+        String threeRdSession = request.getHeader("threeRdSession");
         //如果threeRdSession不为空，则认为是微信端发送送的请求
         if (threeRdSession != null) {
             //获取openId
-            HttpSession session = ctx.getRequest().getSession();
+            HttpSession session = request.getSession();
             Object openIdAndSessionKey = session.getAttribute(threeRdSession);
             // 判断是否成功请求微信服务器，或者是其他非法请求
             String openid = "";
@@ -65,31 +66,11 @@ public class IdentityFilter extends ZuulFilter {
                 System.out.println("JSONException" + e);
             }
             //增加请求参数，根据客户端请求的参数3rd_session，从session中获取客户的openId
-            this.addParams(openid, ctx);
+            ctx.addZuulRequestHeader("openid", openid);
         }
         //验证请求，若不合法，则拦截，反之
         this.verifyRequest(ctx);
         return null;
-    }
-
-    /**
-     * 增加请求参数，根据客户端请求的参数3rd_session，从session中获取客户的openId
-     * @param openid
-     * @param ctx
-     */
-    public void addParams(String openid, RequestContext ctx) {
-        Map<String, List<String>> params = ctx.getRequestQueryParams();
-        //若无请求参数，则new一个map
-        if (params == null) {
-            params = Maps.newHashMap();
-        }
-        //添加参数
-        List<String> param = new ArrayList<String>();
-        param.add(0, openid);
-        params.put("openid", param);
-        //设置参数
-        ctx.setRequestQueryParams(params);
-        return;
     }
 
     /**
@@ -100,17 +81,9 @@ public class IdentityFilter extends ZuulFilter {
         //获取请求
         HttpServletRequest request = ctx.getRequest();
         //定义并赋空值
-        String timestamp, randomString, encryptionInfo;
-        //判断请求方法，并获取相关加密信息
-        if (request.getMethod().equals("GET")) {
-            timestamp = request.getParameter("timestamp");
-            randomString = request.getParameter("randomString");
-            encryptionInfo = request.getParameter("encryptionInfo");
-        } else {
-            timestamp = request.getHeader("timestamp");
-            randomString = request.getHeader("randomString");
-            encryptionInfo = request.getHeader("encryptionInfo");
-        }
+        String timestamp = request.getHeader("timestamp");
+        String randomString = request.getHeader("randomString");
+        String encryptionInfo = request.getHeader("encryptionInfo");
         // 验证信息是否为我们的客户发送的，若不是(除获取当前时间戳外)，拦截
         if (!identityFilterService.isTrue(timestamp, randomString, encryptionInfo) && request.getRequestURL().indexOf("/api/getCurrentTime") < 0) {
             ctx.setSendZuulResponse(false);

@@ -36,7 +36,7 @@ Page({
         var params = {
             id: 1 
         };
-        var api = "WechatCustomer/";
+        var api = "WechatCustomer/isBind";
         http.GET(api, params, function(res){
             //如果未成功请求微信服务器
             if (res.data == "error") {
@@ -65,9 +65,10 @@ Page({
                     usedBeforeWaterQuality: app.info.usedBeforeWaterQuality,
                     usedAfterWaterQuality: app.info.usedAfterWaterQuality
                 })
+                //设置wxchart数据更新
+                app.chart(res.data.recentOneWeekUsedWater);
             }
-            //设置wxchart数据更新
-            app.chart(res.data.recentOneWeekUsedWater);
+
         });
 
         

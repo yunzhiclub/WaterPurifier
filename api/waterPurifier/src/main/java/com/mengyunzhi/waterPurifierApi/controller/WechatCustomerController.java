@@ -1,16 +1,17 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
+import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomer;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomerRepository;
 import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
+import com.mengyunzhi.waterPurifierApi.service.WechatCustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by chuhang on 2017/7/6.
@@ -24,10 +25,13 @@ public class WechatCustomerController {
     private WechatCustomerRepository wechatCustomerRepository;
     @Autowired
     private WaterPurifierService waterPurifierService;
+    @Autowired
+    private WechatCustomerService wechatCustomerService;
 
-    @ApiOperation(value = "get 是否绑定净水器", nickname = "WechatCustomer_")
-    @GetMapping("/")
-    public Object isBind(@ApiParam(value = "openid") @RequestParam("openid") String openid) {
+    @ApiOperation(value = "isBind 判断是否绑定净水器", nickname = "WechatCustomer_isBind")
+    @GetMapping("/isBind")
+    public Object isBind(@ApiParam(value = "请求信息") HttpServletRequest request) {
+        String openid = request.getHeader("openid");
         //判断是否获取到用户的openid
         if (openid == "") {
             return "error";
@@ -42,4 +46,42 @@ public class WechatCustomerController {
 
         return waterPurifierOutput;
     }
+
+    @ApiOperation(value = "bind 绑定净水器", nickname = "WechatCustomer_bind")
+    @PostMapping("/bind")
+    public Boolean bind(@ApiParam(value = "客户信息实体") @RequestBody() CustomerInfo customerInfo, HttpServletRequest request) {
+        String openid = request.getHeader("openid");
+        return wechatCustomerService.save(openid, customerInfo);
+
+    }
+
+    public static class CustomerInfo {
+        private Long waterPurifierId;
+        private String nickName;
+
+        public Long getWaterPurifierId() {
+            return waterPurifierId;
+        }
+
+        public void setWaterPurifierId(Long waterPurifierId) {
+            this.waterPurifierId = waterPurifierId;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public CustomerInfo(Long waterPurifierId, String nickName) {
+            this.waterPurifierId = waterPurifierId;
+            this.nickName = nickName;
+        }
+
+        public CustomerInfo() {
+        }
+    }
+
 }
