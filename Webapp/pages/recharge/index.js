@@ -6,12 +6,29 @@ Page({
    */
   data: {
       focus: false,
-      inputValue: ''
+      inputValue: '',
+      disabled: true
   },
   rechageInput: function(e) {
-    this.setData({
+    var self = this;
+    //如果用户输入的数字是以零开头的，则不更新水量。如00232
+    if (e.detail.value.substr(0, 1) == 0) {
+      e.detail.value = 0;
+    }
+    //更新水量
+    self.setData({
       waterValue: e.detail.value * 10
     })
+    //disabled微信支付按钮
+    if (e.detail.value == '' || e.detail.value.substr(0, 1) == 0) {
+      self.setData({
+        disabled: true
+      })
+    } else {
+      self.setData({
+        disabled: false
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -23,6 +40,17 @@ Page({
    * 跳转至支付结果页面
    */
   resultTap: function () {
+    wx.requestPayment({
+       'timeStamp': '',
+       'nonceStr': '',
+       'package': '',
+       'signType': 'MD5',
+       'paySign': '',
+       'success':function(res){
+       },
+       'fail':function(res){
+       }
+    })
     wx.navigateTo({
       url: '../result/index'
     })

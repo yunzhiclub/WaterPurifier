@@ -29,7 +29,17 @@
             </view>
         </view>
         <view class="weui-btn-area" bindtap="resultTap">
-            <button class="weui-btn" type="primary" bindtap="showTopTips">微信支付</button>
+            <button disabled="{{disabled}}" class="weui-btn" type="primary" bindtap="showTopTips">微信支付</button>
         </view>
+        <!--mask-->  
+        <view class="toast_mask" wx:if="{{isShowToast}}"></view>  
+        <!--以下为toast显示的内容-->  
+        <view class="toast_content_box" wx:if="{{isShowToast}}">  
+          <view class="toast_content">  
+            <view class="toast_content_text">  
+              {{toastText}}  
+            </view>  
+          </view>  
+        </view> 
     </view>
 </view>
