@@ -1,6 +1,8 @@
 // home.js
-var wxCharts = require('../../utils/wxcharts-min.js');
+var wxCharts = require('../../style/js/wxcharts-min.js');
 var app = getApp();
+//引用promise
+var promise = require("../../utils/wxPromisify.js");
 //调用登录接口
 app.getUserInfo();
 var areaChart = null;
@@ -26,8 +28,9 @@ Page({
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
-        var self = this;
-
+        var that = this;
+        //获取最近一周用水量
+        
         //初始化信息，发送请求
         var http = require("../../utils/httpUtil.js");
         var params = {
@@ -54,9 +57,8 @@ Page({
                 })
             } else {
                 app.info = res.data;
-                console.log(app.info)
                 //更新视图
-                self.setData({
+                that.setData({
                     todayUsedWater: app.info.todayUsedWater,
                     lastUsedWater: app.info.lastUsedWater,
                     lastFilterChip: app.info.lastFilterChip,
@@ -64,49 +66,65 @@ Page({
                     usedAfterWaterQuality: app.info.usedAfterWaterQuality
                 })
             }
+            //设置wxchart数据更新
+            app.chart(res.data.recentOneWeekUsedWater);
         });
+
         
-        var windowWidth = 320;
-        try {
-          var res = wx.getSystemInfoSync();
-          windowWidth = res.windowWidth;
-        } catch (e) {
-          console.error('getSystemInfoSync failed!');
-        }
-        
-        console.log(app.info);
-        //折线图
-        areaChart = new wxCharts({
-            canvasId: 'areaCanvas',
-            type: 'area',
-            categories: ['02-20', '02-21', '02-22', '02-23', '02-24', '02-25'],
-            animation: true,
-            series: [{
-                name: '用水量(升)',
-                data: [32, 45, 45, 56, 33, 34],
-                format: function (val) {
-                    return val.toFixed(2) + '';
-                }
-            }],
-            yAxis: {
-                title: '',
-                format: function (val) {
-                    return val.toFixed(2);
-                },
-                min: 0,
-                fontColor: '#8085e9',
-                gridColor: '#8085e9',
-                titleFontColor: '#f7a35c'
-            },
-            xAxis: {
-                fontColor: '#7cb5ec',
-                gridColor: '#7cb5ec'
-            },
-            extra: {
-                legendTextColor: '#cb2431'
-            },
-            width: windowWidth,
-            height: 200
-        });
     }
 });
+
+//设置wxchart数据更新
+app.chart = function chart(value) {
+    //获取屏幕宽度
+    try {
+      var res = wx.getSystemInfoSync();
+      var windowWidth = res.windowWidth;
+    } catch (e) {
+      console.error('getSystemInfoSync failed!');
+    }
+    //对获取的日期格式做修改，如2017-05-03改为05-03
+    var keys = [];
+    Object.keys(value).forEach(function (key) {
+        keys.push(key.substring(5, 10));
+    });
+    //获取每天的用水量
+    var datas = [];
+    Object.keys(value).forEach(function (key) {
+        datas.push(value[key]);
+    });
+    //折线图
+    areaChart = new wxCharts({
+        canvasId: 'areaCanvas',
+        type: 'area',
+        categories: keys,
+        animation: true,
+        series: [{
+            name: '用水量(升)',
+            data: datas,
+            format: function (val) {
+                return val.toFixed(2) + '';
+            }
+        }],
+        yAxis: {
+            title: '',
+            format: function (val) {
+                return val.toFixed(2);
+            },
+            min: 0,
+            fontColor: '#8085e9',
+            gridColor: '#8085e9',
+            titleFontColor: '#f7a35c'
+        },
+        xAxis: {
+            fontColor: '#7cb5ec',
+            gridColor: '#7cb5ec'
+        },
+        extra: {
+            legendTextColor: '#cb2431'
+        },
+        width: windowWidth,
+        height: 200
+    });
+}
+
