@@ -1,11 +1,7 @@
-// home.js
+// 引用wxchart
 var wxCharts = require('../../style/js/wxcharts-min.js');
-var app = getApp();
-//引用promise
-var promise = require("../../utils/wxPromisify.js");
-//调用登录接口
-app.getUserInfo();
 var areaChart = null;
+var app = getApp();
 
 Page({
     data: {
@@ -28,7 +24,7 @@ Page({
         areaChart.showToolTip(e);
     },    
     onLoad: function (e) {
-        var that = this;
+        var self = this;
         //获取最近一周用水量
         
         //初始化信息，发送请求
@@ -49,16 +45,18 @@ Page({
                   url: '/pages/login/index'
                 })
             }
+            console.log(res.data);
             //判断用户是否已绑定净水器
             if (res.data == false) {
+
                 //跳转至登录界面
-                wx.switchTab({
+                wx.redirectTo({
                   url: '/pages/login/index'
                 })
             } else {
                 app.info = res.data;
                 //更新视图
-                that.setData({
+                self.setData({
                     todayUsedWater: app.info.todayUsedWater,
                     lastUsedWater: app.info.lastUsedWater,
                     lastFilterChip: app.info.lastFilterChip,

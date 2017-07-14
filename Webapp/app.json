@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/login/index",
     "pages/recharge/index",
-    "pages/result/index"
+    "pages/result/index",
+    "pages/toggle/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -23,7 +24,7 @@
       {
         "selectedIconPath": "style/images/11.png",
         "iconPath": "style/images/12.png",
-        "pagePath": "pages/login/index",
+        "pagePath": "pages/toggle/index",
         "text": "切换"
       },
       {
