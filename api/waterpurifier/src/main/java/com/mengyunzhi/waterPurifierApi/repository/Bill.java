@@ -37,6 +37,11 @@ public class Bill implements Serializable {
     @ApiModelProperty("客户实体")
     private WechatCustomer wechatCustomer;
 
+    @PrePersist
+    protected void onCreate() {
+        createTime = System.currentTimeMillis();
+    }
+
     public Bill() {
     }
 

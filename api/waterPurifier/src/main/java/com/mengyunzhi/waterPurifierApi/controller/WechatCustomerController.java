@@ -3,11 +3,10 @@ package com.mengyunzhi.waterPurifierApi.controller;
 import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomer;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomerRepository;
+import com.mengyunzhi.waterPurifierApi.service.BillService;
 import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
 import com.mengyunzhi.waterPurifierApi.service.WechatCustomerService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +26,8 @@ public class WechatCustomerController {
     private WaterPurifierService waterPurifierService;
     @Autowired
     private WechatCustomerService wechatCustomerService;
+    @Autowired
+    private BillService billService;
 
     @ApiOperation(value = "isBind 判断是否绑定净水器", nickname = "WechatCustomer_isBind")
     @GetMapping("/isBind")
@@ -55,21 +56,30 @@ public class WechatCustomerController {
     }
 
     @ApiOperation(value = "getPaymentParams 获取支付参数", nickname = "WechatCustomer_getPaymentParams")
-    @GetMapping("/getPaymentParams")
+    @PostMapping("/getPaymentParams")
     public PaymentParams getPaymentParams(@ApiParam(value = "客户信息实体") @RequestParam("rechargeAmount") int rechargeAmount, @RequestParam("rechargeWaterQuantity") int rechargeWaterQuantity, HttpServletRequest request) {
         // 生成一条订单
         String openid = request.getHeader("openid");
+        billService.generateBill(openid, rechargeAmount, rechargeWaterQuantity);
 
         //获取支付参数
         wechatCustomerService.getPaymentParams();
         return null;
     }
+
+    @ApiModel("支付参数")
     public static class PaymentParams {
+        @ApiModelProperty("时间戳")
         private String timeStamp;
+        @ApiModelProperty("随机次富川")
         private String nonceStr;
+        @ApiModelProperty("prepay_id 参数值")
         private String _package;
+        @ApiModelProperty("signType")
         private String signType;
+        @ApiModelProperty("签名")
         private String paySign;
+        @ApiModelProperty("将以上数据再次签名")
         private String sign;
 
         public PaymentParams() {
@@ -145,8 +155,12 @@ public class WechatCustomerController {
         }
     }
 
+    @ApiModel("客户信息")
     public static class CustomerInfo {
+        @ApiModelProperty("净水器id")
         private Long waterPurifierId;
+
+        @ApiModelProperty("昵称")
         private String nickName;
 
         public Long getWaterPurifierId() {
@@ -171,6 +185,59 @@ public class WechatCustomerController {
         }
 
         public CustomerInfo() {
+        }
+    }
+
+    @ApiModel("支付信息")
+    public static class PayInfo {
+        @ApiModelProperty("净水器id")
+        private Long waterPurifierId;
+        @ApiModelProperty("充值金额")
+        private int rechargeAmount;
+        @ApiModelProperty("充值水量")
+        private int rechargeWaterQuantity;
+
+        public Long getWaterPurifierId() {
+            return waterPurifierId;
+        }
+
+        public void setWaterPurifierId(Long waterPurifierId) {
+            this.waterPurifierId = waterPurifierId;
+        }
+
+        public int getRechargeAmount() {
+            return rechargeAmount;
+        }
+
+        public void setRechargeAmount(int rechargeAmount) {
+            this.rechargeAmount = rechargeAmount;
+        }
+
+        public int getRechargeWaterQuantity() {
+            return rechargeWaterQuantity;
+        }
+
+        public void setRechargeWaterQuantity(int rechargeWaterQuantity) {
+            this.rechargeWaterQuantity = rechargeWaterQuantity;
+        }
+
+        @Override
+        public String toString() {
+            return "PayInfo{" +
+                    "waterPurifierId=" + waterPurifierId +
+                    ", rechargeAmount=" + rechargeAmount +
+                    ", rechargeWaterQuantity=" + rechargeWaterQuantity +
+                    '}';
+        }
+
+        public PayInfo(Long waterPurifierId, int rechargeAmount, int rechargeWaterQuantity) {
+            this.waterPurifierId = waterPurifierId;
+            this.rechargeAmount = rechargeAmount;
+            this.rechargeWaterQuantity = rechargeWaterQuantity;
+        }
+
+        public PayInfo() {
+
         }
     }
 
