@@ -40,6 +40,19 @@ Page({
    * 跳转至支付结果页面
    */
   resultTap: function () {
+    //获取请求参数
+    var http = require("../../utils/httpUtil.js");
+    var params = {
+        waterPurifierId: 1,
+        rechargeAmount: 2,
+        rechargeWaterQuantity: 20
+    };
+    var api = "WechatCustomer/getPaymentParams";
+    http.POST(api, params, function(res){
+      console.log(res)
+    });
+
+    //用户确认支付
     wx.requestPayment({
        'timeStamp': '',
        'nonceStr': '',

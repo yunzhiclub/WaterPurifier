@@ -12,7 +12,9 @@ public class Constant {
 
     public static final String APP_SECRET = "ec1c821f512da4895eac961eed649206";
 
-    public static final String MCH_ID = "";  //商户号
+    public static final String MCH_ID = "1230000109";  //商户号
+
+    public static final String APP_KEY = "9A0A8659F005D6984697E2CA0A9CF3B7";    //微信商户平台,密钥
 
     public static final String URL_UNIFIED_ORDER = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 

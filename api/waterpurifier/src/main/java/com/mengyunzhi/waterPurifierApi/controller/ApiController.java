@@ -4,6 +4,7 @@ import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetail;
 import com.mengyunzhi.waterPurifierApi.service.BillService;
 import com.mengyunzhi.waterPurifierApi.service.UsedWaterQuantityDetailService;
 import io.swagger.annotations.*;
+import io.swagger.models.Xml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +62,12 @@ public class ApiController {
         usedWaterQuantityDetailService.saveUseInfo(useInfo);
         return;
     }
+
+    @ApiOperation(value = "notify 微信推送支付结果", nickname = "api_notify")
+    @GetMapping("/notify")
+    public O notify() {
+    }
+
 
     @ApiModel("净水器使用信息")
     public static class UseInfo {

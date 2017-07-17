@@ -18,7 +18,6 @@ public class Bill implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ApiModelProperty("充值金额（分）") private int rechargeAmount;
@@ -30,7 +29,7 @@ public class Bill implements Serializable {
     @ApiModelProperty("更新时间") private Long updateTime;
 
     @ManyToOne
-    @ApiModelProperty("饮水机实体")
+    @ApiModelProperty("净水器实体")
     private WaterPurifier waterPurifier;
 
     @ManyToOne
