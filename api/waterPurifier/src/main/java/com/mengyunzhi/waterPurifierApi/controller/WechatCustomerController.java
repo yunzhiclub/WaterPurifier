@@ -57,13 +57,13 @@ public class WechatCustomerController {
 
     @ApiOperation(value = "getPaymentParams 获取支付参数", nickname = "WechatCustomer_getPaymentParams")
     @PostMapping("/getPaymentParams")
-    public PaymentParams getPaymentParams(@ApiParam(value = "客户信息实体") @RequestParam("rechargeAmount") int rechargeAmount, @RequestParam("rechargeWaterQuantity") int rechargeWaterQuantity, HttpServletRequest request) {
+    public PaymentParams getPaymentParams(@ApiParam(value = "客户信息实体") @RequestBody PayInfo payInfo, HttpServletRequest request) {
         // 生成一条订单
         String openid = request.getHeader("openid");
-        billService.generateBill(openid, rechargeAmount, rechargeWaterQuantity);
+        billService.generateBill(openid, payInfo);
 
         //获取支付参数
-        wechatCustomerService.getPaymentParams();
+        //wechatCustomerService.getPaymentParams();
         return null;
     }
 
