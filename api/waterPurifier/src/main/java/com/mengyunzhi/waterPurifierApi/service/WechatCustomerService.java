@@ -9,4 +9,6 @@ import com.mengyunzhi.waterPurifierApi.controller.WechatCustomerController;
 public interface WechatCustomerService {
     //保存微信客户
     Boolean save(String openid, WechatCustomerController.CustomerInfo customerInfo);
+    //获取支付参数
+    WechatCustomerController.PaymentParams getPaymentParams();
 }

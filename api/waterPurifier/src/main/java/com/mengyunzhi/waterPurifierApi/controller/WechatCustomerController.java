@@ -52,7 +52,97 @@ public class WechatCustomerController {
     public Boolean bind(@ApiParam(value = "客户信息实体") @RequestBody() CustomerInfo customerInfo, HttpServletRequest request) {
         String openid = request.getHeader("openid");
         return wechatCustomerService.save(openid, customerInfo);
+    }
 
+    @ApiOperation(value = "getPaymentParams 获取支付参数", nickname = "WechatCustomer_getPaymentParams")
+    @GetMapping("/getPaymentParams")
+    public PaymentParams getPaymentParams(@ApiParam(value = "客户信息实体") @RequestParam("rechargeAmount") int rechargeAmount, @RequestParam("rechargeWaterQuantity") int rechargeWaterQuantity, HttpServletRequest request) {
+        // 生成一条订单
+        String openid = request.getHeader("openid");
+
+        //获取支付参数
+        wechatCustomerService.getPaymentParams();
+        return null;
+    }
+    public static class PaymentParams {
+        private String timeStamp;
+        private String nonceStr;
+        private String _package;
+        private String signType;
+        private String paySign;
+        private String sign;
+
+        public PaymentParams() {
+        }
+
+        public String getTimeStamp() {
+            return timeStamp;
+        }
+
+        public void setTimeStamp(String timeStamp) {
+            this.timeStamp = timeStamp;
+        }
+
+        public String getNonceStr() {
+            return nonceStr;
+        }
+
+        public void setNonceStr(String nonceStr) {
+            this.nonceStr = nonceStr;
+        }
+
+        public String get_package() {
+            return _package;
+        }
+
+        public void set_package(String _package) {
+            this._package = _package;
+        }
+
+        public String getSignType() {
+            return signType;
+        }
+
+        public void setSignType(String signType) {
+            this.signType = signType;
+        }
+
+        public String getPaySign() {
+            return paySign;
+        }
+
+        public void setPaySign(String paySign) {
+            this.paySign = paySign;
+        }
+
+        public String getSign() {
+            return sign;
+        }
+
+        public void setSign(String sign) {
+            this.sign = sign;
+        }
+
+        @Override
+        public String toString() {
+            return "paymentParams{" +
+                    "timeStamp='" + timeStamp + '\'' +
+                    ", nonceStr='" + nonceStr + '\'' +
+                    ", _package='" + _package + '\'' +
+                    ", signType='" + signType + '\'' +
+                    ", paySign='" + paySign + '\'' +
+                    ", sign='" + sign + '\'' +
+                    '}';
+        }
+
+        public PaymentParams(String timeStamp, String nonceStr, String _package, String signType, String paySign, String sign) {
+            this.timeStamp = timeStamp;
+            this.nonceStr = nonceStr;
+            this._package = _package;
+            this.signType = signType;
+            this.paySign = paySign;
+            this.sign = sign;
+        }
     }
 
     public static class CustomerInfo {
