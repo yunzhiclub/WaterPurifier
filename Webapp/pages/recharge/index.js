@@ -53,11 +53,11 @@ Page({
 
       //用户确认支付
       wx.requestPayment({
-         'timeStamp': res.timeStamp,
-         'nonceStr': res.nonceStr,
-         'package': res._package,
+         'timeStamp': res.data.timestamp,
+         'nonceStr': res.data.nonceStr,
+         'package': res.data._package,
          'signType': 'MD5',
-         'paySign': res.paySign,
+         'paySign': res.data.paySign,
          'success':function(res){
          },
          'fail':function(res){
