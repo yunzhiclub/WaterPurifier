@@ -1,5 +1,6 @@
 package com.mengyunzhi.waterPurifierApi.util;
 
+import com.mengyunzhi.waterPurifierApi.controller.ApiController;
 import com.mengyunzhi.waterPurifierApi.controller.WechatCustomerController;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
@@ -45,6 +46,11 @@ public class CommonUtil {
     public static String UnifiedorderParamsToXML(WechatCustomerController.UnifiedorderParams pi) {
         xstream.alias("xml", pi.getClass());
         return xstream.toXML(pi);
+    }
+
+    public static String ReturnWxParamsToXML(ApiController.ReturnWxParams returnWxParams) {
+        xstream.alias("xml", returnWxParams.getClass());
+        return xstream.toXML(returnWxParams);
     }
 
     @SuppressWarnings("unchecked")

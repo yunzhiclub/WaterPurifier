@@ -64,8 +64,9 @@ public class WechatCustomerController {
         Long id = billService.generateBillAndGetId(openid, payInfo);
         //返回支付参数
         HashMap<String, String> paymentParams = wechatCustomerService.getPaymentParams(request);
-        //设置订单签名，微信服务器通知更新状态时，用于签名校验
-        billService.setSignById(id, paymentParams.get("sign"));
+        // todo 应当保存那个签名，待定？
+        // 设置订单签名，微信服务器通知更新状态时，用于签名校验
+        //billService.setSignById(id, paymentParams.get("sign"));
 
         return paymentParams;
     }

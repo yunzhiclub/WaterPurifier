@@ -58,8 +58,6 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
         paymentParams.put("signType", "MD5");
         //签名，格式为paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS&package=prepay_id=wx2017033010242291fcfe0db70013231072&signType=MD5&timeStamp=1490840662&key=qazwsxedcrfvtgbyhnujmikolp111111) = 22D9B4E54AB1950F51E0649E8810ACD6
         paymentParams.put("paySign", this.getPaySign(paymentParams));
-        //将以上组合再次签名
-        paymentParams.put("sign", this.getAgainSign(paymentParams));
 
         return paymentParams;
     }
@@ -167,23 +165,6 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
             throw new Exception("获取paySign出错");
         }
 
-    }
-
-    //将支付参数组合，再次签名
-    public static String getAgainSign(HashMap paymentParams) throws Exception {
-        try {
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append("nonceStr=" + paymentParams.get("nonceStr"))
-                    .append("package=" + paymentParams.get("package"))
-                    .append("signType=" + paymentParams.get("signType"))
-                    .append("timeStamp=" + paymentParams.get("timeStamp"))
-                    .append("paySign=" + paymentParams.get("paySign"));
-
-            return CommonUtil.getMD5(stringBuffer.toString().trim());
-
-        } catch (Exception e) {
-            throw new Exception("获取组合再次签名出错");
-        }
     }
 
 }
