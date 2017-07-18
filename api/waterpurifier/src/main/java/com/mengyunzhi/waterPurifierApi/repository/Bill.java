@@ -25,6 +25,7 @@ public class Bill implements Serializable {
     @ApiModelProperty("充值到净水机时间") private Long rechargeToWaterPurifierTime;
     @ApiModelProperty("是否充值到净水器。0：否。1：是") private int isRechargeToWaterPurifier;
     @ApiModelProperty("订单状态，0：待支付。1：已支付") private int status;
+    @ApiModelProperty("签名校验") private String sign;
     @ApiModelProperty("创建时间") private Long createTime;
     @ApiModelProperty("更新时间") private Long updateTime;
 
@@ -42,34 +43,6 @@ public class Bill implements Serializable {
     }
 
     public Bill() {
-    }
-
-    public Bill(int rechargeAmount, int rechargeWaterQuantity, Long rechargeToWaterPurifierTime, int isRechargeToWaterPurifier, int status, Long createTime, Long updateTime, WaterPurifier waterPurifier, WechatCustomer wechatCustomer) {
-        this.rechargeAmount = rechargeAmount;
-        this.rechargeWaterQuantity = rechargeWaterQuantity;
-        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
-        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
-        this.status = status;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.waterPurifier = waterPurifier;
-        this.wechatCustomer = wechatCustomer;
-    }
-
-    @Override
-    public String toString() {
-        return "Bill{" +
-                "id=" + id +
-                ", rechargeAmount=" + rechargeAmount +
-                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
-                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
-                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", waterPurifier=" + waterPurifier +
-                ", wechatCustomer=" + wechatCustomer +
-                '}';
     }
 
     public Long getId() {
@@ -120,6 +93,14 @@ public class Bill implements Serializable {
         this.status = status;
     }
 
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
     public Long getCreateTime() {
         return createTime;
     }
@@ -149,6 +130,37 @@ public class Bill implements Serializable {
     }
 
     public void setWechatCustomer(WechatCustomer wechatCustomer) {
+        this.wechatCustomer = wechatCustomer;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", rechargeAmount=" + rechargeAmount +
+                ", rechargeWaterQuantity=" + rechargeWaterQuantity +
+                ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
+                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
+                ", status=" + status +
+                ", sign='" + sign + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", waterPurifier=" + waterPurifier +
+                ", wechatCustomer=" + wechatCustomer +
+                '}';
+    }
+
+    public Bill(Long id, int rechargeAmount, int rechargeWaterQuantity, Long rechargeToWaterPurifierTime, int isRechargeToWaterPurifier, int status, String sign, Long createTime, Long updateTime, WaterPurifier waterPurifier, WechatCustomer wechatCustomer) {
+        this.id = id;
+        this.rechargeAmount = rechargeAmount;
+        this.rechargeWaterQuantity = rechargeWaterQuantity;
+        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
+        this.status = status;
+        this.sign = sign;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.waterPurifier = waterPurifier;
         this.wechatCustomer = wechatCustomer;
     }
 }

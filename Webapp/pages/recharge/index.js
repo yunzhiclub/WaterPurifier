@@ -50,20 +50,23 @@ Page({
     var api = "WechatCustomer/getPaymentParams";
     http.POST(api, params, function(res){
       console.log(res)
+
+      //用户确认支付
+      wx.requestPayment({
+         'timeStamp': res.timeStamp,
+         'nonceStr': res.nonceStr,
+         'package': res._package,
+         'signType': 'MD5',
+         'paySign': res.paySign,
+         'success':function(res){
+         },
+         'fail':function(res){
+         }
+      })
+
     });
 
-    //用户确认支付
-    wx.requestPayment({
-       'timeStamp': '',
-       'nonceStr': '',
-       'package': '',
-       'signType': 'MD5',
-       'paySign': '',
-       'success':function(res){
-       },
-       'fail':function(res){
-       }
-    })
+    
     wx.navigateTo({
       url: '../result/index'
     })

@@ -63,9 +63,10 @@ public class ApiController {
         return;
     }
 
-    @ApiOperation(value = "notify 微信推送支付结果", nickname = "api_notify")
-    @GetMapping("/notify")
-    public O notify() {
+    @ApiOperation(value = "wxNotify 微信推送支付结果", nickname = "api_wxNotify")
+    @GetMapping("/wxNotify")
+    public Xml wxNotify() {
+        return null;
     }
 
 

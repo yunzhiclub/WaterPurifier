@@ -53,7 +53,7 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
         //生成随机字符串，长度为32位以下
         paymentParams.put("nonceStr", RandomStringUtils.randomAlphanumeric(30));
         // 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=*
-        paymentParams.put("package", this.getPackage(request));
+        paymentParams.put("_package", this.getPackage(request));
         //签名算法，暂支持 MD5
         paymentParams.put("signType", "MD5");
         //签名，格式为paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS&package=prepay_id=wx2017033010242291fcfe0db70013231072&signType=MD5&timeStamp=1490840662&key=qazwsxedcrfvtgbyhnujmikolp111111) = 22D9B4E54AB1950F51E0649E8810ACD6

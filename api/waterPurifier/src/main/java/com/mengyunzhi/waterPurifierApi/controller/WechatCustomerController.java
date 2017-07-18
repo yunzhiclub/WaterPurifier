@@ -3,6 +3,7 @@ package com.mengyunzhi.waterPurifierApi.controller;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomer;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomerRepository;
 import com.mengyunzhi.waterPurifierApi.service.BillService;
+import com.mengyunzhi.waterPurifierApi.service.BillServiceImpl;
 import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
 import com.mengyunzhi.waterPurifierApi.service.WechatCustomerService;
 import io.swagger.annotations.*;
@@ -58,11 +59,15 @@ public class WechatCustomerController {
     @ApiOperation(value = "getPaymentParams 获取支付参数", nickname = "WechatCustomer_getPaymentParams")
     @PostMapping("/getPaymentParams")
     public HashMap getPaymentParams(@ApiParam(value = "客户信息实体") @RequestBody PayInfo payInfo, HttpServletRequest request) throws Exception{
-        // 生成一条订单
+        // 生成一条订单,并获取订单id
         String openid = request.getHeader("openid");
-        billService.generateBill(openid, payInfo);
+        Long id = billService.generateBillAndGetId(openid, payInfo);
         //返回支付参数
-        return wechatCustomerService.getPaymentParams(request);
+        HashMap<String, String> paymentParams = wechatCustomerService.getPaymentParams(request);
+        //设置订单签名，微信服务器通知更新状态时，用于签名校验
+        billService.setSignById(id, paymentParams.get("sign"));
+
+        return paymentParams;
     }
 
     @ApiModel("统一下单参数")

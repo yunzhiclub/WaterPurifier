@@ -69,7 +69,7 @@ public class BillServiceImpl implements BillService {
 
 
     @Override
-    public void generateBill(String openid, WechatCustomerController.PayInfo payInfo) {
+    public Long generateBillAndGetId(String openid, WechatCustomerController.PayInfo payInfo) {
         //根据openid查找客户实体
         WechatCustomer wechatCustomer = wechatCustomerRepository.findById(openid);
         // 根据净水器id查找净水器实体
@@ -80,14 +80,12 @@ public class BillServiceImpl implements BillService {
         Bill bill = new Bill();
         bill.setRechargeAmount(payInfo.getRechargeAmount());
         bill.setRechargeWaterQuantity(payInfo.getRechargeWaterQuantity());
-        bill.setIsRechargeToWaterPurifier(0);
-        bill.setStatus(0);
         bill.setWaterPurifier(waterPurifier);
         bill.setWechatCustomer(wechatCustomer);
         bill.setId(this.generateBillNumber());
 
         billRepository.save(bill);
-        return;
+        return bill.getId();
     }
 
     public Long generateBillNumber() {
@@ -136,5 +134,14 @@ public class BillServiceImpl implements BillService {
         return Long.parseLong(billLastThree);
     }
 
-
+    public void setSignById(Long id, String sign) throws Exception {
+        try {
+            Bill bill = billRepository.findById(id);
+            bill.setSign(sign);
+            billRepository.save(bill);
+            return;
+        } catch (Exception e) {
+            throw new Exception("保存签名出错");
+        }
+    }
 }
