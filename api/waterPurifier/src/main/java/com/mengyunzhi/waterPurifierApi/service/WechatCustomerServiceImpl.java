@@ -12,13 +12,10 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.mengyunzhi.waterPurifierApi.controller.WechatCustomerController.PaymentParams;
 import com.mengyunzhi.waterPurifierApi.controller.WechatCustomerController.UnifiedorderParams;
-import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
-import java.security.MessageDigest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -47,51 +44,39 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
         return Boolean.TRUE;
     }
 
-    public PaymentParams getPaymentParams(HttpServletRequest request) throws Exception{
-        PaymentParams paymentParams = new PaymentParams();
+    public HashMap getPaymentParams(HttpServletRequest request) throws Exception{
+        HashMap<String, String> paymentParams = new HashMap<>();
         //设置时间戳
         long time = System.currentTimeMillis();
         String timestamp = String.valueOf(time/1000);
-        paymentParams.setTimeStamp(timestamp);
+        paymentParams.put("timestamp", timestamp);
         //生成随机字符串，长度为32位以下
-        paymentParams.setNonceStr(RandomStringUtils.randomAlphanumeric(30));
-        // TODO 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=*
-        String _package = this.getPackage(request);
-        paymentParams.set_package(_package);
+        paymentParams.put("nonceStr", RandomStringUtils.randomAlphanumeric(30));
+        // 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=*
+        paymentParams.put("package", this.getPackage(request));
         //签名算法，暂支持 MD5
-        paymentParams.setSignType("MD5");
+        paymentParams.put("signType", "MD5");
         //签名，格式为paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS&package=prepay_id=wx2017033010242291fcfe0db70013231072&signType=MD5&timeStamp=1490840662&key=qazwsxedcrfvtgbyhnujmikolp111111) = 22D9B4E54AB1950F51E0649E8810ACD6
-        return paymentParams;
-    }
+        paymentParams.put("paySign", this.getPaySign(paymentParams));
+        //将以上组合再次签名
+        paymentParams.put("sign", this.getAgainSign(paymentParams));
 
-    @Override
-    public String getClientIp(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
-            //多次反向代理后会有多个ip值，第一个ip才是真实ip
-            int index = ip.indexOf(",");
-            if(index != -1){
-                return ip.substring(0,index);
-            }else{
-                return ip;
-            }
-        }
-        ip = request.getHeader("X-Real-IP");
-        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
-            return ip;
-        }
-        return request.getRemoteAddr();
+        return paymentParams;
     }
 
     @Override
     public String getPackage(HttpServletRequest request) throws Exception {
         try {
-            UnifiedorderParams unifiedorderParams = this.getUnifiedorderParams(request.getHeader("openid"));
+            //获取统一下单参数
+            UnifiedorderParams unifiedorderParams = this.getUnifiedorderParams(request);
+            //转化为xml格式
             String xml = CommonUtil.UnifiedorderParamsToXML(unifiedorderParams);
             xml = xml.replace("__", "_").replace("<![CDATA[1]]>", "1");
+            //请求统一下单接口
             StringBuffer buffer = HttpUtil.httpsRequest(Constant.URL_UNIFIED_ORDER, "POST", xml);
             Map<String, String> result = CommonUtil.parseXml(buffer.toString());
 
+            //在return_code 和result_code都为SUCCESS的时候，获取prepay_id
             String return_code = result.get("return_code");
             if(StringUtils.isNotBlank(return_code) && return_code.equals("SUCCESS")) {
 
@@ -101,7 +86,7 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
                 }
 
                 String prepay_Id = result.get("prepay_id");
-                return prepay_Id;
+                return "prepay_id" + "=" + prepay_Id;
 
             } else {
                 return "";
@@ -113,7 +98,7 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
     }
 
     @Override
-    public UnifiedorderParams getUnifiedorderParams(String openid) throws Exception {
+    public UnifiedorderParams getUnifiedorderParams(HttpServletRequest request) throws Exception {
         UnifiedorderParams unifiedorderParams = new UnifiedorderParams();
         unifiedorderParams.setAppid(Constant.APP_ID);
         unifiedorderParams.setMch_id(Constant.MCH_ID);
@@ -124,20 +109,20 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
         unifiedorderParams.setAttach("支付测试");
         unifiedorderParams.setOut_trade_no("20122322113");
         unifiedorderParams.setTotal_fee(1);
-        unifiedorderParams.setSpbill_create_ip("127.0.0.1");
+        unifiedorderParams.setSpbill_create_ip(CommonUtil.getClientIp(request));
         unifiedorderParams.setTime_start("20091225091010");
         unifiedorderParams.setTime_expire("20091225091010");
         unifiedorderParams.setNotify_url(Constant.URL_NOTIFY);
-        unifiedorderParams.setTrade_type("JSAPI");
-        unifiedorderParams.setLimit_pay("no_credit");
-        unifiedorderParams.setOpenid(openid);
+        unifiedorderParams.setTrade_type(Constant.TRADE_TYPE);
+        unifiedorderParams.setLimit_pay(Constant.LIMIT_PAY);
+        unifiedorderParams.setOpenid(request.getHeader("openid"));
         unifiedorderParams.setSign(this.getSign(unifiedorderParams));
+
         return unifiedorderParams;
     }
 
-    //对字符串进行md5加密
-    @Override
-    public String getSign(UnifiedorderParams unifiedorderParams) throws Exception {
+    //获取签名，签名生成算法https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
+    public static String getSign(UnifiedorderParams unifiedorderParams) throws Exception {
         try {
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append("appid=" + unifiedorderParams.getAppid())
@@ -157,25 +142,48 @@ public class WechatCustomerServiceImpl implements WechatCustomerService {
                     .append("&total_fee=" + unifiedorderParams.getTotal_fee())
                     .append("&trade_type=" + unifiedorderParams.getTrade_type())
                     .append("&key=" + Constant.APP_KEY);
-            return this.getMD5(stringBuffer.toString().trim()).toUpperCase();
+
+            return CommonUtil.getMD5(stringBuffer.toString().trim()).toUpperCase();
+
         } catch (Exception e) {
             throw new Exception("获取签名出现错误");
         }
 
     }
 
-    //对字符串md5加密
-    public static String getMD5(String str) throws Exception {
+    public static String getPaySign(HashMap paymentParams) throws Exception {
         try {
-            // 生成一个MD5加密计算摘要
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            // 计算md5函数
-            md.update(str.getBytes());
-            // digest()最后确定返回md5 hash值，返回值为8为字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
-            // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
-            return new BigInteger(1, md.digest()).toString(16);
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("appid=" + paymentParams.get("appid"))
+                    .append("nonceStr=" + paymentParams.get("nonceStr"))
+                    .append("package=" + paymentParams.get("package"))
+                    .append("signType=" + paymentParams.get("signType"))
+                    .append("timeStamp=" + paymentParams.get("timeStamp"))
+                    .append("key=" + Constant.APP_KEY);
+
+            return CommonUtil.getMD5(stringBuffer.toString().trim());
+
         } catch (Exception e) {
-            throw new Exception("MD5加密出现错误");
+            throw new Exception("获取paySign出错");
+        }
+
+    }
+
+    //将支付参数组合，再次签名
+    public static String getAgainSign(HashMap paymentParams) throws Exception {
+        try {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("nonceStr=" + paymentParams.get("nonceStr"))
+                    .append("package=" + paymentParams.get("package"))
+                    .append("signType=" + paymentParams.get("signType"))
+                    .append("timeStamp=" + paymentParams.get("timeStamp"))
+                    .append("paySign=" + paymentParams.get("paySign"));
+
+            return CommonUtil.getMD5(stringBuffer.toString().trim());
+
+        } catch (Exception e) {
+            throw new Exception("获取组合再次签名出错");
         }
     }
+
 }

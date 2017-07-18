@@ -1,17 +1,16 @@
 package com.mengyunzhi.waterPurifierApi.controller;
 
-import com.mengyunzhi.waterPurifierApi.repository.WaterPurifier;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomer;
 import com.mengyunzhi.waterPurifierApi.repository.WechatCustomerRepository;
 import com.mengyunzhi.waterPurifierApi.service.BillService;
 import com.mengyunzhi.waterPurifierApi.service.WaterPurifierService;
 import com.mengyunzhi.waterPurifierApi.service.WechatCustomerService;
 import io.swagger.annotations.*;
-import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * Created by chuhang on 2017/7/6.
@@ -58,14 +57,12 @@ public class WechatCustomerController {
 
     @ApiOperation(value = "getPaymentParams 获取支付参数", nickname = "WechatCustomer_getPaymentParams")
     @PostMapping("/getPaymentParams")
-    public PaymentParams getPaymentParams(@ApiParam(value = "客户信息实体") @RequestBody PayInfo payInfo, HttpServletRequest request) throws Exception{
+    public HashMap getPaymentParams(@ApiParam(value = "客户信息实体") @RequestBody PayInfo payInfo, HttpServletRequest request) throws Exception{
         // 生成一条订单
         String openid = request.getHeader("openid");
         billService.generateBill(openid, payInfo);
-
-        //获取支付参数
-        wechatCustomerService.getPaymentParams(request);
-        return null;
+        //返回支付参数
+        return wechatCustomerService.getPaymentParams(request);
     }
 
     @ApiModel("统一下单参数")
@@ -287,93 +284,6 @@ public class WechatCustomerController {
                     ", limit_pay='" + limit_pay + '\'' +
                     ", openid='" + openid + '\'' +
                     '}';
-        }
-    }
-    @ApiModel("支付参数")
-    public static class PaymentParams {
-        @ApiModelProperty("时间戳")
-        private String timeStamp;
-        @ApiModelProperty("随机字符串")
-        private String nonceStr;
-        @ApiModelProperty("prepay_id 参数值")
-        private String _package;
-        @ApiModelProperty("signType")
-        private String signType;
-        @ApiModelProperty("签名")
-        private String paySign;
-        @ApiModelProperty("将以上数据再次签名")
-        private String sign;
-
-        public PaymentParams() {
-        }
-
-        public String getTimeStamp() {
-            return timeStamp;
-        }
-
-        public void setTimeStamp(String timeStamp) {
-            this.timeStamp = timeStamp;
-        }
-
-        public String getNonceStr() {
-            return nonceStr;
-        }
-
-        public void setNonceStr(String nonceStr) {
-            this.nonceStr = nonceStr;
-        }
-
-        public String get_package() {
-            return _package;
-        }
-
-        public void set_package(String _package) {
-            this._package = _package;
-        }
-
-        public String getSignType() {
-            return signType;
-        }
-
-        public void setSignType(String signType) {
-            this.signType = signType;
-        }
-
-        public String getPaySign() {
-            return paySign;
-        }
-
-        public void setPaySign(String paySign) {
-            this.paySign = paySign;
-        }
-
-        public String getSign() {
-            return sign;
-        }
-
-        public void setSign(String sign) {
-            this.sign = sign;
-        }
-
-        @Override
-        public String toString() {
-            return "paymentParams{" +
-                    "timeStamp='" + timeStamp + '\'' +
-                    ", nonceStr='" + nonceStr + '\'' +
-                    ", _package='" + _package + '\'' +
-                    ", signType='" + signType + '\'' +
-                    ", paySign='" + paySign + '\'' +
-                    ", sign='" + sign + '\'' +
-                    '}';
-        }
-
-        public PaymentParams(String timeStamp, String nonceStr, String _package, String signType, String paySign, String sign) {
-            this.timeStamp = timeStamp;
-            this.nonceStr = nonceStr;
-            this._package = _package;
-            this.signType = signType;
-            this.paySign = paySign;
-            this.sign = sign;
         }
     }
 
