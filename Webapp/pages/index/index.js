@@ -24,52 +24,57 @@ Page({
     },    
     onLoad: function (e) {
         var self = this;
-        //获取最近一周用水量
-        
-        //初始化信息，发送请求
-        var http = require("../../utils/httpUtil.js");
-        var params = {
-            id: 1 
-        };
-        var api = "WechatCustomer/isBind";
-        http.GET(api, params, function(res){
-            //如果未成功请求微信服务器
-            if (res.data == "error") {
-                wx.showToast({
-                    title: '请求失败',
-                    icon: 'loading',
-                    duration: 2000
-                })
-                wx.switchTab({
-                  url: '/pages/login/index'
-                })
-            }
-            console.log(res.data);
-            //判断用户是否已绑定净水器
-            if (res.data == false) {
 
-                //跳转至登录界面
-                wx.redirectTo({
-                  url: '/pages/login/index'
-                })
-            } else {
-                app.info = res.data;
-                //更新视图
-                self.setData({
-                    todayUsedWater: app.info.todayUsedWater.toString().format(),
-                    lastUsedWater: app.info.lastUsedWater.toString().format(),
-                    lastFilterChip: app.info.lastFilterChip,
-                    usedAfterWaterQuality: app.info.usedAfterWaterQuality
-                })
-                //设置wxchart数据更新
-                app.chart(res.data.recentOneWeekUsedWater);
-            }
-
-        });
-
+        if (null === app.globalData.info) {
+            //请求服务器，获取净水器详情
+            var http = require("../../utils/httpUtil.js");
+            var params = {};
+            var api = "WechatCustomer/isBind";
+            http.GET(api, params, function(res){
+                //如果未成功请求微信服务器
+                if (res.data == "error") {
+                    wx.showToast({
+                        title: '请求失败',
+                        icon: 'loading',
+                        duration: 2000
+                    })
+                    wx.switchTab({
+                      url: '/pages/login/index'
+                    })
+                }
+                //判断用户是否已绑定净水器
+                if (res.data == false) {
+                    //跳转至登录界面
+                    wx.redirectTo({
+                      url: '/pages/login/index'
+                    })
+                } else {
+                    //更新全局变量净水器详情
+                    app.globalData.info = res.data;
+                    //更新视图信息
+                    app.updateInfo(self, res.data);
+                }
+            });
+        } else {
+            //更新视图信息
+            app.updateInfo(self, app.globalData.info);
+        }
         
     }
 });
+//更新首页视图所有净水器相关信息
+app.updateInfo = function updateInfo(self, data) {
+    //更新视图数据
+    self.setData({
+        todayUsedWater: data.todayUsedWater.toString().format(),
+        lastUsedWater: data.lastUsedWater.toString().format(),
+        lastFilterChip: data.lastFilterChip,
+        usedAfterWaterQuality: data.usedAfterWaterQuality
+    })
+    //设置wxchart数据更新
+    app.chart(data.recentOneWeekUsedWater);
+}
+
 
 //设置wxchart数据更新
 app.chart = function chart(value) {

@@ -50,8 +50,8 @@ App({
   }},
 
   globalData:{
-    waterPurifierId: null,
-    userInfo:null
+    userInfo:null,
+    info:null
   }
   
 })

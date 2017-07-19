@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by chuhang on 2017/7/6.
@@ -51,9 +52,17 @@ public class WechatCustomerController {
 
     @ApiOperation(value = "bind 绑定净水器", nickname = "WechatCustomer_bind")
     @PostMapping("/bind")
-    public Boolean bind(@ApiParam(value = "客户信息实体") @RequestBody() CustomerInfo customerInfo, HttpServletRequest request) {
+    public Map<String, Object> bind(@ApiParam(value = "客户信息实体") @RequestBody() CustomerInfo customerInfo, HttpServletRequest request) {
         String openid = request.getHeader("openid");
-        return wechatCustomerService.save(openid, customerInfo);
+
+        //判断净水器是否存在，若存在，取出相关信息
+        Map<String, Object> result = new HashMap<>();
+        result.put("isExist", wechatCustomerService.save(openid, customerInfo));
+        if (result.get("isExist").equals(Boolean.TRUE)) {
+            result.put("info", waterPurifierService.getRelateInfoById(customerInfo.getWaterPurifierId()));
+        }
+
+        return result;
     }
 
     @ApiOperation(value = "getPaymentParams 获取支付参数", nickname = "WechatCustomer_getPaymentParams")

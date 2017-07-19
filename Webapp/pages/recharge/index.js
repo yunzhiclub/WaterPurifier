@@ -1,4 +1,6 @@
 // index.js
+var app = getApp();
+
 Page({
 
   /**
@@ -7,7 +9,7 @@ Page({
   data: {
       focus: false,
       inputValue: '',
-      waterPurifierId: 123,
+      waterPurifierId: 0,
       rechargeWaterQuantity: '',
       rechargeAmount: '',
       disabled: true
@@ -37,10 +39,19 @@ Page({
       })
     }
   },
+  idInput: function(e) {
+    this.setData({
+      waterPurifierId: e.detail.value
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //更新净水器编号
+    this.setData({
+      waterPurifierId: app.globalData.waterPurifierId
+    })
   
   },
   /**
@@ -51,10 +62,11 @@ Page({
     //获取请求参数
     var http = require("../../utils/httpUtil.js");
     var params = {
-        waterPurifierId: self.data.waterPurifierId,
+        waterPurifierId: parseInt(self.data.waterPurifierId),
         rechargeAmount: parseInt(self.data.rechargeAmount),
         rechargeWaterQuantity: parseInt(self.data.rechargeAmount * 10000)
     };
+    console.log(params)
     var api = "WechatCustomer/getPaymentParams";
     http.POST(api, params, function(res){
 
@@ -77,7 +89,7 @@ Page({
 
     
     wx.navigateTo({
-      url: '../result/index'
+      url: '../result/index?rechargeAmount=' + parseInt(self.data.rechargeAmount)
     })
   },
 

@@ -36,7 +36,6 @@ Page({
     var self = this;
     //绑定净水器
     var http = require("../../utils/httpUtil.js");
-    console.log(app.globalData.userInfo);
     var params = {
       waterPurifierId: app.number,
       nickName: app.globalData.userInfo.nickName

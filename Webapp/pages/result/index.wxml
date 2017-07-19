@@ -7,7 +7,7 @@
     </view>
     <view class="page__title title">支付成功</view>
     <view class="page__desc desc-center">收款方净水器公司</view>
-    <view class="page__title title-money">￥20.00</view>
+    <view class="page__title title-money">￥{{rechargeAmount}}</view>
     <view bindtap="indexTap"  class="weui-btn-area">
         <button class="weui-btn" type="primary" bindtap="showTopTips">完成</button>
     </view>
