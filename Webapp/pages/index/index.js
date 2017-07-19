@@ -17,7 +17,6 @@ Page({
       todayUsedWater: 0,
       lastUsedWater: 0,
       lastFilterChip: 0,
-      usedBeforeWaterQuality: 0,
       usedAfterWaterQuality: 0
     },
     touchHandler: function (e) {
@@ -57,10 +56,9 @@ Page({
                 app.info = res.data;
                 //更新视图
                 self.setData({
-                    todayUsedWater: app.info.todayUsedWater,
-                    lastUsedWater: app.info.lastUsedWater,
+                    todayUsedWater: app.info.todayUsedWater.toString().format(),
+                    lastUsedWater: app.info.lastUsedWater.toString().format(),
                     lastFilterChip: app.info.lastFilterChip,
-                    usedBeforeWaterQuality: app.info.usedBeforeWaterQuality,
                     usedAfterWaterQuality: app.info.usedAfterWaterQuality
                 })
                 //设置wxchart数据更新

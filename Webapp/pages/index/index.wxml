@@ -2,9 +2,9 @@
 <view class="page">
 	<swiper indicator-dots="{{indicatorDots}}"
 	  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-	  <block wx:for="{{imgUrls}}">
+	  <block wx:for-items="{{imgUrls}}" wx:key="*this" wx:for-item="img">
 	    <swiper-item>
-	      <image src="/style/images/1.jpg" class="slide-image image-width" height="150"/>
+	      <image src="{{img}}" class="slide-image image-width" height="150"/>
 	    </swiper-item>
 	  </block>
 	</swiper>
@@ -25,19 +25,17 @@
             <view class="weui-cell">
                 <view class="weui-cell__bd">剩余滤芯</view>
                 <view class="weui-cell__ft">
-                	<view class="weui-badge badge-general" style="margin-left: 5px;">{{lastFilterChip}}%</view>
-                </view>
-            </view>
-            <view class="weui-cell">
-                <view class="weui-cell__bd">净水前水质状态</view>
-                <view class="weui-cell__ft">
-                	<view class="weui-badge badge-bad" style="margin-left: 5px;">{{usedBeforeWaterQuality}}%</view>
+                    <view wx:if="{{lastFilterChip > 80}}" class="weui-badge badge-good" style="margin-left: 5px;">{{lastFilterChip}}%</view>
+                    <view wx:elif="{{lastFilterChip < 60}}" class="weui-badge badge-bad" style="margin-left: 5px;">{{lastFilterChip}}%</view>
+                    <view wx:else class="weui-badge badge-general" style="margin-left: 5px;">{{lastFilterChip}}%</view>
                 </view>
             </view>
             <view class="weui-cell">
                 <view class="weui-cell__bd">净水后水质状态</view>
                 <view class="weui-cell__ft">
-                	<view class="weui-badge badge-good" style="margin-left: 5px;">{{usedAfterWaterQuality}}%</view>
+                    <view wx:if="{{usedAfterWaterQuality > 80}}" class="weui-badge badge-good" style="margin-left: 5px;">{{usedAfterWaterQuality}}%</view>
+                    <view wx:elif="{{usedAfterWaterQuality < 60}}" class="weui-badge badge-bad" style="margin-left: 5px;">{{usedAfterWaterQuality}}%</view>
+                	<view wx:else class="weui-badge badge-general" style="margin-left: 5px;">{{usedAfterWaterQuality}}%</view>
                 </view>
             </view>
         </view>

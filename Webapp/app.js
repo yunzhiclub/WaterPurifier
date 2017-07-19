@@ -34,6 +34,7 @@ App({
     })
 
     this.getUserInfo();
+    moneyFormat();
   },
   getUserInfo:function(cb){
     var that = this
@@ -49,6 +50,15 @@ App({
   }},
 
   globalData:{
+    waterPurifierId: null,
     userInfo:null
   }
+  
 })
+
+//把表达金钱的数字格式化如1234567转为1,234,567
+function moneyFormat() {
+  String.prototype.format = function() {
+    return this.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+}

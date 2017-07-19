@@ -7,6 +7,9 @@ Page({
   data: {
       focus: false,
       inputValue: '',
+      waterPurifierId: 123,
+      rechargeWaterQuantity: '',
+      rechargeAmount: '',
       disabled: true
   },
   rechageInput: function(e) {
@@ -17,7 +20,11 @@ Page({
     }
     //更新水量
     self.setData({
-      waterValue: e.detail.value * 10
+      rechargeWaterQuantity: (e.detail.value * 10000).toString().format()
+    })
+    //更新金额
+    self.setData({
+      rechargeAmount: e.detail.value
     })
     //disabled微信支付按钮
     if (e.detail.value == '' || e.detail.value.substr(0, 1) == 0) {
@@ -40,16 +47,16 @@ Page({
    * 跳转至支付结果页面
    */
   resultTap: function () {
+    var self = this;
     //获取请求参数
     var http = require("../../utils/httpUtil.js");
     var params = {
-        waterPurifierId: 1,
-        rechargeAmount: 2,
-        rechargeWaterQuantity: 20
+        waterPurifierId: self.data.waterPurifierId,
+        rechargeAmount: parseInt(self.data.rechargeAmount),
+        rechargeWaterQuantity: parseInt(self.data.rechargeAmount * 10000)
     };
     var api = "WechatCustomer/getPaymentParams";
     http.POST(api, params, function(res){
-      console.log(res)
 
       //用户确认支付
       wx.requestPayment({
@@ -59,8 +66,10 @@ Page({
          'signType': 'MD5',
          'paySign': res.data.paySign,
          'success':function(res){
+          console.log(res);
          },
          'fail':function(res){
+          console.log(res);
          }
       })
 
