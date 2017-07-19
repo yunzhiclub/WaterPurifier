@@ -25,50 +25,26 @@ function request(api, method, header, params, success){
     //同步获取authToken信息
     var authToken = wx.getStorageSync('authToken');
 
-    if (method == "POST") {
-        //向后台发送请求
-        wx.request({
-          url: baseURL + api,
-          method: method,
-          header: {
-                'timestamp': timestamp,
-                'randomString': randomString,
-                'encryptionInfo': encryptionInfo,
-                'x-auth-token': res.data
-          },
-          data: params,
-          success: function(res) {
-              wx.hideToast()
-              success(res)
-          },
-          fail: function(res){
-              console.log("发送http请求失败" + res);
-          }
-        })
-    } else {
-        //给参数增加验证信息
-        params.timestamp = timestamp;
-        params.randomString = randomString;
-        params.encryptionInfo = encryptionInfo;
-        params.threeRdSession = threeRdSession;
-        
-        //向后台发送请求
-        wx.request({
-          url: baseURL + api,
-          method: method,
-          header: {
-              'x-auth-token': authToken
-          },
-          data: params,
-          success: function(res) {
-              wx.hideToast()
-              success(res)
-          },
-          fail: function(res){
-              console.log("发送http请求失败" + res);
-          }
-        })
-    }
+    //向后台发送请求
+    wx.request({
+      url: baseURL + api,
+      method: method,
+      header: {
+            'timestamp': timestamp,
+            'randomString': randomString,
+            'encryptionInfo': encryptionInfo,
+            'x-auth-token': authToken,
+            'threeRdSession': threeRdSession
+      },
+      data: params,
+      success: function(res) {
+          wx.hideToast()
+          success(res)
+      },
+      fail: function(res){
+          console.log("发送http请求失败" + res);
+      }
+    })
 
     
     

@@ -14,5 +14,16 @@
             <button class="weui-btn" type="primary" bindtap="showTopTips">确定</button>
         </view>
 
+        <!--mask-->  
+        <view class="toast_mask" wx:if="{{isShowToast}}"></view>  
+        <!--以下为toast显示的内容-->  
+        <view class="toast_content_box" wx:if="{{isShowToast}}">  
+          <view class="toast_content">  
+            <view class="toast_content_text">  
+              {{toastText}}  
+            </view>  
+          </view>  
+        </view> 
+
     </view>
 </view>
