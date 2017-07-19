@@ -35,24 +35,19 @@ public class WechatCustomerController {
     @GetMapping("/isBind")
     public Object isBind(@ApiParam(value = "请求信息") HttpServletRequest request) {
         String openid = request.getHeader("openid");
-        //判断是否获取到用户的openid
-        if (openid == "") {
-            return "error";
-        }
         //判断用户是否绑定净水器
         WechatCustomer wechatCustomer = wechatCustomerRepository.findById(openid);
-        if (wechatCustomer == null) {
+        if (null == wechatCustomer) {
             return Boolean.FALSE;
         }
-        //根据净水器编号获取相关信息
-        WaterPurifierController.WaterPurifierOutput waterPurifierOutput = waterPurifierService.getRelateInfoById(wechatCustomer.getWaterPurifier().getId());
 
-        return waterPurifierOutput;
+        //根据净水器编号获取相关信息并返回
+        return waterPurifierService.getRelateInfoById(wechatCustomer.getWaterPurifier().getId());
     }
 
-    @ApiOperation(value = "bind 绑定净水器", nickname = "WechatCustomer_bind")
-    @PostMapping("/bind")
-    public Map<String, Object> bind(@ApiParam(value = "客户信息实体") @RequestBody() CustomerInfo customerInfo, HttpServletRequest request) {
+    @ApiOperation(value = "toggle 切换净水器", nickname = "WechatCustomer_toggle")
+    @PostMapping("/toggle")
+    public Map<String, Object> toggle(@ApiParam(value = "客户信息实体") @RequestBody() CustomerInfo customerInfo, HttpServletRequest request) {
         String openid = request.getHeader("openid");
 
         //判断净水器是否存在，若存在，取出相关信息

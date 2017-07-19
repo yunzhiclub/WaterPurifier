@@ -70,6 +70,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //友情提示用户，请求超时。todo：暂时小程序没有网络超时正确的提示，待完善
+    if (options.fail == "1") {
+      wx.showToast({
+        title: '网络超时',
+        icon: 'loading',
+        duration: 3000
+      })
+    }
   },
 
   /**

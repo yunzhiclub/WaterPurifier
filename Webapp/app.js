@@ -20,11 +20,22 @@ App({
                 'content-type': 'application/json'
             },
             success: function(res) {
-              //将x-auth-token存入缓存中
-              wx.setStorageSync('authToken', res.header['x-auth-token']);
-            
-              //将3rdsession存入缓存中
-              wx.setStorageSync('threeRdSession', res.data);
+              console.log(res)
+              console.log("fsdfsdfsdfs")
+              //判断是否成功获取openid
+              if ("" == res.data) {
+                console.log(2121);
+                //友情提示，并重启
+                wx.redirectTo({
+                  url: '/pages/login/index?fail=1'
+                })
+              } else {
+                //将x-auth-token存入缓存中
+                wx.setStorageSync('authToken', res.header['x-auth-token']);
+                //将3rdsession存入缓存中
+                wx.setStorageSync('threeRdSession', res.data);
+              }              
+
             }
           })
         } else {

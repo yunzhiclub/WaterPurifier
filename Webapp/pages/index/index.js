@@ -30,17 +30,6 @@ Page({
             var params = {};
             var api = "WechatCustomer/isBind";
             http.GET(api, params, function(res){
-                //如果未成功请求微信服务器
-                if (res.data == "error") {
-                    wx.showToast({
-                        title: '请求失败',
-                        icon: 'loading',
-                        duration: 2000
-                    })
-                    wx.switchTab({
-                      url: '/pages/login/index'
-                    })
-                }
                 //判断用户是否已绑定净水器
                 if (res.data == false) {
                     //跳转至登录界面
