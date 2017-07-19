@@ -50,14 +50,20 @@ Page({
           url: '/pages/index/index'
         })
       } else {
+        //友情提示用户
         self.setData({  
           count: 1500,  
           toastText: '对不起，不存在该净水器'  
         });  
+
         self.showToast(); 
       }
     })
 
+    // 友情提示
+    wx.showLoading({
+      title: '加载中',
+    })
   },
 
   /**

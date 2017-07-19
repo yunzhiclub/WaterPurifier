@@ -42,7 +42,9 @@ Page({
     };
     var api = "WechatCustomer/bind";
     http.POST(api, params, function(res) {
-      if (res.data == true) {
+      if (res.data.isExist == true) {
+        //赋值净水器信息
+        app.globalData.info = res.data.info;
         //跳转至首页
         wx.switchTab({
           url: '/pages/index/index'

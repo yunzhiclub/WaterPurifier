@@ -9,7 +9,7 @@ Page({
   data: {
       focus: false,
       inputValue: '',
-      waterPurifierId: 0,
+      waterPurifierId: '',
       rechargeWaterQuantity: '',
       rechargeAmount: '',
       disabled: true
@@ -50,7 +50,7 @@ Page({
   onLoad: function (options) {
     //更新净水器编号
     this.setData({
-      waterPurifierId: app.globalData.waterPurifierId
+      waterPurifierId: app.globalData.info.id
     })
   
   },

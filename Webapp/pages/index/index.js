@@ -21,10 +21,9 @@ Page({
     },
     touchHandler: function (e) {
         areaChart.showToolTip(e);
-    },    
+    },
     onLoad: function (e) {
         var self = this;
-
         if (null === app.globalData.info) {
             //请求服务器，获取净水器详情
             var http = require("../../utils/httpUtil.js");
@@ -52,15 +51,19 @@ Page({
                     //更新全局变量净水器详情
                     app.globalData.info = res.data;
                     //更新视图信息
-                    app.updateInfo(self, res.data);
+                    app.updateInfo(self, app.globalData.info);
                 }
             });
-        } else {
+        }
+    },
+    onShow: function() {
+        //导航栏之间切换时，不经过onload/onready登发，故在此处更新界面
+        var self = this;
+        if (null !== app.globalData.info) {
             //更新视图信息
             app.updateInfo(self, app.globalData.info);
         }
-        
-    }
+    },
 });
 //更新首页视图所有净水器相关信息
 app.updateInfo = function updateInfo(self, data) {
