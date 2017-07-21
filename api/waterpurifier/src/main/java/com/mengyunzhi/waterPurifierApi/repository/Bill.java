@@ -18,36 +18,31 @@ public class Bill implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ApiModelProperty("充值金额（分）") private int rechargeAmount;
     @ApiModelProperty("充值水量（ml）") private int rechargeWaterQuantity;
     @ApiModelProperty("充值到净水机时间") private Long rechargeToWaterPurifierTime;
-    @ApiModelProperty("订单状态，0：未处理，1：处理中，2：已处理") private int status;
+    @ApiModelProperty("是否充值到净水器。0：否。1：是") private int isRechargeToWaterPurifier;
+    @ApiModelProperty("订单状态，0：待支付。1：已支付") private int status;
+    @ApiModelProperty("签名校验") private String sign;
     @ApiModelProperty("创建时间") private Long createTime;
     @ApiModelProperty("更新时间") private Long updateTime;
 
     @ManyToOne
-    @ApiModelProperty("饮水机实体")
+    @ApiModelProperty("净水器实体")
     private WaterPurifier waterPurifier;
 
     @ManyToOne
-    @ApiModelProperty("用户实体")
-    private User user;
+    @ApiModelProperty("客户实体")
+    private WechatCustomer wechatCustomer;
 
-    public Bill() {
+    @PrePersist
+    protected void onCreate() {
+        createTime = System.currentTimeMillis();
     }
 
-    public Bill(int rechargeAmount, int rechargeWaterQuantity, Long rechargeToWaterPurifierTime, int status, Long createTime, Long updateTime, WaterPurifier waterPurifier, User user) {
-        this.rechargeAmount = rechargeAmount;
-        this.rechargeWaterQuantity = rechargeWaterQuantity;
-        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
-        this.status = status;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.waterPurifier = waterPurifier;
-        this.user = user;
+    public Bill() {
     }
 
     public Long getId() {
@@ -82,12 +77,28 @@ public class Bill implements Serializable {
         this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
     }
 
+    public int getIsRechargeToWaterPurifier() {
+        return isRechargeToWaterPurifier;
+    }
+
+    public void setIsRechargeToWaterPurifier(int isRechargeToWaterPurifier) {
+        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
+    }
+
     public int getStatus() {
         return status;
     }
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public Long getCreateTime() {
@@ -114,12 +125,12 @@ public class Bill implements Serializable {
         this.waterPurifier = waterPurifier;
     }
 
-    public User getUser() {
-        return user;
+    public WechatCustomer getWechatCustomer() {
+        return wechatCustomer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setWechatCustomer(WechatCustomer wechatCustomer) {
+        this.wechatCustomer = wechatCustomer;
     }
 
     @Override
@@ -129,11 +140,27 @@ public class Bill implements Serializable {
                 ", rechargeAmount=" + rechargeAmount +
                 ", rechargeWaterQuantity=" + rechargeWaterQuantity +
                 ", rechargeToWaterPurifierTime=" + rechargeToWaterPurifierTime +
+                ", isRechargeToWaterPurifier=" + isRechargeToWaterPurifier +
                 ", status=" + status +
+                ", sign='" + sign + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", waterPurifier=" + waterPurifier +
-                ", user=" + user +
+                ", wechatCustomer=" + wechatCustomer +
                 '}';
+    }
+
+    public Bill(Long id, int rechargeAmount, int rechargeWaterQuantity, Long rechargeToWaterPurifierTime, int isRechargeToWaterPurifier, int status, String sign, Long createTime, Long updateTime, WaterPurifier waterPurifier, WechatCustomer wechatCustomer) {
+        this.id = id;
+        this.rechargeAmount = rechargeAmount;
+        this.rechargeWaterQuantity = rechargeWaterQuantity;
+        this.rechargeToWaterPurifierTime = rechargeToWaterPurifierTime;
+        this.isRechargeToWaterPurifier = isRechargeToWaterPurifier;
+        this.status = status;
+        this.sign = sign;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.waterPurifier = waterPurifier;
+        this.wechatCustomer = wechatCustomer;
     }
 }

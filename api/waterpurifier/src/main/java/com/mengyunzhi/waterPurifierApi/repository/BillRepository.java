@@ -14,4 +14,6 @@ import java.util.List;
 public interface BillRepository extends PagingAndSortingRepository<Bill, Long> {
     //根据净水器编号查找未充值到净水器的订单记录
     List<Bill> findByWaterPurifierIdAndStatus(Long id, int status);
+    //根据订单id查找订单
+    Bill findById(Long id);
 }

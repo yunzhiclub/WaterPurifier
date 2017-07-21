@@ -21,6 +21,7 @@ public class BillRepositoryTest extends RepositoryTest {
     public void save() {
         logger.info("----- 保存测试 -----");
         Bill bill = new Bill();
+        bill.setId(34324L);
         billRepository.save(bill);
 
         assertThat(bill.getId()).isNotNull();

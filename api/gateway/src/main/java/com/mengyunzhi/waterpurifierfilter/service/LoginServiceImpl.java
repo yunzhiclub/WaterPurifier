@@ -1,5 +1,7 @@
 package com.mengyunzhi.waterpurifierfilter.service;
 
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -42,8 +44,19 @@ public class LoginServiceImpl implements LoginService {
 
         ResponseEntity<String> response = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.GET, entity, String.class);
 
-        //将请求到的信息返回
-        return response.getBody();
+        //判断是否获取到openid
+        String openid = "";
+        try {
+            openid = JSONObject.fromObject(response.getBody()).getString("openid");
+        } catch(JSONException e){
+            System.out.println("JSONException" + e);
+        }
+
+        //若获取到openid，将请求到的信息返回，否则，返回null
+        if (!openid.equals("")) {
+            return response.getBody();
+        }
+        return null;
     }
 
     @Override

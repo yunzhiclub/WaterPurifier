@@ -3,10 +3,14 @@ package com.mengyunzhi.waterPurifierApi.controller;
 import com.mengyunzhi.waterPurifierApi.repository.UsedWaterQuantityDetail;
 import com.mengyunzhi.waterPurifierApi.service.BillService;
 import com.mengyunzhi.waterPurifierApi.service.UsedWaterQuantityDetailService;
+import com.mengyunzhi.waterPurifierApi.util.CommonUtil;
 import io.swagger.annotations.*;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.logging.Logger;
 
 
@@ -60,6 +64,53 @@ public class ApiController {
         UsedWaterQuantityDetail usedWaterQuantityDetail = new UsedWaterQuantityDetail();
         usedWaterQuantityDetailService.saveUseInfo(useInfo);
         return;
+    }
+
+    //todo 获取商户号后测试完善
+    @ApiOperation(value = "wxNotify 微信推送支付结果", nickname = "api_wxNotify")
+    @PostMapping("/wxNotify")
+    public String wxNotify()  {
+        ReturnWxParams returnWxParams = new ReturnWxParams("SUCCESS", "OK");
+        return CommonUtil.ReturnWxParamsToXML(returnWxParams);
+
+    }
+
+    @ApiModel
+    public static class ReturnWxParams {
+        private String return_code;
+        private String return_msg;
+
+        public ReturnWxParams() {
+        }
+
+        public ReturnWxParams(String return_code, String return_msg) {
+            this.return_code = return_code;
+            this.return_msg = return_msg;
+        }
+
+        @Override
+        public String toString() {
+            return "ReturnWxParams{" +
+                    "return_code='" + return_code + '\'' +
+                    ", return_msg='" + return_msg + '\'' +
+                    '}';
+        }
+
+        public String getReturn_code() {
+            return return_code;
+        }
+
+        public void setReturn_code(String return_code) {
+            this.return_code = return_code;
+        }
+
+        public String getReturn_msg() {
+            return return_msg;
+        }
+
+        public void setReturn_msg(String return_msg) {
+            this.return_msg = return_msg;
+        }
     }
 
     @ApiModel("净水器使用信息")

@@ -109,9 +109,8 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
         filterChip.setAvailableWaterQuantity(1000);
         filterChip.setWaterPurifier(waterPurifier);
         filterChip.setCreateTime(timestamp);
+
         filterChipRepository.save(filterChip);
-
-
     }
 
     //根据净水器编号获取最后一次安装的滤芯
@@ -119,7 +118,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
     public Integer getLastUsedWaterById(Long id) {
         FilterChip filterChip = filterChipRepository.findTopByWaterPurifierIdOrderByInstallTimeDesc(id);
         if (filterChip == null) {
-            return null;
+            return 0;
         }
         return filterChip.getAvailableWaterQuantity();
     }
@@ -129,7 +128,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
     public Integer getUsedBeforeWaterQualityById(Long id) {
         UsedWaterQuantityDetail usedWaterQuantityDetail = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(id);
         if (usedWaterQuantityDetail == null) {
-            return null;
+            return 0;
         }
         return usedWaterQuantityDetail.getUsedBeforeWaterQuality();
     }
@@ -139,7 +138,7 @@ public class WaterPurifierServiceImpl implements WaterPurifierService {
     public Integer getUsedAfterWaterQualityById(Long id) {
         UsedWaterQuantityDetail usedWaterQuantityDetail = usedWaterQuantityDetailRepository.findTopByWaterPurifierIdOrderByCreateTimeDesc(id);
         if (usedWaterQuantityDetail == null) {
-            return null;
+            return 0;
         }
         return usedWaterQuantityDetail.getUsedAfterWaterQuality();
     }

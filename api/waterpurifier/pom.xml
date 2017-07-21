@@ -170,6 +170,13 @@
 			<version>${swagger2markup.version}</version>
 		</dependency>
 
+		<!--使用xml转义-->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

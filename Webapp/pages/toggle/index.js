@@ -1,6 +1,6 @@
 // 实例化全局应用
 var app = getApp();
-app.getUserInfo();
+
 Page({
   /**
    * 页面的初始数据
@@ -50,34 +50,20 @@ Page({
           url: '/pages/index/index'
         })
       } else {
-        //友情提示用户
         self.setData({  
           count: 1500,  
           toastText: '对不起，不存在该净水器'  
         });  
-
         self.showToast(); 
       }
     })
 
-    // 友情提示
-    wx.showLoading({
-      title: '加载中',
-    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //友情提示用户，请求超时。todo：暂时小程序没有网络超时正确的提示，待完善
-    if (options.fail == "1") {
-      wx.showToast({
-        title: '网络超时',
-        icon: 'loading',
-        duration: 3000
-      })
-    }
   },
 
   /**

@@ -8,7 +8,7 @@
                     <view class="weui-label">净水器编号</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" value="2332" />
+                    <input class="weui-input" type="number" bindinput="idInput" value="{{waterPurifierId}}" />
                 </view>
             </view>
             <view class="weui-cell weui-cell_input">
@@ -16,20 +16,20 @@
                     <view class="weui-label">充值金额(元)</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" type="number" min="0" bindinput="rechageInput" />
+                    <input class="weui-input" type="number" min="0" max="9999999" bindinput="rechageInput" />
                 </view>
             </view>
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">水量(升)</view>
+                    <view class="weui-label">水量(毫升)</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" disabled="true" type="number" min="0" value="{{waterValue}}" />
+                    <input class="weui-input" disabled="true" type="number" min="0" value="{{rechargeWaterQuantity}}" />
                 </view>
             </view>
         </view>
         <view class="weui-btn-area" bindtap="resultTap">
-            <button class="weui-btn" type="primary" bindtap="showTopTips">微信支付</button>
+            <button disabled="{{disabled}}" class="weui-btn" type="primary" bindtap="showTopTips">微信支付</button>
         </view>
     </view>
 </view>
